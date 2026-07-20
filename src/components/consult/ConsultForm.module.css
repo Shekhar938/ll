@@ -1,0 +1,109 @@
+.wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+.stepper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding: 0 8px;
+}
+
+.progressBar {
+  position: absolute;
+  top: 20px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy), var(--gold));
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  padding: 0;
+}
+
+.stepBtn:disabled {
+  cursor: default;
+}
+
+.stepCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.stepActive .stepCircle {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: white;
+  box-shadow: 0 4px 12px rgba(11,31,58,0.3);
+  transform: scale(1.1);
+}
+
+.stepDone .stepCircle {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.stepLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.stepActive .stepLabel {
+  color: var(--navy);
+}
+
+.stepDone .stepLabel {
+  color: var(--success);
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  animation: scaleIn 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .card { padding: 28px 20px; }
+  .stepLabel { display: none; }
+  .stepCircle { width: 32px; height: 32px; font-size: 12px; }
+}

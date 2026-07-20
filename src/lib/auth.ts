@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'nyaya2024';
+
 const SESSION_COOKIE = 'nyaya_admin_session';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'nyaya-secret-key-change-in-production';
 

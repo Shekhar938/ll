@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NyayaConnect – Legal Consultation Platform
 
-## Getting Started
+A premium, mobile-first legal consultation web application for Indian advocates.
 
-First, run the development server:
+## 🚀 Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Admin Panel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Visit [http://localhost:3000/admin](http://localhost:3000/admin)
 
-## Learn More
+Default password: `nyaya2024`
 
-To learn more about Next.js, take a look at the following resources:
+To change the admin password, set the environment variable:
+```
+ADMIN_PASSWORD=your_secure_password
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── consult/          # Consultation CRUD APIs
+│   │   └── admin/            # Admin auth APIs
+│   ├── admin/                # Admin panel pages
+│   ├── consult/              # Consultation form
+│   ├── success/              # Thank you page
+│   └── page.tsx              # Landing page
+├── components/
+│   ├── admin/                # Admin UI components
+│   ├── consult/              # Multi-step form
+│   └── landing/              # Landing page sections
+└── lib/
+    ├── store.ts              # JSON file-based data store
+    ├── types.ts              # TypeScript interfaces
+    ├── auth.ts               # Cookie-based session auth
+    ├── ai.ts                 # Mock AI case analysis
+    └── utils.ts              # Shared constants & helpers
+data/
+└── consultations.json        # Auto-created on first submission
+```
 
-## Deploy on Vercel
+## 🌟 Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Landing Page** – Hero, Practice Areas (12), Why Us, Testimonials carousel, FAQ accordion, Footer
+- **5-Step Consultation Form** – Personal Info, Legal Matter, Priority, Document Upload, Review
+- **Document Upload** – Drag & drop, PDF/DOCX/images, 20MB limit
+- **AI Case Analysis** – Automated summary, risk level, keywords, next steps (no API key needed)
+- **Admin Dashboard** – Stats, filterable data table, status management
+- **Client Details** – AI summary, case info, document list, internal notes
+- **PWA Ready** – Installable on Android
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚢 Deploy to Vercel
+
+```bash
+npm install -g vercel
+vercel
+```
+
+Set environment variable on Vercel: `ADMIN_PASSWORD=your_password`
+
+> **Note:** Vercel is serverless – the JSON data store will reset on each deployment. For production, switch `src/lib/store.ts` to use a database like Vercel Postgres or Planetscale.
+
+## 🔧 Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `ADMIN_PASSWORD` | `nyaya2024` | Admin panel password |
+| `SESSION_SECRET` | `nyaya-secret-key-change-in-production` | Cookie signing secret |

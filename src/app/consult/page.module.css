@@ -1,0 +1,29 @@
+.main {
+  min-height: 100vh;
+  padding-bottom: 80px;
+  background: var(--bg);
+}
+
+.header {
+  background: var(--navy);
+  padding: 120px 0 48px;
+  margin-bottom: 48px;
+}
+
+.headerInner {
+  max-width: 600px;
+}
+
+.heading {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.sub {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+}

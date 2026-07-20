@@ -1,0 +1,171 @@
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.optionGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--bg);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.option:hover {
+  border-color: var(--navy);
+  background: white;
+  color: var(--navy);
+}
+
+.optionActive {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: white;
+}
+
+.optionActive:hover {
+  background: var(--navy);
+  color: white;
+}
+
+.urgencyGroup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.urgencyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--bg);
+  text-align: center;
+}
+
+.urgencyCard:hover {
+  border-color: var(--navy);
+  box-shadow: var(--shadow-sm);
+  background: white;
+}
+
+.urgencyCardActive {
+  border-color: transparent;
+  background: var(--navy);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.urgencyIcon {
+  font-size: 28px;
+}
+
+.urgencyLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.urgencyCardActive .urgencyLabel {
+  color: white;
+}
+
+.urgencyDesc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.urgencyCardActive .urgencyDesc {
+  color: rgba(255,255,255,0.65);
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+}
+
+.toggleLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.toggleSub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.toggle {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.toggle input { opacity: 0; width: 0; height: 0; }
+
+.toggleSlider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--border-hover);
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+}
+
+.toggleSlider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle input:checked + .toggleSlider {
+  background: var(--success);
+}
+
+.toggle input:checked + .toggleSlider::before {
+  transform: translateX(22px);
+}
+
+@media (max-width: 640px) {
+  .grid2 { grid-template-columns: 1fr; }
+  .urgencyGroup { grid-template-columns: 1fr; }
+}

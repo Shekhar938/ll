@@ -1,19 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthenticated } from './auth';
-
-export async function adminMiddleware(req: NextRequest): Promise<NextResponse | null> {
-  const isAuth = await isAdminAuthenticated();
-  if (!isAuth) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-  return null;
-}
-
-export function generateId(): string {
-  const timestamp = Date.now().toString(36);
-  const random = Math.random().toString(36).substring(2, 8);
-  return `NYC-${timestamp}-${random}`.toUpperCase();
-}
+// Client-safe utilities and constants
+// Do NOT import server-only modules here
 
 export function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-IN', {
@@ -23,15 +9,6 @@ export function formatDate(dateStr: string): string {
     hour: '2-digit',
     minute: '2-digit',
   });
-}
-
-export function sanitizeInput(str: string): string {
-  return str
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-    .trim();
 }
 
 export const PRACTICE_AREAS = [

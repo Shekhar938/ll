@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAllConsultations, saveConsultation } from '@/lib/store';
-import { generateId, sanitizeInput } from '@/lib/utils';
+import { generateId, sanitizeInput } from '@/lib/server-utils';
 import { generateAISummary } from '@/lib/ai';
 import { ConsultationRequest } from '@/lib/types';
 
