@@ -1,52 +1,128 @@
-import fs from 'fs';
-import path from 'path';
+import { sql } from '@vercel/postgres';
 import { ConsultationRequest } from './types';
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'consultations.json');
-
-function ensureDataDir() {
-  const dir = path.dirname(DATA_FILE);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+// Helper to initialize the table if it doesn't exist
+export async function initializeDatabase() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS consultations (
+        id VARCHAR(255) PRIMARY KEY,
+        "createdAt" TIMESTAMP NOT NULL,
+        "updatedAt" TIMESTAMP NOT NULL,
+        status VARCHAR(50) NOT NULL,
+        "fullName" VARCHAR(255) NOT NULL,
+        mobile VARCHAR(20) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        city VARCHAR(100),
+        state VARCHAR(100),
+        "preferredLanguage" VARCHAR(50),
+        occupation VARCHAR(100),
+        "practiceArea" VARCHAR(100),
+        "caseType" VARCHAR(100),
+        "caseSummary" TEXT,
+        "opponentName" VARCHAR(255),
+        court VARCHAR(255),
+        "policeStation" VARCHAR(255),
+        "caseStage" VARCHAR(100),
+        urgency VARCHAR(50),
+        "preferredContactTime" VARCHAR(50),
+        "videoConsultation" BOOLEAN,
+        documents JSONB,
+        "aiSummary" TEXT,
+        "aiCategory" VARCHAR(100),
+        "aiPriority" VARCHAR(50),
+        "aiDocuments" JSONB,
+        "aiDuration" VARCHAR(100),
+        "aiRiskLevel" VARCHAR(50),
+        "aiKeywords" JSONB,
+        "aiNextSteps" JSONB
+      );
+    `;
+  } catch (error) {
+    console.error('Failed to initialize database:', error);
   }
-  if (!fs.existsSync(DATA_FILE)) {
-    fs.writeFileSync(DATA_FILE, JSON.stringify([], null, 2));
+}
+
+export async function getAllConsultations(): Promise<ConsultationRequest[]> {
+  try {
+    const { rows } = await sql<ConsultationRequest>`SELECT * FROM consultations ORDER BY "createdAt" DESC`;
+    return rows;
+  } catch (error) {
+    console.error('Error fetching consultations:', error);
+    return [];
   }
 }
 
-export function getAllConsultations(): ConsultationRequest[] {
-  ensureDataDir();
-  const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-  return JSON.parse(raw) as ConsultationRequest[];
+export async function getConsultationById(id: string): Promise<ConsultationRequest | null> {
+  try {
+    const { rows } = await sql<ConsultationRequest>`SELECT * FROM consultations WHERE id = ${id} LIMIT 1`;
+    return rows[0] || null;
+  } catch (error) {
+    console.error('Error fetching consultation by id:', error);
+    return null;
+  }
 }
 
-export function getConsultationById(id: string): ConsultationRequest | null {
-  const all = getAllConsultations();
-  return all.find((c) => c.id === id) || null;
+export async function saveConsultation(c: ConsultationRequest): Promise<void> {
+  try {
+    await sql`
+      INSERT INTO consultations (
+        id, "createdAt", "updatedAt", status, "fullName", mobile, email, city, state, "preferredLanguage",
+        occupation, "practiceArea", "caseType", "caseSummary", "opponentName", court, "policeStation", "caseStage",
+        urgency, "preferredContactTime", "videoConsultation", documents, "aiSummary", "aiCategory", "aiPriority",
+        "aiDocuments", "aiDuration", "aiRiskLevel", "aiKeywords", "aiNextSteps"
+      ) VALUES (
+        ${c.id}, ${c.createdAt}, ${c.updatedAt}, ${c.status}, ${c.fullName}, ${c.mobile}, ${c.email}, ${c.city}, ${c.state}, ${c.preferredLanguage},
+        ${c.occupation}, ${c.practiceArea}, ${c.caseType}, ${c.caseSummary}, ${c.opponentName}, ${c.court}, ${c.policeStation}, ${c.caseStage},
+        ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation}, ${JSON.stringify(c.documents)}, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
+        ${JSON.stringify(c.aiDocuments)}, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords)}, ${JSON.stringify(c.aiNextSteps)}
+      )
+    `;
+  } catch (error) {
+    console.error('Error saving consultation:', error);
+    throw error;
+  }
 }
 
-export function saveConsultation(consultation: ConsultationRequest): void {
-  ensureDataDir();
-  const all = getAllConsultations();
-  all.unshift(consultation);
-  fs.writeFileSync(DATA_FILE, JSON.stringify(all, null, 2));
+export async function updateConsultation(id: string, updates: Partial<ConsultationRequest>): Promise<ConsultationRequest | null> {
+  try {
+    // Basic dynamic update builder for Postgres
+    const setClauses: string[] = [];
+    const values: any[] = [];
+    let idx = 1;
+
+    for (const [key, value] of Object.entries(updates)) {
+      if (key === 'id') continue;
+      const dbKey = key.includes('A') || key.includes('C') || key.includes('N') || key.includes('D') || key.includes('L') || key.includes('S') || key.includes('P') || key.includes('K') || key.includes('R') || key.includes('F') ? `"${key}"` : key;
+      
+      setClauses.push(`${dbKey} = $${idx}`);
+      values.push(typeof value === 'object' ? JSON.stringify(value) : value);
+      idx++;
+    }
+
+    setClauses.push(`"updatedAt" = $${idx}`);
+    values.push(new Date().toISOString());
+    idx++;
+
+    values.push(id); // For the WHERE clause
+
+    const query = `UPDATE consultations SET ${setClauses.join(', ')} WHERE id = $${idx - 1} RETURNING *`;
+    
+    // We have to use the underlying pool to run a dynamic query string safely, but @vercel/postgres `sql.query` allows this.
+    const { rows } = await sql.query(query, values);
+    return (rows[0] as ConsultationRequest) || null;
+  } catch (error) {
+    console.error('Error updating consultation:', error);
+    return null;
+  }
 }
 
-export function updateConsultation(id: string, updates: Partial<ConsultationRequest>): ConsultationRequest | null {
-  ensureDataDir();
-  const all = getAllConsultations();
-  const idx = all.findIndex((c) => c.id === id);
-  if (idx === -1) return null;
-  all[idx] = { ...all[idx], ...updates, updatedAt: new Date().toISOString() };
-  fs.writeFileSync(DATA_FILE, JSON.stringify(all, null, 2));
-  return all[idx];
-}
-
-export function deleteConsultation(id: string): boolean {
-  ensureDataDir();
-  const all = getAllConsultations();
-  const filtered = all.filter((c) => c.id !== id);
-  if (filtered.length === all.length) return false;
-  fs.writeFileSync(DATA_FILE, JSON.stringify(filtered, null, 2));
-  return true;
+export async function deleteConsultation(id: string): Promise<boolean> {
+  try {
+    const res = await sql`DELETE FROM consultations WHERE id = ${id}`;
+    return (res.rowCount ?? 0) > 0;
+  } catch (error) {
+    console.error('Error deleting consultation:', error);
+    return false;
+  }
 }

@@ -9,7 +9,9 @@ export default async function DashboardPage() {
   const isAuth = await isAdminAuthenticated();
   if (!isAuth) redirect('/admin');
 
-  const consultations = getAllConsultations();
+  const { initializeDatabase } = await import('@/lib/store');
+  await initializeDatabase();
+  const consultations = await getAllConsultations();
   const today = new Date().toDateString();
   const stats = {
     total: consultations.length,

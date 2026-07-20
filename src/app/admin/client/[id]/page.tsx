@@ -10,7 +10,9 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
   if (!isAuth) redirect('/admin');
 
   const { id } = await params;
-  const consultation = getConsultationById(id);
+  const { initializeDatabase } = await import('@/lib/store');
+  await initializeDatabase();
+  const consultation = await getConsultationById(id);
   if (!consultation) redirect('/admin/dashboard');
 
   return <ClientDetailView consultation={consultation} />;

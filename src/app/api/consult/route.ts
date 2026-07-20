@@ -60,7 +60,9 @@ export async function POST(request: Request) {
     consultation.aiKeywords = ai.keywords;
     consultation.aiNextSteps = ai.nextSteps;
 
-    saveConsultation(consultation);
+    const { initializeDatabase } = await import('@/lib/store');
+    await initializeDatabase();
+    await saveConsultation(consultation);
 
     return NextResponse.json({
       success: true,
@@ -87,7 +89,10 @@ export async function GET(request: Request) {
     const practiceArea = url.searchParams.get('practiceArea') || '';
     const state = url.searchParams.get('state') || '';
 
-    let consultations = getAllConsultations();
+    const { initializeDatabase } = await import('@/lib/store');
+    await initializeDatabase();
+    
+    let consultations = await getAllConsultations();
 
     if (search) {
       const q = search.toLowerCase();
@@ -110,13 +115,14 @@ export async function GET(request: Request) {
     }
 
     const today = new Date().toDateString();
+    const all = await getAllConsultations();
     const stats = {
-      total: getAllConsultations().length,
-      todayCount: getAllConsultations().filter(
+      total: all.length,
+      todayCount: all.filter(
         (c) => new Date(c.createdAt).toDateString() === today
       ).length,
-      pending: getAllConsultations().filter((c) => c.status === 'pending').length,
-      resolved: getAllConsultations().filter((c) => c.status === 'resolved').length,
+      pending: all.filter((c) => c.status === 'pending').length,
+      resolved: all.filter((c) => c.status === 'resolved').length,
     };
 
     return NextResponse.json({ consultations, stats });

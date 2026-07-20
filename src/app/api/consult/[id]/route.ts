@@ -11,7 +11,7 @@ export async function GET(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const { id } = await params;
-  const consultation = getConsultationById(id);
+  const consultation = await getConsultationById(id);
   if (!consultation) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
@@ -28,7 +28,7 @@ export async function PATCH(
   }
   const { id } = await params;
   const body = await request.json();
-  const updated = updateConsultation(id, body);
+  const updated = await updateConsultation(id, body);
   if (!updated) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
@@ -44,7 +44,7 @@ export async function DELETE(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const { id } = await params;
-  const success = deleteConsultation(id);
+  const success = await deleteConsultation(id);
   if (!success) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
