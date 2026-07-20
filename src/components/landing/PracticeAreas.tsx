@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 import styles from './PracticeAreas.module.css';
 
 const areas = [
@@ -17,14 +19,17 @@ const areas = [
 ];
 
 export default function PracticeAreas() {
+  const { t } = useLanguage();
+  const areas = t.practiceAreas.areas;
+
   return (
     <section className={styles.section} id="areas">
       <div className="container">
         <div className={styles.header}>
-          <div className={styles.badge}>My Practice Areas</div>
-          <h2 className={styles.heading}>Expert Legal Guidance<br />Tailored to Your Case</h2>
+          <div className={styles.badge}>{t.practiceAreas.badge}</div>
+          <h2 className={styles.heading}>{t.practiceAreas.heading}</h2>
           <p className={styles.sub}>
-            From family disputes to corporate law, I provide specialized legal expertise and dedicated support for your specific situation.
+            {t.practiceAreas.sub}
           </p>
         </div>
 

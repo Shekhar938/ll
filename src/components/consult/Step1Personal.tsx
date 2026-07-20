@@ -5,27 +5,29 @@ import NavButtons from './NavButtons';
 import fieldStyles from './FormField.module.css';
 import styles from './Steps.module.css';
 import { FormData } from './ConsultForm';
-import { STATES, LANGUAGES } from '@/lib/utils';
+import { STATES, LANGUAGES, BIHAR_DISTRICTS } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Props { data: FormData; update: (u: Partial<FormData>) => void; onNext: () => void; }
 
-function validate(data: FormData) {
+function validate(data: FormData, t: any) {
   const errs: Partial<Record<keyof FormData, string>> = {};
-  if (!data.fullName.trim()) errs.fullName = 'Full name is required';
-  if (!data.mobile.trim()) errs.mobile = 'Mobile number is required';
-  else if (!/^[6-9]\d{9}$/.test(data.mobile.replace(/\s/g, ''))) errs.mobile = 'Enter a valid 10-digit Indian mobile number';
-  if (!data.email.trim()) errs.email = 'Email is required';
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errs.email = 'Enter a valid email address';
-  if (!data.city.trim()) errs.city = 'City is required';
-  if (!data.state) errs.state = 'Please select a state';
+  if (!data.fullName.trim()) errs.fullName = t.consult.step1.errors.fullName;
+  if (!data.mobile.trim()) errs.mobile = t.consult.step1.errors.mobileReq;
+  else if (!/^[6-9]\d{9}$/.test(data.mobile.replace(/\s/g, ''))) errs.mobile = t.consult.step1.errors.mobileInv;
+  if (!data.email.trim()) errs.email = t.consult.step1.errors.emailReq;
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errs.email = t.consult.step1.errors.emailInv;
+  if (!data.city.trim()) errs.city = t.consult.step1.errors.cityReq;
+  if (!data.state) errs.state = t.consult.step1.errors.stateReq;
   return errs;
 }
 
 export default function Step1Personal({ data, update, onNext }: Props) {
+  const { t } = useLanguage();
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
   const handleNext = () => {
-    const errs = validate(data);
+    const errs = validate(data, t);
     if (Object.keys(errs).length) { setErrors(errs); return; }
     onNext();
   };
@@ -34,45 +36,47 @@ export default function Step1Personal({ data, update, onNext }: Props) {
 
   return (
     <div>
-      <StepHeader step={1} title="Personal Information" desc="Tell us about yourself so we can reach you with the right guidance." />
+      <StepHeader step={1} title={t.consult.step1.title} desc={t.consult.step1.desc} />
       <div className={styles.grid2}>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Full Name <span className={fieldStyles.required}>*</span></label>
-          <input className={`${fieldStyles.input} ${field('fullName')}`} placeholder="Rajesh Kumar" value={data.fullName} onChange={(e) => { update({ fullName: e.target.value }); setErrors((p) => ({ ...p, fullName: '' })); }} />
+          <label className={fieldStyles.label}>{t.consult.step1.fullName} <span className={fieldStyles.required}>*</span></label>
+          <input className={`${fieldStyles.input} ${field('fullName')}`} placeholder={t.consult.step1.fullNamePlaceholder} value={data.fullName} onChange={(e) => { update({ fullName: e.target.value }); setErrors((p) => ({ ...p, fullName: '' })); }} />
           {errors.fullName && <span className={fieldStyles.errorMsg}>{errors.fullName}</span>}
         </div>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Mobile Number <span className={fieldStyles.required}>*</span></label>
-          <input className={`${fieldStyles.input} ${field('mobile')}`} placeholder="9XXXXXXXXX" value={data.mobile} maxLength={10} onChange={(e) => { update({ mobile: e.target.value.replace(/\D/g, '') }); setErrors((p) => ({ ...p, mobile: '' })); }} />
+          <label className={fieldStyles.label}>{t.consult.step1.mobile} <span className={fieldStyles.required}>*</span></label>
+          <input className={`${fieldStyles.input} ${field('mobile')}`} placeholder={t.consult.step1.mobilePlaceholder} value={data.mobile} maxLength={10} onChange={(e) => { update({ mobile: e.target.value.replace(/\D/g, '') }); setErrors((p) => ({ ...p, mobile: '' })); }} />
           {errors.mobile && <span className={fieldStyles.errorMsg}>{errors.mobile}</span>}
         </div>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Email Address <span className={fieldStyles.required}>*</span></label>
-          <input className={`${fieldStyles.input} ${field('email')}`} type="email" placeholder="rajesh@example.com" value={data.email} onChange={(e) => { update({ email: e.target.value }); setErrors((p) => ({ ...p, email: '' })); }} />
+          <label className={fieldStyles.label}>{t.consult.step1.email} <span className={fieldStyles.required}>*</span></label>
+          <input className={`${fieldStyles.input} ${field('email')}`} type="email" placeholder={t.consult.step1.emailPlaceholder} value={data.email} onChange={(e) => { update({ email: e.target.value }); setErrors((p) => ({ ...p, email: '' })); }} />
           {errors.email && <span className={fieldStyles.errorMsg}>{errors.email}</span>}
         </div>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Occupation</label>
-          <input className={fieldStyles.input} placeholder="e.g. Business Owner, Teacher" value={data.occupation} onChange={(e) => update({ occupation: e.target.value })} />
+          <label className={fieldStyles.label}>{t.consult.step1.occupation}</label>
+          <input className={fieldStyles.input} placeholder={t.consult.step1.occupationPlaceholder} value={data.occupation} onChange={(e) => update({ occupation: e.target.value })} />
         </div>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>City <span className={fieldStyles.required}>*</span></label>
-          <input className={`${fieldStyles.input} ${field('city')}`} placeholder="e.g. Mumbai" value={data.city} onChange={(e) => { update({ city: e.target.value }); setErrors((p) => ({ ...p, city: '' })); }} />
+          <label className={fieldStyles.label}>{t.consult.step1.city} <span className={fieldStyles.required}>*</span></label>
+          <select className={`${fieldStyles.select} ${field('city')}`} value={data.city} onChange={(e) => { update({ city: e.target.value }); setErrors((p) => ({ ...p, city: '' })); }}>
+            <option value="">{t.consult.step1.citySelect}</option>
+            {BIHAR_DISTRICTS.map((d) => <option key={d} value={d}>{d}</option>)}
+          </select>
           {errors.city && <span className={fieldStyles.errorMsg}>{errors.city}</span>}
         </div>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>State <span className={fieldStyles.required}>*</span></label>
+          <label className={fieldStyles.label}>{t.consult.step1.state} <span className={fieldStyles.required}>*</span></label>
           <select className={`${fieldStyles.select} ${field('state')}`} value={data.state} onChange={(e) => { update({ state: e.target.value }); setErrors((p) => ({ ...p, state: '' })); }}>
-            <option value="">Select State</option>
-            {STATES.map((s) => <option key={s}>{s}</option>)}
+            {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
           {errors.state && <span className={fieldStyles.errorMsg}>{errors.state}</span>}
         </div>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Preferred Language</label>
+          <label className={fieldStyles.label}>{t.consult.step1.prefLang}</label>
           <select className={fieldStyles.select} value={data.preferredLanguage} onChange={(e) => update({ preferredLanguage: e.target.value })}>
-            <option value="">Select Language</option>
-            {LANGUAGES.map((l) => <option key={l}>{l}</option>)}
+            <option value="">{t.consult.step1.langSelect}</option>
+            {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
           </select>
         </div>
       </div>

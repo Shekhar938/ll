@@ -1,0 +1,37 @@
+.toggleGroup {
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  box-shadow: var(--shadow-outset-sm);
+  margin-left: 16px;
+}
+
+.divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+.toggleBtn {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+  background: transparent;
+  box-shadow: none;
+}
+
+.toggleBtn:hover {
+  color: var(--navy);
+}
+
+.toggleBtn.active {
+  color: var(--navy);
+  background: var(--bg);
+  box-shadow: var(--shadow-inset);
+}

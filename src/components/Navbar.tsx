@@ -1,11 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageToggle from './LanguageToggle';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -28,10 +31,11 @@ export default function Navbar() {
         </Link>
 
         <div className={styles.links}>
-          <a href="/#areas" className={styles.link}>Practice Areas</a>
-          <a href="/#why" className={styles.link}>Why Us</a>
-          <a href="/#faq" className={styles.link}>FAQ</a>
-          <Link href="/consult" className={styles.ctaBtn}>Request Consultation</Link>
+          <a href="/#areas" className={styles.link}>{t.nav.practiceAreas}</a>
+          <a href="/#why" className={styles.link}>{t.nav.profile}</a>
+          <a href="/#faq" className={styles.link}>{t.nav.faq}</a>
+          <Link href="/consult" className={styles.ctaBtn}>{t.nav.clientPortal}</Link>
+          <LanguageToggle />
         </div>
 
         <button
@@ -47,10 +51,13 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          <a href="/#areas" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Practice Areas</a>
-          <a href="/#why" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Why Us</a>
-          <a href="/#faq" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>FAQ</a>
-          <Link href="/consult" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>Request Consultation</Link>
+          <a href="/#areas" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.practiceAreas}</a>
+          <a href="/#why" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.profile}</a>
+          <a href="/#faq" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.faq}</a>
+          <Link href="/consult" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>{t.nav.clientPortal}</Link>
+          <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center' }}>
+            <LanguageToggle />
+          </div>
         </div>
       )}
     </nav>

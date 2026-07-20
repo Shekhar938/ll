@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 import styles from './FAQ.module.css';
 
 const faqs = [
@@ -39,6 +40,8 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const { t } = useLanguage();
+  const faqs = t.faq.faqs;
   const [open, setOpen] = useState<number | null>(null);
   const toggle = (i: number) => setOpen(open === i ? null : i);
 
@@ -47,9 +50,9 @@ export default function FAQ() {
       <section className={styles.section} id="faq">
         <div className="container">
           <div className={styles.header}>
-            <div className={styles.badge}>FAQ</div>
-            <h2 className={styles.heading}>Frequently Asked Questions</h2>
-            <p className={styles.sub}>Everything you need to know about our legal consultation platform.</p>
+            <div className={styles.badge}>{t.faq.badge}</div>
+            <h2 className={styles.heading}>{t.faq.heading}</h2>
+            <p className={styles.sub}>{t.faq.sub}</p>
           </div>
 
           <div className={styles.list}>
@@ -71,9 +74,9 @@ export default function FAQ() {
           </div>
 
           <div className={styles.cta}>
-            <h3 className={styles.ctaTitle}>Still have questions?</h3>
-            <p className={styles.ctaText}>Submit a consultation request and we will personally address your query.</p>
-            <Link href="/consult" className={styles.ctaBtn} id="faq-cta">Get Legal Help Now</Link>
+            <h3 className={styles.ctaTitle}>{t.faq.stillQuestions}</h3>
+            <p className={styles.ctaText}>{t.faq.submitQuery}</p>
+            <Link href="/consult" className={styles.ctaBtn} id="faq-cta">{t.faq.clientPortalBtn}</Link>
           </div>
         </div>
       </section>

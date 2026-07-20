@@ -1,4 +1,5 @@
 import styles from './StepHeader.module.css';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Props {
   step: number;
@@ -7,9 +8,11 @@ interface Props {
 }
 
 export default function StepHeader({ step, title, desc }: Props) {
+  const { lang } = useLanguage();
+  const stepText = lang === 'hi' ? `चरण ${step} / 5` : `Step ${step} of 5`;
   return (
     <div className={styles.header}>
-      <div className={styles.stepNum}>Step {step} of 5</div>
+      <div className={styles.stepNum}>{stepText}</div>
       <h2 className={styles.title}>{title}</h2>
       <p className={styles.desc}>{desc}</p>
     </div>

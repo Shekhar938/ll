@@ -1,25 +1,30 @@
+'use client';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 import styles from './WhyUs.module.css';
 
 const FEATURES = [
   {
-    title: 'Personalized Attention',
-    desc: 'You work directly with me. No middlemen, no passed-around files. Your case gets my undivided focus.',
-    icon: '🤝'
+    title: 'Bar Council Enrollment',
+    desc: 'Enrolled with the Bar Council of Delhi since 2015. Enrollment Number: D/4567/2015.',
+    icon: '⚖️'
   },
   {
-    title: 'Digital Efficiency',
-    desc: 'Upload documents, schedule consultations, and track progress securely online without unnecessary office visits.',
-    icon: '⚡'
+    title: 'Academic Qualifications',
+    desc: 'B.A. LL.B. (Hons.) from National Law University. LL.M. in Corporate Law.',
+    icon: '🎓'
   },
   {
-    title: 'Absolute Privacy',
-    desc: 'All communications and documents are end-to-end encrypted and treated with strict attorney-client privilege.',
-    icon: '🔒'
+    title: 'Client Portal',
+    desc: 'This digital portal allows clients to securely share case documents and request appointments online.',
+    icon: '💻'
   }
 ];
 
 export default function WhyUs() {
+  const { t } = useLanguage();
+  const FEATURES = t.whyUs.features;
+
   return (
     <section id="why" className={styles.section}>
       <div className={`container ${styles.inner}`}>
@@ -33,8 +38,8 @@ export default function WhyUs() {
           />
         </div>
         <div className={styles.contentCol}>
-          <h2 className={styles.title}>Why Choose Me</h2>
-          <p className={styles.subtitle}>Modern legal practice designed for your convenience.</p>
+          <h2 className={styles.title}>{t.whyUs.title}</h2>
+          <p className={styles.subtitle}>{t.whyUs.subtitle}</p>
           
           <div className={styles.features}>
             {FEATURES.map((f, i) => (

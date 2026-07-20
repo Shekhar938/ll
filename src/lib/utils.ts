@@ -41,17 +41,17 @@ export const CASE_TYPES: Record<string, string[]> = {
   'Employment Law': ['Discrimination', 'Harassment', 'Wrongful Dismissal', 'Benefits Dispute'],
 };
 
-export const STATES = [
-  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
-  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
-  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
-  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
-  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
-  'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
-  'Delhi', 'Jammu & Kashmir', 'Ladakh',
+export const STATES = ['Bihar'];
+
+export const BIHAR_DISTRICTS = [
+  'Araria', 'Arwal', 'Aurangabad', 'Banka', 'Begusarai', 'Bhagalpur', 'Bhojpur', 
+  'Buxar', 'Darbhanga', 'East Champaran', 'Gaya', 'Gopalganj', 'Jamui', 'Jehanabad', 
+  'Kaimur', 'Katihar', 'Khagaria', 'Kishanganj', 'Lakhisarai', 'Madhepura', 'Madhubani', 
+  'Munger', 'Muzaffarpur', 'Nalanda', 'Nawada', 'Patna', 'Purnia', 'Rohtas', 'Saharsa', 
+  'Samastipur', 'Saran', 'Sheikhpura', 'Sheohar', 'Sitamarhi', 'Siwan', 'Supaul', 
+  'Vaishali', 'West Champaran'
 ];
 
 export const LANGUAGES = [
-  'English', 'Hindi', 'Tamil', 'Telugu', 'Kannada', 'Malayalam',
-  'Marathi', 'Bengali', 'Gujarati', 'Punjabi', 'Odia', 'Urdu',
+  'English', 'Hindi'
 ];

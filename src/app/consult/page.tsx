@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
+import ConsultPageHeader from '@/components/consult/ConsultPageHeader';
 import ConsultForm from '@/components/consult/ConsultForm';
 import styles from './page.module.css';
 
@@ -17,8 +18,7 @@ export default function ConsultPage() {
         <div className={styles.header}>
           <div className="container">
             <div className={styles.headerInner}>
-              <h1 className={styles.heading}>Request a Consultation</h1>
-              <p className={styles.sub}>Fill in the details below and we will get back to you promptly.</p>
+              <ConsultPageHeader />
             </div>
           </div>
         </div>

@@ -4,46 +4,46 @@ import NavButtons from './NavButtons';
 import fieldStyles from './FormField.module.css';
 import styles from './Steps.module.css';
 import { FormData } from './ConsultForm';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const CONTACT_TIMES = [
-  { value: 'morning', label: '🌅 Morning', sub: '9 AM – 12 PM' },
-  { value: 'afternoon', label: '☀️ Afternoon', sub: '12 PM – 5 PM' },
-  { value: 'evening', label: '🌙 Evening', sub: '5 PM – 8 PM' },
-];
+export default function Step3Priority({ data, update, onNext, onBack }: { data: FormData; update: (u: Partial<FormData>) => void; onNext: () => void; onBack: () => void; }) {
+  const { t } = useLanguage();
+  const handleNext = () => onNext();
 
-const URGENCIES = [
-  { value: 'low', label: 'Low', icon: '🟢', desc: 'General advice needed' },
-  { value: 'medium', label: 'Medium', icon: '🟡', desc: 'Matter needs attention soon' },
-  { value: 'high', label: 'High', icon: '🔴', desc: 'Urgent legal action required' },
-];
+  const CONTACT_TIMES = [
+    { value: 'morning', label: `🌅 ${t.consult.step3.timeMorn}` },
+    { value: 'afternoon', label: `☀️ ${t.consult.step3.timeAft}` },
+    { value: 'evening', label: `🌙 ${t.consult.step3.timeEve}` },
+  ];
 
-interface Props { data: FormData; update: (u: Partial<FormData>) => void; onNext: () => void; onBack: () => void; }
+  const URGENCIES = [
+    { value: 'low', label: t.consult.step3.urgLow, icon: '🟢' },
+    { value: 'medium', label: t.consult.step3.urgMed, icon: '🟡' },
+    { value: 'high', label: t.consult.step3.urgHigh, icon: '🔴' },
+  ];
 
-export default function Step3Priority({ data, update, onNext, onBack }: Props) {
   return (
     <div>
-      <StepHeader step={3} title="Priority & Contact Preferences" desc="Help us understand the urgency and how best to reach you." />
+      <StepHeader step={3} title={t.consult.step3.title} desc={t.consult.step3.desc} />
       <div className={styles.stack}>
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Urgency Level</label>
+          <label className={fieldStyles.label}>{t.consult.step3.urgency}</label>
           <div className={styles.urgencyGroup}>
             {URGENCIES.map((u) => (
               <div key={u.value} className={`${styles.urgencyCard} ${data.urgency === u.value ? styles.urgencyCardActive : ''}`} onClick={() => update({ urgency: u.value as FormData['urgency'] })} role="button" tabIndex={0}>
                 <span className={styles.urgencyIcon}>{u.icon}</span>
                 <span className={styles.urgencyLabel}>{u.label}</span>
-                <span className={styles.urgencyDesc}>{u.desc}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className={fieldStyles.group}>
-          <label className={fieldStyles.label}>Preferred Contact Time</label>
+          <label className={fieldStyles.label}>{t.consult.step3.contactTime}</label>
           <div className={styles.optionGroup}>
-            {CONTACT_TIMES.map((t) => (
-              <div key={t.value} className={`${styles.option} ${data.preferredContactTime === t.value ? styles.optionActive : ''}`} onClick={() => update({ preferredContactTime: t.value })} role="button" tabIndex={0}>
-                <span>{t.label}</span>
-                <span style={{ opacity: 0.6, fontSize: 12 }}>{t.sub}</span>
+            {CONTACT_TIMES.map((timeOpt) => (
+              <div key={timeOpt.value} className={`${styles.option} ${data.preferredContactTime === timeOpt.value ? styles.optionActive : ''}`} onClick={() => update({ preferredContactTime: timeOpt.value })} role="button" tabIndex={0}>
+                <span>{timeOpt.label}</span>
               </div>
             ))}
           </div>
@@ -51,8 +51,8 @@ export default function Step3Priority({ data, update, onNext, onBack }: Props) {
 
         <div className={styles.toggleRow}>
           <div>
-            <div className={styles.toggleLabel}>Video Consultation</div>
-            <div className={styles.toggleSub}>Request a video call instead of a phone call</div>
+            <div className={styles.toggleLabel}>{t.consult.step3.video}</div>
+            <div className={styles.toggleSub}>{t.consult.step3.videoDesc}</div>
           </div>
           <label className={styles.toggle}>
             <input type="checkbox" checked={data.videoConsultation} onChange={(e) => update({ videoConsultation: e.target.checked })} />

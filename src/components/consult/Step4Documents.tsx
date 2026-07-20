@@ -1,10 +1,11 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import StepHeader from './StepHeader';
 import NavButtons from './NavButtons';
 import fieldStyles from './FormField.module.css';
 import styles from './Step4Documents.module.css';
 import { FormData } from './ConsultForm';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ACCEPTED = '.pdf,.docx,.doc,.jpg,.jpeg,.png,.webp';
 const MAX_SIZE = 20 * 1024 * 1024;
@@ -26,7 +27,9 @@ function formatSize(bytes: number) {
 interface Props { data: FormData; update: (u: Partial<FormData>) => void; onNext: () => void; onBack: () => void; }
 
 export default function Step4Documents({ data, update, onNext, onBack }: Props) {
-  const [dragging, setDragging] = useState(false);
+  const { t } = useLanguage();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [fileError, setFileError] = useState('');
 
   const addFiles = useCallback((incoming: FileList | null) => {
@@ -49,33 +52,38 @@ export default function Step4Documents({ data, update, onNext, onBack }: Props) 
     update({ documents: docs });
   };
 
-  const onDrop = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent) => { e.preventDefault(); setIsDragging(true); };
+  const handleDragLeave = () => setIsDragging(false);
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    setDragging(false);
+    setIsDragging(false);
     addFiles(e.dataTransfer.files);
   };
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => addFiles(e.target.files);
 
   return (
     <div>
-      <StepHeader step={4} title="Document Upload" desc="Upload relevant documents to help us better understand your case. All files are securely encrypted." />
+      <StepHeader step={4} title={t.consult.step4.title} desc={t.consult.step4.desc} />
 
-      <div
-        className={`${styles.dropZone} ${dragging ? styles.dragging : ''}`}
-        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={onDrop}
-        onClick={() => document.getElementById('fileInput')?.click()}
-      >
-        <input id="fileInput" type="file" multiple accept={ACCEPTED} className={styles.fileInput} onChange={(e) => addFiles(e.target.files)} />
-        <div className={styles.dropIcon}>📂</div>
-        <p className={styles.dropTitle}>Drag & drop files here</p>
-        <p className={styles.dropSub}>or click to browse</p>
-        <div className={styles.dropMeta}>
-          <span>PDF, DOCX, JPG, PNG</span>
-          <span>·</span>
-          <span>Max 20 MB per file</span>
-          <span>·</span>
-          <span>Up to {MAX_FILES} files</span>
+      <div className={styles.stack}>
+        <div 
+          className={`${styles.uploadZone} ${isDragging ? styles.dragActive : ''}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input type="file" ref={fileInputRef} multiple className={styles.hiddenInput} onChange={handleFileSelect} accept={ACCEPTED} />
+          <div className={styles.uploadIcon}>📂</div>
+          <p className={styles.dropTitle}>{t.consult.step4.uploadBtn}</p>
+          <p className={styles.dropSub}>{t.consult.step4.uploadSub}</p>
+          <div className={styles.dropMeta}>
+            <span>PDF, DOCX, JPG, PNG</span>
+            <span>·</span>
+            <span>Max 20 MB per file</span>
+            <span>·</span>
+            <span>Up to {MAX_FILES} files</span>
+          </div>
         </div>
       </div>
 

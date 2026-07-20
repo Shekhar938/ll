@@ -6,6 +6,7 @@ import Step2Legal from './Step2Legal';
 import Step3Priority from './Step3Priority';
 import Step4Documents from './Step4Documents';
 import Step5Review from './Step5Review';
+import { useLanguage } from '@/contexts/LanguageContext';
 import styles from './ConsultForm.module.css';
 
 export type FormData = {
@@ -18,16 +19,10 @@ export type FormData = {
   documents: File[];
 };
 
-const STEPS = [
-  { num: 1, label: 'Personal Info' },
-  { num: 2, label: 'Legal Matter' },
-  { num: 3, label: 'Priority' },
-  { num: 4, label: 'Documents' },
-  { num: 5, label: 'Review' },
-];
+
 
 const INITIAL: FormData = {
-  fullName: '', mobile: '', email: '', city: '', state: '', preferredLanguage: '', occupation: '',
+  fullName: '', mobile: '', email: '', city: '', state: 'Bihar', preferredLanguage: '', occupation: '',
   practiceArea: '', caseType: '', caseSummary: '', opponentName: '', court: '', policeStation: '', caseStage: '',
   urgency: 'medium', preferredContactTime: 'morning', videoConsultation: false, documents: [],
 };
@@ -36,6 +31,15 @@ export default function ConsultForm() {
   const router = useRouter();
   const params = useSearchParams();
   const areaParam = params.get('area') || '';
+  const { t } = useLanguage();
+
+  const STEPS = [
+    { num: 1, label: t.consult.steps[1] },
+    { num: 2, label: t.consult.steps[2] },
+    { num: 3, label: t.consult.steps[3] },
+    { num: 4, label: t.consult.steps[4] },
+    { num: 5, label: t.consult.steps[5] },
+  ];
 
   const [step, setStep] = useState(1);
   const [data, setData] = useState<FormData>({ ...INITIAL, practiceArea: areaParam });
