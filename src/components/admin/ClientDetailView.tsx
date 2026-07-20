@@ -52,7 +52,7 @@ export default function ClientDetailView({ consultation: initial }: Props) {
               <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" stroke="#C9A227" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
-            <span>NyayaConnect</span>
+            <span>Nyaya Aastha</span>
           </div>
         </div>
 

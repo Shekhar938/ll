@@ -1,22 +1,26 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import DisclaimerModal from '@/components/DisclaimerModal';
 
 export const metadata: Metadata = {
-  title: 'NyayaConnect – Legal Guidance You Can Trust',
+  title: 'Nyaya Aastha – Legal Guidance You Can Trust',
   description:
-    'Describe your legal issue securely and receive professional consultation from experienced Indian advocates. Confidential, transparent, and fast response.',
-  keywords: 'legal consultation India, advocate, lawyer, legal advice, NyayaConnect',
-  authors: [{ name: 'NyayaConnect' }],
+    'Connect with Advocate Aastha. Secure, private, and transparent legal guidance at your fingertips.',
+  keywords: 'legal consultation India, advocate, lawyer, legal advice, Aastha',
+  authors: [{ name: 'Advocate Aastha' }],
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'NyayaConnect',
+    title: 'Nyaya Aastha',
   },
   openGraph: {
-    title: 'NyayaConnect – Legal Guidance You Can Trust',
-    description: 'Describe your legal issue securely and receive professional consultation.',
+    title: 'Nyaya Aastha – Legal Guidance You Can Trust',
+    description: 'Secure, private, and transparent legal guidance by Advocate Aastha.',
     type: 'website',
+    locale: 'en_IN',
+    url: 'https://nyayaaastha.in',
+    siteName: 'Nyaya Aastha – Legal Guidance You Can Trust',
   },
 };
 
@@ -33,7 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body>{children}</body>
+      <body>
+        <DisclaimerModal />
+        {children}
+      </body>
     </html>
   );
 }

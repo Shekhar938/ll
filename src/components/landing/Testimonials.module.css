@@ -10,7 +10,7 @@
 
 .badge {
   display: inline-block;
-  background: var(--gold-pale);
+  background: var(--bg);
   color: #a07e18;
   font-size: 12px;
   font-weight: 700;
@@ -18,7 +18,7 @@
   text-transform: uppercase;
   padding: 6px 16px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(201,162,39,0.2);
+  box-shadow: var(--shadow-outset);
   margin-bottom: 20px;
 }
 
@@ -46,11 +46,10 @@
 }
 
 .mainCard {
-  background: white;
+  background: var(--bg);
   border-radius: var(--radius-xl);
   padding: 48px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border);
+  box-shadow: var(--shadow-outset);
   animation: fadeIn 0.3s ease;
   grid-column: 1;
   grid-row: 1;
@@ -82,8 +81,9 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--navy);
-  color: white;
+  background: var(--bg);
+  color: var(--navy);
+  box-shadow: var(--shadow-outset);
   font-size: 16px;
   font-weight: 700;
   display: flex;
@@ -107,12 +107,12 @@
 .areaBadge {
   margin-left: auto;
   padding: 4px 12px;
-  background: var(--gold-pale);
+  background: var(--bg);
   color: #a07e18;
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid rgba(201,162,39,0.2);
+  box-shadow: var(--shadow-outset);
 }
 
 .controls {
@@ -129,22 +129,18 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--navy);
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-outset);
 }
 
 .navBtn:hover {
-  background: var(--navy);
-  color: white;
-  border-color: var(--navy);
-  transform: scale(1.05);
+  box-shadow: var(--shadow-inset);
 }
 
 .dots {
@@ -183,8 +179,8 @@
   gap: 12px;
   padding: 14px 16px;
   border-radius: var(--radius-md);
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--bg);
+  box-shadow: var(--shadow-outset);
   cursor: pointer;
   text-align: left;
   transition: var(--transition);
@@ -192,32 +188,26 @@
 }
 
 .thumb:hover {
-  border-color: var(--navy);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-inset);
 }
 
 .thumbActive {
-  border-color: var(--navy);
-  background: var(--navy);
+  box-shadow: var(--shadow-inset);
 }
 
 .thumbAvatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--bg-alt);
+  background: var(--bg);
   color: var(--navy);
+  box-shadow: var(--shadow-outset);
   font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-}
-
-.thumbActive .thumbAvatar {
-  background: rgba(255,255,255,0.2);
-  color: white;
 }
 
 .thumbInfo {
@@ -236,17 +226,9 @@
   text-overflow: ellipsis;
 }
 
-.thumbActive .thumbName {
-  color: white;
-}
-
 .thumbArea {
   font-size: 11px;
   color: var(--text-muted);
-}
-
-.thumbActive .thumbArea {
-  color: rgba(255,255,255,0.6);
 }
 
 @media (max-width: 900px) {

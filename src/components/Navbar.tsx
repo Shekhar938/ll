@@ -24,7 +24,7 @@ export default function Navbar() {
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
-          <span className={styles.brandText}>NyayaConnect</span>
+          <span className={styles.brandText}>Nyaya Aastha</span>
         </Link>
 
         <div className={styles.links}>

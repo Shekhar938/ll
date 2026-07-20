@@ -9,10 +9,10 @@
 }
 
 .scrolled {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-outset);
   padding: 12px 0;
 }
 
@@ -33,7 +33,8 @@
 .logo {
   width: 40px;
   height: 40px;
-  background: var(--navy);
+  background: var(--bg);
+  box-shadow: var(--shadow-outset);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -66,13 +67,14 @@
 
 .link:hover {
   color: var(--navy);
-  background: var(--bg-alt);
+  background: var(--bg);
+  box-shadow: var(--shadow-inset);
 }
 
 .ctaBtn {
   padding: 10px 20px;
-  background: var(--navy);
-  color: white;
+  background: var(--bg);
+  color: var(--navy);
   border-radius: var(--radius-full);
   font-size: 15px;
   font-weight: 600;
@@ -80,12 +82,12 @@
   transition: var(--transition);
   margin-left: 8px;
   white-space: nowrap;
+  box-shadow: var(--shadow-outset);
 }
 
 .ctaBtn:hover {
-  background: var(--gold);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-gold);
+  background: var(--bg);
+  box-shadow: var(--shadow-inset);
 }
 
 .hamburger {
@@ -97,7 +99,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background: transparent;
+  background: var(--bg);
+  box-shadow: var(--shadow-outset);
   border: none;
   cursor: pointer;
 }
@@ -112,12 +115,12 @@
 }
 
 .mobileMenu {
-  background: white;
+  background: var(--bg);
   padding: 16px 24px 24px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-top: 1px solid var(--border);
+  box-shadow: var(--shadow-outset);
   animation: fadeInUp 0.2s ease;
 }
 
@@ -134,23 +137,26 @@
 .mobileLink:hover {
   background: var(--bg);
   color: var(--navy);
+  box-shadow: var(--shadow-inset);
 }
 
 .mobileCta {
   margin-top: 8px;
   padding: 14px 20px;
-  background: var(--navy);
-  color: white;
+  background: var(--bg);
+  color: var(--navy);
   border-radius: var(--radius-lg);
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   text-align: center;
   transition: var(--transition);
+  box-shadow: var(--shadow-outset);
 }
 
 .mobileCta:hover {
-  background: var(--gold);
+  background: var(--bg);
+  box-shadow: var(--shadow-inset);
 }
 
 @media (max-width: 768px) {

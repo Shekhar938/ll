@@ -12,21 +12,21 @@
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background: white;
+  background: var(--bg);
   color: var(--text-secondary);
-  border: 1.5px solid var(--border);
+  border: none;
   border-radius: var(--radius-lg);
   font-size: 15px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   transition: var(--transition);
+  box-shadow: var(--shadow-outset);
 }
 
 .backBtn:hover {
-  border-color: var(--navy);
   color: var(--navy);
-  background: var(--bg);
+  box-shadow: var(--shadow-inset);
 }
 
 .nextBtn {
@@ -44,12 +44,13 @@
   cursor: pointer;
   transition: var(--transition);
   margin-left: auto;
+  box-shadow: var(--shadow-outset);
 }
 
 .nextBtn:hover:not(:disabled) {
-  background: var(--navy-light);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: var(--navy);
+  transform: translateY(1px);
+  box-shadow: var(--shadow-inset);
 }
 
 .nextBtn:disabled {
@@ -72,12 +73,13 @@
   cursor: pointer;
   transition: var(--transition);
   margin-left: auto;
+  box-shadow: var(--shadow-outset);
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--gold-light);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-gold);
+  background: var(--gold);
+  transform: translateY(1px);
+  box-shadow: var(--shadow-inset);
 }
 
 .submitBtn:disabled {

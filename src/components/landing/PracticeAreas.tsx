@@ -21,10 +21,10 @@ export default function PracticeAreas() {
     <section className={styles.section} id="areas">
       <div className="container">
         <div className={styles.header}>
-          <div className={styles.badge}>Practice Areas</div>
-          <h2 className={styles.heading}>Expert Legal Guidance<br />Across All Practice Areas</h2>
+          <div className={styles.badge}>My Practice Areas</div>
+          <h2 className={styles.heading}>Expert Legal Guidance<br />Tailored to Your Case</h2>
           <p className={styles.sub}>
-            From criminal defense to corporate law, our platform connects you with specialized legal expertise for your specific situation.
+            From family disputes to corporate law, I provide specialized legal expertise and dedicated support for your specific situation.
           </p>
         </div>
 

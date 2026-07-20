@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
           </svg>
         </div>
         <h1 className={styles.heading}>Admin Portal</h1>
-        <p className={styles.sub}>NyayaConnect Advocate Dashboard</p>
+        <p className={styles.sub}>Advocate Aastha's Dashboard</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.field}>
