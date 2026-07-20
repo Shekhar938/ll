@@ -141,6 +141,16 @@ export const translations = {
         submitError: 'Something went wrong. Please try again.',
         consent: 'By submitting, you agree to our Privacy Policy and Terms of Service. Your information is encrypted and confidential.'
       }
+    },
+    languages: { 'English': 'English', 'Hindi': 'Hindi' },
+    states: { 'Bihar': 'Bihar' },
+    districts: {
+      'Araria': 'Araria', 'Arwal': 'Arwal', 'Aurangabad': 'Aurangabad', 'Banka': 'Banka', 'Begusarai': 'Begusarai', 'Bhagalpur': 'Bhagalpur', 'Bhojpur': 'Bhojpur', 
+      'Buxar': 'Buxar', 'Darbhanga': 'Darbhanga', 'East Champaran': 'East Champaran', 'Gaya': 'Gaya', 'Gopalganj': 'Gopalganj', 'Jamui': 'Jamui', 'Jehanabad': 'Jehanabad', 
+      'Kaimur': 'Kaimur', 'Katihar': 'Katihar', 'Khagaria': 'Khagaria', 'Kishanganj': 'Kishanganj', 'Lakhisarai': 'Lakhisarai', 'Madhepura': 'Madhepura', 'Madhubani': 'Madhubani', 
+      'Munger': 'Munger', 'Muzaffarpur': 'Muzaffarpur', 'Nalanda': 'Nalanda', 'Nawada': 'Nawada', 'Patna': 'Patna', 'Purnia': 'Purnia', 'Rohtas': 'Rohtas', 'Saharsa': 'Saharsa', 
+      'Samastipur': 'Samastipur', 'Saran': 'Saran', 'Sheikhpura': 'Sheikhpura', 'Sheohar': 'Sheohar', 'Sitamarhi': 'Sitamarhi', 'Siwan': 'Siwan', 'Supaul': 'Supaul', 
+      'Vaishali': 'Vaishali', 'West Champaran': 'West Champaran'
     }
   },
   hi: {
@@ -285,6 +295,16 @@ export const translations = {
         submitError: 'कुछ गलत हो गया। कृपया पुन: प्रयास करें।',
         consent: 'सबमिट करके, आप हमारी गोपनीयता नीति और सेवा की शर्तों से सहमत होते हैं। आपकी जानकारी एन्क्रिप्टेड और गोपनीय है।'
       }
+    },
+    languages: { 'English': 'अंग्रेज़ी', 'Hindi': 'हिंदी' },
+    states: { 'Bihar': 'बिहार' },
+    districts: {
+      'Araria': 'अररिया', 'Arwal': 'अरवल', 'Aurangabad': 'औरंगाबाद', 'Banka': 'बांका', 'Begusarai': 'बेगूसराय', 'Bhagalpur': 'भागलपुर', 'Bhojpur': 'भोजपुर', 
+      'Buxar': 'बक्सर', 'Darbhanga': 'दरभंगा', 'East Champaran': 'पूर्वी चंपारण', 'Gaya': 'गया', 'Gopalganj': 'गोपालगंज', 'Jamui': 'जमुई', 'Jehanabad': 'जहानाबाद', 
+      'Kaimur': 'कैमूर', 'Katihar': 'कटिहार', 'Khagaria': 'खगड़िया', 'Kishanganj': 'किशनगंज', 'Lakhisarai': 'लखीसराय', 'Madhepura': 'मधेपुरा', 'Madhubani': 'मधुबनी', 
+      'Munger': 'मुंगेर', 'Muzaffarpur': 'मुजफ्फरपुर', 'Nalanda': 'नालंदा', 'Nawada': 'नवादा', 'Patna': 'पटना', 'Purnia': 'पूर्णिया', 'Rohtas': 'रोहतास', 'Saharsa': 'सहरसा', 
+      'Samastipur': 'समस्तीपुर', 'Saran': 'सारण', 'Sheikhpura': 'शेखपुरा', 'Sheohar': 'शिवहर', 'Sitamarhi': 'सीतामढ़ी', 'Siwan': 'सीवान', 'Supaul': 'सुपौल', 
+      'Vaishali': 'वैशाली', 'West Champaran': 'पश्चिमी चंपारण'
     }
   }
 } as const;

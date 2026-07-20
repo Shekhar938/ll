@@ -61,14 +61,14 @@ export default function Step1Personal({ data, update, onNext }: Props) {
           <label className={fieldStyles.label}>{t.consult.step1.city} <span className={fieldStyles.required}>*</span></label>
           <select className={`${fieldStyles.select} ${field('city')}`} value={data.city} onChange={(e) => { update({ city: e.target.value }); setErrors((p) => ({ ...p, city: '' })); }}>
             <option value="">{t.consult.step1.citySelect}</option>
-            {BIHAR_DISTRICTS.map((d) => <option key={d} value={d}>{d}</option>)}
+            {BIHAR_DISTRICTS.map((d) => <option key={d} value={d}>{(t.districts as Record<string, string>)[d] || d}</option>)}
           </select>
           {errors.city && <span className={fieldStyles.errorMsg}>{errors.city}</span>}
         </div>
         <div className={fieldStyles.group}>
           <label className={fieldStyles.label}>{t.consult.step1.state} <span className={fieldStyles.required}>*</span></label>
           <select className={`${fieldStyles.select} ${field('state')}`} value={data.state} onChange={(e) => { update({ state: e.target.value }); setErrors((p) => ({ ...p, state: '' })); }}>
-            {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
+            {STATES.map((s) => <option key={s} value={s}>{(t.states as Record<string, string>)[s] || s}</option>)}
           </select>
           {errors.state && <span className={fieldStyles.errorMsg}>{errors.state}</span>}
         </div>
@@ -76,7 +76,7 @@ export default function Step1Personal({ data, update, onNext }: Props) {
           <label className={fieldStyles.label}>{t.consult.step1.prefLang}</label>
           <select className={fieldStyles.select} value={data.preferredLanguage} onChange={(e) => update({ preferredLanguage: e.target.value })}>
             <option value="">{t.consult.step1.langSelect}</option>
-            {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
+            {LANGUAGES.map((l) => <option key={l} value={l}>{(t.languages as Record<string, string>)[l] || l}</option>)}
           </select>
         </div>
       </div>
