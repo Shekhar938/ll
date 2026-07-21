@@ -1,12 +1,13 @@
-import { sql } from '@vercel/postgres';
+import { createPool } from '@vercel/postgres';
 import { ConsultationRequest } from './types';
+
+// The Vercel Neon integration added a 'DATA_' prefix to the environment variables.
+const connectionString = process.env.DATA_POSTGRES_URL || process.env.POSTGRES_URL;
+const pool = createPool({ connectionString });
+const sql = pool.sql;
 
 // Helper to initialize the table if it doesn't exist
 export async function initializeDatabase() {
-  if (!process.env.POSTGRES_URL) {
-    console.warn('Skipping database initialization: POSTGRES_URL is missing.');
-    return;
-  }
   try {
     await sql`
       CREATE TABLE IF NOT EXISTS consultations (
@@ -48,7 +49,6 @@ export async function initializeDatabase() {
 }
 
 export async function getAllConsultations(): Promise<ConsultationRequest[]> {
-  if (!process.env.POSTGRES_URL) return [];
   try {
     const { rows } = await sql<ConsultationRequest>`SELECT * FROM consultations ORDER BY "createdAt" DESC`;
     return rows;
@@ -59,7 +59,6 @@ export async function getAllConsultations(): Promise<ConsultationRequest[]> {
 }
 
 export async function getConsultationById(id: string): Promise<ConsultationRequest | null> {
-  if (!process.env.POSTGRES_URL) return null;
   try {
     const { rows } = await sql<ConsultationRequest>`SELECT * FROM consultations WHERE id = ${id} LIMIT 1`;
     return rows[0] || null;
@@ -70,10 +69,6 @@ export async function getConsultationById(id: string): Promise<ConsultationReque
 }
 
 export async function saveConsultation(c: ConsultationRequest): Promise<void> {
-  if (!process.env.POSTGRES_URL) {
-    console.warn('Skipping saveConsultation: POSTGRES_URL is missing.');
-    return;
-  }
   try {
     await sql`
       INSERT INTO consultations (
@@ -95,7 +90,6 @@ export async function saveConsultation(c: ConsultationRequest): Promise<void> {
 }
 
 export async function updateConsultation(id: string, updates: Partial<ConsultationRequest>): Promise<ConsultationRequest | null> {
-  if (!process.env.POSTGRES_URL) return null;
   try {
     // Basic dynamic update builder for Postgres
     const setClauses: string[] = [];
@@ -129,7 +123,6 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
 }
 
 export async function deleteConsultation(id: string): Promise<boolean> {
-  if (!process.env.POSTGRES_URL) return false;
   try {
     const res = await sql`DELETE FROM consultations WHERE id = ${id}`;
     return (res.rowCount ?? 0) > 0;
