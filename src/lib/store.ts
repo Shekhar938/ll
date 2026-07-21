@@ -74,8 +74,8 @@ export async function saveConsultation(c: ConsultationRequest): Promise<void> {
       ) VALUES (
         ${c.id}, ${c.createdAt}, ${c.updatedAt}, ${c.status}, ${c.fullName}, ${c.mobile}, ${c.email}, ${c.city}, ${c.state}, ${c.preferredLanguage},
         ${c.occupation}, ${c.practiceArea}, ${c.caseType}, ${c.caseSummary}, ${c.opponentName}, ${c.court}, ${c.policeStation}, ${c.caseStage},
-        ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation}, ${JSON.stringify(c.documents)}, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
-        ${JSON.stringify(c.aiDocuments)}, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords)}, ${JSON.stringify(c.aiNextSteps)}
+        ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation ? true : false}::boolean, ${JSON.stringify(c.documents || [])}::jsonb, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
+        ${JSON.stringify(c.aiDocuments || [])}::jsonb, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords || [])}::jsonb, ${JSON.stringify(c.aiNextSteps || [])}::jsonb
       )
     `;
   } catch (error) {
