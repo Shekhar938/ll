@@ -69,9 +69,9 @@ export async function POST(request: Request) {
       id: consultation.id,
       message: 'Consultation request submitted successfully',
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error saving consultation:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
