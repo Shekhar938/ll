@@ -3,8 +3,20 @@ import { ConsultationRequest } from './types';
 
 // The Vercel Neon integration added a 'DATA_' prefix to the environment variables.
 const connectionString = process.env.DATA_POSTGRES_URL || process.env.POSTGRES_URL;
-const pool = createPool({ connectionString });
-const sql = pool.sql;
+
+let pool: any;
+let sql: any;
+
+if (connectionString) {
+  pool = createPool({ connectionString });
+  sql = pool.sql;
+} else {
+  // During Vercel's build phase, environment variables are often hidden.
+  // We mock the database client so Next.js static generation doesn't crash.
+  const mockDb = async () => ({ rows: [], rowCount: 0 });
+  pool = { query: mockDb };
+  sql = mockDb;
+}
 
 // Helper to initialize the table if it doesn't exist
 export async function initializeDatabase() {
