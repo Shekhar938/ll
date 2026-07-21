@@ -113,8 +113,8 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
 
     const query = `UPDATE consultations SET ${setClauses.join(', ')} WHERE id = $${idx - 1} RETURNING *`;
     
-    // We have to use the underlying pool to run a dynamic query string safely, but @vercel/postgres `sql.query` allows this.
-    const { rows } = await sql.query(query, values);
+    // We have to use the underlying pool to run a dynamic query string safely.
+    const { rows } = await pool.query(query, values);
     return (rows[0] as ConsultationRequest) || null;
   } catch (error) {
     console.error('Error updating consultation:', error);
