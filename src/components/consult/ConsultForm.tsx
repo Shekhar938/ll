@@ -50,9 +50,17 @@ export default function ConsultForm() {
     setData((prev) => ({ ...prev, ...updates }));
   }, []);
 
-  const next = () => { setStep((s) => Math.min(s + 1, 5)); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-  const back = () => { setStep((s) => Math.max(s - 1, 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-  const goTo = (s: number) => { if (s < step) { setStep(s); window.scrollTo({ top: 0, behavior: 'smooth' }); } };
+  const scrollToForm = () => {
+    const el = document.getElementById('consult-form');
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 100; // 100px offset for fixed navbar
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const next = () => { setStep((s) => Math.min(s + 1, 5)); scrollToForm(); };
+  const back = () => { setStep((s) => Math.max(s - 1, 1)); scrollToForm(); };
+  const goTo = (s: number) => { if (s < step) { setStep(s); scrollToForm(); } };
 
   const submit = async () => {
     setSubmitting(true);
@@ -72,7 +80,7 @@ export default function ConsultForm() {
   const progress = ((step - 1) / (STEPS.length - 1)) * 100;
 
   return (
-    <div className={styles.wrapper}>
+    <div id="consult-form" className={styles.wrapper}>
       {/* Stepper */}
       <div className={styles.stepper}>
         <div className={styles.progressBar}>

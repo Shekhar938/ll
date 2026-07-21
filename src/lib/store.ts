@@ -48,8 +48,15 @@ export async function initializeDatabase() {
         "aiDuration" VARCHAR(100),
         "aiRiskLevel" VARCHAR(50),
         "aiKeywords" JSONB,
-        "aiNextSteps" JSONB
+        "aiNextSteps" JSONB,
+        "internalNotes" TEXT
       );
+    `;
+
+    // Ensure the internalNotes column exists for older deployments
+    await pool.sql`
+      ALTER TABLE consultations 
+      ADD COLUMN IF NOT EXISTS "internalNotes" TEXT;
     `;
   } catch (error) {
     console.error('Failed to initialize database:', error);
@@ -121,10 +128,11 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
 
     for (const [key, value] of Object.entries(updates)) {
       if (key === 'id') continue;
-      const dbKey = key.includes('A') || key.includes('C') || key.includes('N') || key.includes('D') || key.includes('L') || key.includes('S') || key.includes('P') || key.includes('K') || key.includes('R') || key.includes('F') ? `"${key}"` : key;
+      // Quote column names that have uppercase letters (camelCase)
+      const dbKey = key.match(/[A-Z]/) ? `"${key}"` : key;
       
       setClauses.push(`${dbKey} = $${idx}`);
-      values.push(typeof value === 'object' ? JSON.stringify(value) : value);
+      values.push(typeof value === 'object' && value !== null ? JSON.stringify(value) : value);
       idx++;
     }
 
@@ -132,9 +140,9 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
     values.push(new Date().toISOString());
     idx++;
 
-    values.push(id); // For the WHERE clause
+    values.push(id); // For the WHERE clause (which is now at position $idx)
 
-    const query = `UPDATE consultations SET ${setClauses.join(', ')} WHERE id = $${idx - 1} RETURNING *`;
+    const query = `UPDATE consultations SET ${setClauses.join(', ')} WHERE id = $${idx} RETURNING *`;
     
     // We have to use the underlying pool to run a dynamic query string safely.
     const { rows } = await pool.query(query, values);
