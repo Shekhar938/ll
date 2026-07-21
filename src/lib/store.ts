@@ -1,27 +1,23 @@
 import { createPool } from '@vercel/postgres';
 import { ConsultationRequest } from './types';
 
-// The Vercel Neon integration added a 'DATA_' prefix to the environment variables.
-const connectionString = process.env.DATA_POSTGRES_URL || process.env.POSTGRES_URL;
-
-let pool: any;
-let sql: any;
-
-if (connectionString) {
-  pool = createPool({ connectionString });
-  sql = pool.sql;
-} else {
-  // During Vercel's build phase, environment variables are often hidden.
-  // We mock the database client so Next.js static generation doesn't crash.
-  const mockDb = async () => ({ rows: [], rowCount: 0 });
-  pool = { query: mockDb };
-  sql = mockDb;
+// Lazily initialize the pool to avoid build-time crashes and support DATA_POSTGRES_URL
+function getPool() {
+  const connectionString = process.env.DATA_POSTGRES_URL || process.env.POSTGRES_URL;
+  if (!connectionString) return null;
+  return createPool({ connectionString });
 }
 
 // Helper to initialize the table if it doesn't exist
 export async function initializeDatabase() {
+  const pool = getPool();
+  if (!pool) {
+    console.warn('Skipping database initialization: Connection string is missing.');
+    return;
+  }
+  
   try {
-    await sql`
+    await pool.sql`
       CREATE TABLE IF NOT EXISTS consultations (
         id VARCHAR(255) PRIMARY KEY,
         "createdAt" TIMESTAMP NOT NULL,
@@ -61,8 +57,11 @@ export async function initializeDatabase() {
 }
 
 export async function getAllConsultations(): Promise<ConsultationRequest[]> {
+  const pool = getPool();
+  if (!pool) return [];
+  
   try {
-    const { rows } = await sql<ConsultationRequest>`SELECT * FROM consultations ORDER BY "createdAt" DESC`;
+    const { rows } = await pool.sql<ConsultationRequest>`SELECT * FROM consultations ORDER BY "createdAt" DESC`;
     return rows;
   } catch (error) {
     console.error('Error fetching consultations:', error);
@@ -71,8 +70,11 @@ export async function getAllConsultations(): Promise<ConsultationRequest[]> {
 }
 
 export async function getConsultationById(id: string): Promise<ConsultationRequest | null> {
+  const pool = getPool();
+  if (!pool) return null;
+  
   try {
-    const { rows } = await sql<ConsultationRequest>`SELECT * FROM consultations WHERE id = ${id} LIMIT 1`;
+    const { rows } = await pool.sql<ConsultationRequest>`SELECT * FROM consultations WHERE id = ${id} LIMIT 1`;
     return rows[0] || null;
   } catch (error) {
     console.error('Error fetching consultation by id:', error);
@@ -81,8 +83,14 @@ export async function getConsultationById(id: string): Promise<ConsultationReque
 }
 
 export async function saveConsultation(c: ConsultationRequest): Promise<void> {
+  const pool = getPool();
+  if (!pool) {
+    console.warn('Skipping saveConsultation: Connection string is missing.');
+    return;
+  }
+
   try {
-    await sql`
+    await pool.sql`
       INSERT INTO consultations (
         id, "createdAt", "updatedAt", status, "fullName", mobile, email, city, state, "preferredLanguage",
         occupation, "practiceArea", "caseType", "caseSummary", "opponentName", court, "policeStation", "caseStage",
@@ -102,6 +110,9 @@ export async function saveConsultation(c: ConsultationRequest): Promise<void> {
 }
 
 export async function updateConsultation(id: string, updates: Partial<ConsultationRequest>): Promise<ConsultationRequest | null> {
+  const pool = getPool();
+  if (!pool) return null;
+
   try {
     // Basic dynamic update builder for Postgres
     const setClauses: string[] = [];
@@ -135,8 +146,11 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
 }
 
 export async function deleteConsultation(id: string): Promise<boolean> {
+  const pool = getPool();
+  if (!pool) return false;
+
   try {
-    const res = await sql`DELETE FROM consultations WHERE id = ${id}`;
+    const res = await pool.sql`DELETE FROM consultations WHERE id = ${id}`;
     return (res.rowCount ?? 0) > 0;
   } catch (error) {
     console.error('Error deleting consultation:', error);
