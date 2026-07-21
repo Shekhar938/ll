@@ -4,6 +4,8 @@ import { generateId, sanitizeInput } from '@/lib/server-utils';
 import { generateAISummary } from '@/lib/ai';
 import { ConsultationRequest } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
