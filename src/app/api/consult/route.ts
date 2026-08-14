@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getAllConsultations, saveConsultation } from '@/lib/store';
+import { getFilteredConsultations, getAllConsultations, saveConsultation, initializeDatabase } from '@/lib/store';
 import { generateId, sanitizeInput } from '@/lib/server-utils';
-import { generateAISummary } from '@/lib/ai';
+import { generateAISummaryLive } from '@/lib/ai';
 import { ConsultationRequest } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
@@ -10,7 +10,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Basic validation
     if (!body.fullName || !body.mobile || !body.email) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
@@ -51,8 +50,8 @@ export async function POST(request: Request) {
       documents: body.documents || [],
     };
 
-    // Generate AI summary
-    const ai = generateAISummary(consultation);
+    // Generate Live Gemini AI analysis
+    const ai = await generateAISummaryLive(consultation);
     consultation.aiSummary = ai.summary;
     consultation.aiCategory = ai.category;
     consultation.aiPriority = ai.priority;
@@ -62,7 +61,6 @@ export async function POST(request: Request) {
     consultation.aiKeywords = ai.keywords;
     consultation.aiNextSteps = ai.nextSteps;
 
-    const { initializeDatabase } = await import('@/lib/store');
     await initializeDatabase();
     await saveConsultation(consultation);
 
@@ -86,38 +84,22 @@ export async function GET(request: Request) {
     }
 
     const url = new URL(request.url);
-    const search = url.searchParams.get('search') || '';
-    const status = url.searchParams.get('status') || '';
-    const practiceArea = url.searchParams.get('practiceArea') || '';
-    const state = url.searchParams.get('state') || '';
+    const search = url.searchParams.get('search') || undefined;
+    const status = url.searchParams.get('status') || undefined;
+    const practiceArea = url.searchParams.get('practiceArea') || undefined;
+    const state = url.searchParams.get('state') || undefined;
 
-    const { initializeDatabase } = await import('@/lib/store');
     await initializeDatabase();
     
-    let consultations = await getAllConsultations();
+    const { rows: consultations } = await getFilteredConsultations({
+      search,
+      status,
+      practiceArea,
+      state,
+    });
 
-    if (search) {
-      const q = search.toLowerCase();
-      consultations = consultations.filter(
-        (c) =>
-          c.fullName.toLowerCase().includes(q) ||
-          c.mobile.includes(q) ||
-          c.id.toLowerCase().includes(q) ||
-          c.practiceArea.toLowerCase().includes(q)
-      );
-    }
-    if (status) {
-      consultations = consultations.filter((c) => c.status === status);
-    }
-    if (practiceArea) {
-      consultations = consultations.filter((c) => c.practiceArea === practiceArea);
-    }
-    if (state) {
-      consultations = consultations.filter((c) => c.state === state);
-    }
-
-    const today = new Date().toDateString();
     const all = await getAllConsultations();
+    const today = new Date().toDateString();
     const stats = {
       total: all.length,
       todayCount: all.filter(
@@ -133,3 +115,4 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Step1Personal from './Step1Personal';
 import Step2Legal from './Step2Legal';
@@ -19,13 +19,13 @@ export type FormData = {
   documents: File[];
 };
 
-
-
 const INITIAL: FormData = {
   fullName: '', mobile: '', email: '', city: '', state: 'Bihar', preferredLanguage: '', occupation: '',
   practiceArea: '', caseType: '', caseSummary: '', opponentName: '', court: '', policeStation: '', caseStage: '',
   urgency: 'medium', preferredContactTime: 'morning', videoConsultation: false, documents: [],
 };
+
+const DRAFT_KEY = 'nyaya_consult_draft';
 
 export default function ConsultForm() {
   const router = useRouter();
@@ -46,6 +46,29 @@ export default function ConsultForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
+  // Restore draft from sessionStorage on initial render
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(DRAFT_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setData((prev) => ({ ...prev, ...parsed, practiceArea: areaParam || parsed.practiceArea || prev.practiceArea }));
+      }
+    } catch (e) {
+      console.error('Failed to load consultation draft:', e);
+    }
+  }, [areaParam]);
+
+  // Persist draft updates to sessionStorage
+  useEffect(() => {
+    try {
+      const { documents, ...persistableData } = data;
+      sessionStorage.setItem(DRAFT_KEY, JSON.stringify(persistableData));
+    } catch (e) {
+      // Ignore storage errors
+    }
+  }, [data]);
+
   const update = useCallback((updates: Partial<FormData>) => {
     setData((prev) => ({ ...prev, ...updates }));
   }, []);
@@ -53,7 +76,7 @@ export default function ConsultForm() {
   const scrollToForm = () => {
     const el = document.getElementById('consult-form');
     if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 100; // 100px offset for fixed navbar
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
@@ -70,12 +93,14 @@ export default function ConsultForm() {
       const res = await fetch('/api/consult', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Submission failed');
+      sessionStorage.removeItem(DRAFT_KEY);
       router.push(`/success?id=${json.id}`);
     } catch (err: any) {
       setError(err.message || 'Something went wrong. Please try again.');
       setSubmitting(false);
     }
   };
+
 
   const progress = ((step - 1) / (STEPS.length - 1)) * 100;
 

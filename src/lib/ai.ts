@@ -128,3 +128,89 @@ export function generateAISummary(data: ConsultationRequest): {
     nextSteps: steps,
   };
 }
+
+export async function generateAISummaryLive(data: ConsultationRequest): Promise<{
+  summary: string;
+  category: string;
+  priority: string;
+  documents: string[];
+  duration: string;
+  riskLevel: string;
+  keywords: string[];
+  nextSteps: string[];
+}> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return generateAISummary(data);
+  }
+
+  try {
+    const prompt = `You are an expert Indian Legal AI Assistant. Analyze the following legal consultation request and output a JSON object containing concise insights for the advocate.
+
+Client Name: ${data.fullName}
+City/State: ${data.city}, ${data.state}
+Practice Area: ${data.practiceArea}
+Case Type: ${data.caseType}
+Case Stage: ${data.caseStage}
+Urgency Level: ${data.urgency}
+Case Summary: ${data.caseSummary}
+Opponent Name: ${data.opponentName || 'N/A'}
+Court / Police Station: ${data.court || data.policeStation || 'N/A'}
+
+Respond with raw JSON only (no markdown code blocks) matching this schema:
+{
+  "summary": "Executive summary of case and key legal risks (2-3 sentences)",
+  "category": "${data.practiceArea} – ${data.caseType}",
+  "priority": "High | Medium | Low",
+  "documents": ["List of 3-5 specific legal documents the client must bring"],
+  "duration": "30 minutes | 60 minutes | 90 minutes",
+  "riskLevel": "High | Medium | Low",
+  "keywords": ["List of 4-8 relevant legal terms/statutes"],
+  "nextSteps": ["List of 3-5 actionable steps for the advocate to take"]
+}`;
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: 'application/json',
+            temperature: 0.2,
+          },
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      console.warn('Gemini API call failed, falling back to static analysis:', await res.text());
+      return generateAISummary(data);
+    }
+
+    const json = await res.json();
+    const candidateText = json.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!candidateText) {
+      return generateAISummary(data);
+    }
+
+    const cleanText = candidateText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+    const parsed = JSON.parse(cleanText);
+
+    return {
+      summary: parsed.summary || generateAISummary(data).summary,
+      category: parsed.category || `${data.practiceArea} – ${data.caseType}`,
+      priority: parsed.priority || 'Medium',
+      documents: Array.isArray(parsed.documents) ? parsed.documents : ['Identity proof'],
+      duration: parsed.duration || '60 minutes',
+      riskLevel: parsed.riskLevel || 'Medium',
+      keywords: Array.isArray(parsed.keywords) ? parsed.keywords : [data.practiceArea],
+      nextSteps: Array.isArray(parsed.nextSteps) ? parsed.nextSteps : ['Schedule consultation'],
+    };
+  } catch (err) {
+    console.error('Error calling Gemini API for legal analysis:', err);
+    return generateAISummary(data);
+  }
+}
+
