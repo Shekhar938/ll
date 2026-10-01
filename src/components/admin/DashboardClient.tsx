@@ -54,6 +54,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   // Draft Cache State
   const [lastSavedTime, setLastSavedTime] = useState<string>('');
   const [hasRestoredDraft, setHasRestoredDraft] = useState<boolean>(false);
+  const [focusMode, setFocusMode] = useState<boolean>(false);
 
   // Auto-save draft to localStorage whenever form fields change
   useEffect(() => {
@@ -704,6 +705,14 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 )}
               </div>
               <div className={styles.modalHeaderRight}>
+                <button
+                  type="button"
+                  className={`${styles.focusToggleBtn} ${focusMode ? styles.focusToggleActive : ''}`}
+                  onClick={() => setFocusMode(!focusMode)}
+                  title={focusMode ? "Show metadata sidebar" : "Focus writing mode (hide metadata)"}
+                >
+                  {focusMode ? '📑 Show Metadata' : '✨ Focus Writing Mode'}
+                </button>
                 {hasRestoredDraft && (
                   <button
                     type="button"
@@ -718,71 +727,75 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               </div>
             </div>
 
-            {/* Main 2-Column Split Workspace */}
+            {/* Main Workspace */}
             <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
-              {/* Left Metadata Sidebar */}
-              <aside className={styles.editorSidebar}>
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Article Title *</label>
-                  <input
-                    type="text"
-                    className={styles.formInput}
-                    placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023"
-                    value={formTitle}
-                    onChange={(e) => setFormTitle(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className={styles.formRowSplit}>
-                  <div className={styles.formGroup} style={{ flex: 1 }}>
-                    <label className={styles.formLabel}>Author Name</label>
+              {/* Left Metadata Sidebar (Hidden in Focus Mode) */}
+              {!focusMode && (
+                <aside className={styles.editorSidebar}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Article Title *</label>
                     <input
                       type="text"
                       className={styles.formInput}
-                      value={formAuthor}
-                      onChange={(e) => setFormAuthor(e.target.value)}
+                      placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023"
+                      value={formTitle}
+                      onChange={(e) => setFormTitle(e.target.value)}
+                      required
                     />
                   </div>
-                  <div className={styles.formGroup} style={{ flex: 1 }}>
-                    <label className={styles.formLabel}>URL Slug</label>
+
+                  <div className={styles.formRowSplit}>
+                    <div className={styles.formGroup} style={{ flex: 1 }}>
+                      <label className={styles.formLabel}>Author Name</label>
+                      <input
+                        type="text"
+                        className={styles.formInput}
+                        value={formAuthor}
+                        onChange={(e) => setFormAuthor(e.target.value)}
+                      />
+                    </div>
+                    <div className={styles.formGroup} style={{ flex: 1 }}>
+                      <label className={styles.formLabel}>URL Slug</label>
+                      <input
+                        type="text"
+                        className={styles.formInput}
+                        placeholder="auto-generated"
+                        value={formSlug}
+                        onChange={(e) => setFormSlug(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Category Tags (comma-separated)</label>
                     <input
                       type="text"
                       className={styles.formInput}
-                      placeholder="auto-generated"
-                      value={formSlug}
-                      onChange={(e) => setFormSlug(e.target.value)}
+                      placeholder="Criminal Law, BNS 2023, Legal Reform"
+                      value={formTags}
+                      onChange={(e) => setFormTags(e.target.value)}
                     />
                   </div>
-                </div>
 
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Category Tags (comma-separated)</label>
-                  <input
-                    type="text"
-                    className={styles.formInput}
-                    placeholder="Criminal Law, BNS 2023, Legal Reform"
-                    value={formTags}
-                    onChange={(e) => setFormTags(e.target.value)}
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Summary / Excerpt</label>
-                  <textarea
-                    className={styles.formTextarea}
-                    style={{ height: 100 }}
-                    placeholder="Brief executive summary..."
-                    value={formExcerpt}
-                    onChange={(e) => setFormExcerpt(e.target.value)}
-                  />
-                </div>
-              </aside>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Summary / Excerpt</label>
+                    <textarea
+                      className={styles.formTextarea}
+                      style={{ height: 100 }}
+                      placeholder="Brief executive summary..."
+                      value={formExcerpt}
+                      onChange={(e) => setFormExcerpt(e.target.value)}
+                    />
+                  </div>
+                </aside>
+              )}
 
               {/* Right Main Writing Canvas */}
-              <main className={styles.editorCanvas}>
+              <main className={`${styles.editorCanvas} ${focusMode ? styles.focusCanvas : ''}`}>
                 <div className={styles.canvasHeader}>
-                  <label className={styles.formLabel}>Full Article Content (Markdown / Text) *</label>
+                  <label className={styles.formLabel}>
+                    {focusMode ? `Editing: ${formTitle || 'Untitled Article'} (Focus Writing Mode)` : 'Full Article Content (Markdown / Text) *'}
+                  </label>
                   <span className={styles.wordCountBadge}>
                     {formContent.trim() ? `${formContent.trim().split(/\s+/).length} words` : '0 words'}
                   </span>
