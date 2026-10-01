@@ -93,7 +93,8 @@ CURRENT ARTICLE DRAFT CONTEXT:
 
         if (response && response.text) {
           const sanitizedReply = sanitizeBlogCopilotOutput(response.text);
-          return NextResponse.json({ success: true, reply: sanitizedReply, modelUsed: modelName });
+          const isGuardrail = sanitizedReply.includes('🛡️') || sanitizedReply.toLowerCase().includes('guardrail');
+          return NextResponse.json({ success: true, reply: sanitizedReply, isGuardrail, modelUsed: modelName });
         }
       } catch (err: any) {
         console.warn(`Gemini SDK model ${modelName} failed in blog-assistant:`, err.message);
@@ -118,9 +119,11 @@ CURRENT ARTICLE DRAFT CONTEXT:
       const restData = await restRes.json();
       if (restData.candidates && restData.candidates[0]?.content?.parts[0]?.text) {
         const sanitizedReply = sanitizeBlogCopilotOutput(restData.candidates[0].content.parts[0].text);
+        const isGuardrail = sanitizedReply.includes('🛡️') || sanitizedReply.toLowerCase().includes('guardrail');
         return NextResponse.json({
           success: true,
           reply: sanitizedReply,
+          isGuardrail,
           modelUsed: 'gemini-3.5-flash-lite-rest'
         });
       }

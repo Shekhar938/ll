@@ -143,7 +143,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
 
   // Blog Copilot State
   const [isAiCopilotOpen, setIsAiCopilotOpen] = useState<boolean>(false);
-  const [aiMessages, setAiMessages] = useState<Array<{ role: 'user' | 'model'; content: string }>>([]);
+  const [aiMessages, setAiMessages] = useState<Array<{ role: 'user' | 'model'; content: string; isGuardrail?: boolean }>>([]);
   const [aiInput, setAiInput] = useState<string>('');
   const [loadingAi, setLoadingAi] = useState<boolean>(false);
   const [copilotToast, setCopilotToast] = useState<string>('');
@@ -211,13 +211,14 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
 
       const data = await res.json();
       if (data.success && data.reply) {
-        setAiMessages(prev => [...prev, { role: 'model', content: data.reply }]);
+        const isGuard = !!data.isGuardrail || !!data.guardrailTriggered || data.reply.includes('🛡️');
+        setAiMessages(prev => [...prev, { role: 'model', content: data.reply, isGuardrail: isGuard }]);
       } else {
-        setAiMessages(prev => [...prev, { role: 'model', content: data.reply || 'Blog Copilot is currently unavailable.' }]);
+        setAiMessages(prev => [...prev, { role: 'model', content: data.reply || 'Blog Copilot is currently unavailable.', isGuardrail: true }]);
       }
     } catch (err) {
       console.error('Error with Blog Copilot:', err);
-      setAiMessages(prev => [...prev, { role: 'model', content: 'Network error contacting Blog Copilot.' }]);
+      setAiMessages(prev => [...prev, { role: 'model', content: 'Network error contacting Blog Copilot.', isGuardrail: true }]);
     } finally {
       setLoadingAi(false);
     }
@@ -1130,17 +1131,33 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                         <p>Ask Blog Copilot to draft section outlines, check statutory accuracy (BNS/BNSS/BSA), or polish your article style.</p>
                       </div>
                     ) : (
-                      aiMessages.map((msg, idx) => (
-                        <div key={idx} className={msg.role === 'user' ? styles.copilotUserMsg : styles.copilotModelMsg}>
-                          <div className={styles.copilotMsgRole}>{msg.role === 'user' ? 'You' : 'Blog Copilot'}</div>
-                          <div className={styles.copilotMsgBody}>
-                            {msg.role === 'model' ? (
+                      aiMessages.map((msg, idx) => {
+                        if (msg.role === 'user') {
+                          return (
+                            <div key={idx} className={styles.copilotUserMsg}>
+                              <div className={styles.copilotMsgRole}>You</div>
+                              <div className={styles.copilotMsgBody}>{msg.content}</div>
+                            </div>
+                          );
+                        }
+
+                        if (msg.isGuardrail) {
+                          return (
+                            <div key={idx} className={styles.copilotWarningMsg}>
+                              <div className={styles.copilotWarningRole}>🛡️ Guardrail Warning</div>
+                              <div className={styles.copilotMsgBody}>
+                                <FormattedMarkdown content={msg.content} />
+                              </div>
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <div key={idx} className={styles.copilotModelMsg}>
+                            <div className={styles.copilotMsgRole}>Blog Copilot</div>
+                            <div className={styles.copilotMsgBody}>
                               <FormattedMarkdown content={msg.content} />
-                            ) : (
-                              msg.content
-                            )}
-                          </div>
-                          {msg.role === 'model' && (
+                            </div>
                             <div className={styles.copilotMsgActions}>
                               <button
                                 type="button"
@@ -1167,9 +1184,9 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                                 📋 Copy
                               </button>
                             </div>
-                          )}
-                        </div>
-                      ))
+                          </div>
+                        );
+                      })
                     )}
                     {loadingAi && <div className={styles.copilotLoading}>🤖 Blog Copilot analyzing legal draft...</div>}
                   </div>
