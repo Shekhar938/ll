@@ -49,6 +49,7 @@ function FormattedText({ content }: { content: string }) {
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -61,10 +62,12 @@ export default function ChatWidget() {
   };
 
   useEffect(() => {
-    scrollToBottom();
-    const timer = setTimeout(scrollToBottom, 50);
-    return () => clearTimeout(timer);
-  }, [messages, loading, isOpen]);
+    if (!isMinimized) {
+      scrollToBottom();
+      const timer = setTimeout(scrollToBottom, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [messages, loading, isOpen, isMinimized]);
 
   const handleSend = async (textToSend?: string) => {
     const text = textToSend || input.trim();
@@ -106,13 +109,55 @@ export default function ChatWidget() {
   return (
     <>
       {!isOpen && (
-        <button className={styles.floatingBtn} onClick={() => setIsOpen(true)} aria-label="Open Legal AI Assistant">
+        <button
+          className={styles.floatingBtn}
+          onClick={() => {
+            setIsOpen(true);
+            setIsMinimized(false);
+          }}
+          aria-label="Open Legal AI Assistant"
+        >
           <span className={styles.badge}></span>
           <span>⚖️ AI Legal Guide</span>
         </button>
       )}
 
-      {isOpen && (
+      {isOpen && isMinimized && (
+        <div className={styles.minimizedBar} onClick={() => setIsMinimized(false)} title="Click to expand chat">
+          <div className={styles.headerInfo}>
+            <span className={styles.badge}></span>
+            <span className={styles.minimizedTitle}>⚖️ Legal Assistant</span>
+            {messages.length > 0 && <span className={styles.countBadge}>{messages.length}</span>}
+          </div>
+          <div className={styles.headerControls}>
+            <button
+              className={styles.headerControlBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMinimized(false);
+              }}
+              aria-label="Expand Chat"
+              title="Expand"
+            >
+              🗖
+            </button>
+            <button
+              className={styles.headerControlBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+                setIsMinimized(false);
+              }}
+              aria-label="Close Chat"
+              title="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {isOpen && !isMinimized && (
         <div className={styles.chatWindow}>
           <div className={styles.header}>
             <div className={styles.headerInfo}>
@@ -124,9 +169,27 @@ export default function ChatWidget() {
                 </div>
               </div>
             </div>
-            <button className={styles.closeBtn} onClick={() => setIsOpen(false)} aria-label="Close Chat">
-              ✕
-            </button>
+            <div className={styles.headerControls}>
+              <button
+                className={styles.headerControlBtn}
+                onClick={() => setIsMinimized(true)}
+                aria-label="Minimize Chat"
+                title="Minimize"
+              >
+                –
+              </button>
+              <button
+                className={styles.headerControlBtn}
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsMinimized(false);
+                }}
+                aria-label="Close Chat"
+                title="Close"
+              >
+                ✕
+              </button>
+            </div>
           </div>
 
           <div className={styles.body} ref={bodyRef}>
