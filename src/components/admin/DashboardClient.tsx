@@ -183,8 +183,39 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
     router.refresh();
   };
 
+  // URL State Persistence Helpers
+  const updateUrlParams = (updates: Record<string, string | null>) => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    Object.entries(updates).forEach(([key, val]) => {
+      if (val === null) {
+        params.delete(key);
+      } else {
+        params.set(key, val);
+      }
+    });
+    const newQuery = params.toString();
+    const newUrl = `${window.location.pathname}${newQuery ? `?${newQuery}` : ''}`;
+    window.history.replaceState(null, '', newUrl);
+  };
+
+  const switchTab = (tab: 'consultations' | 'blogs') => {
+    setActiveTab(tab);
+    if (tab === 'blogs') {
+      updateUrlParams({ tab: 'blogs' });
+    } else {
+      updateUrlParams({ tab: 'consultations', action: null, edit: null });
+    }
+  };
+
+  const closeBlogModal = () => {
+    setIsModalOpen(false);
+    setEditingPost(null);
+    updateUrlParams({ action: null, edit: null });
+  };
+
   // Blog CRUD actions
-  const openNewBlogModal = () => {
+  const openNewBlogModal = (skipUrlUpdate: boolean | React.MouseEvent = false) => {
     setEditingPost(null);
     const draftKey = 'nyaya_draft_new';
     const savedDraft = typeof window !== 'undefined' ? localStorage.getItem(draftKey) : null;
@@ -223,9 +254,12 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       setLastSavedTime('');
     }
     setIsModalOpen(true);
+    if (skipUrlUpdate !== true) {
+      updateUrlParams({ tab: 'blogs', action: 'new', edit: null });
+    }
   };
 
-  const openEditBlogModal = (post: BlogPost) => {
+  const openEditBlogModal = (post: BlogPost, skipUrlUpdate: boolean | React.MouseEvent = false) => {
     setEditingPost(post);
     const draftKey = `nyaya_draft_${post.id}`;
     const savedDraft = typeof window !== 'undefined' ? localStorage.getItem(draftKey) : null;
@@ -264,7 +298,45 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       setLastSavedTime('');
     }
     setIsModalOpen(true);
+    if (skipUrlUpdate !== true) {
+      updateUrlParams({ tab: 'blogs', action: null, edit: post.id });
+    }
   };
+
+  // Restore Active Tab and Modal state from URL search params on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    const actionParam = params.get('action');
+    const editParam = params.get('edit');
+
+    if (tabParam === 'blogs') {
+      setActiveTab('blogs');
+    } else if (tabParam === 'consultations') {
+      setActiveTab('consultations');
+    }
+
+    if (actionParam === 'new') {
+      openNewBlogModal(true);
+    } else if (editParam) {
+      const found = blogs.find(b => b.id === editParam);
+      if (found) {
+        openEditBlogModal(found, true);
+      }
+    }
+  }, []);
+
+  // Listen for Escape key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeBlogModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
 
   const discardDraft = () => {
     const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
@@ -334,7 +406,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       setHasRestoredDraft(false);
       setLastSavedTime('');
 
-      setIsModalOpen(false);
+      closeBlogModal();
       router.refresh();
     } catch (err) {
       console.error('Error saving blog post:', err);
@@ -382,14 +454,14 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         <nav className={styles.mobileNavTabs}>
           <button
             className={`${styles.mobileTabBtn} ${activeTab === 'consultations' ? styles.mobileTabActive : ''}`}
-            onClick={() => setActiveTab('consultations')}
+            onClick={() => switchTab('consultations')}
           >
             Consultations
             {stats.pending > 0 && <span className={styles.tabBadge}>{stats.pending}</span>}
           </button>
           <button
             className={`${styles.mobileTabBtn} ${activeTab === 'blogs' ? styles.mobileTabActive : ''}`}
-            onClick={() => setActiveTab('blogs')}
+            onClick={() => switchTab('blogs')}
           >
             Blog & Articles
             <span className={styles.tabBadgeAlt}>{blogs.length}</span>
@@ -409,7 +481,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         <nav className={styles.sidebarNav}>
           <button
             className={`${styles.navItem} ${activeTab === 'consultations' ? styles.navActive : ''}`}
-            onClick={() => setActiveTab('consultations')}
+            onClick={() => switchTab('consultations')}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             Consultations
@@ -418,7 +490,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
           
           <button
             className={`${styles.navItem} ${activeTab === 'blogs' ? styles.navActive : ''}`}
-            onClick={() => setActiveTab('blogs')}
+            onClick={() => switchTab('blogs')}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             Blog & Articles
@@ -745,7 +817,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
 
       {/* Full Screen Workspace for Creating / Editing Legal Articles */}
       {isModalOpen && (
-        <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
+        <div className={styles.modalOverlay} onClick={closeBlogModal}>
           <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
             {/* Top Fixed Header Bar */}
             <div className={styles.modalHeader}>
@@ -786,7 +858,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                     Discard Saved Cache
                   </button>
                 )}
-                <button className={styles.modalClose} onClick={() => setIsModalOpen(false)} title="Close (Esc)">✕</button>
+                <button className={styles.modalClose} onClick={closeBlogModal} title="Close (Esc)">✕</button>
               </div>
             </div>
 
@@ -969,7 +1041,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 )}
               </div>
               <div className={styles.footerButtons}>
-                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>
+                <button type="button" className={styles.cancelBtn} onClick={closeBlogModal}>
                   Cancel
                 </button>
                 <button type="submit" form="blogForm" className={styles.saveBtn} disabled={savingBlog || !formTitle.trim() || !formContent.trim()}>
