@@ -109,7 +109,7 @@
 .empty p { font-size: 16px; font-weight: 500; }
 .count { font-size: 13px; color: var(--text-muted); text-align: right; }
 
-/* Full View Modal Styling for Write / Edit Article */
+/* Full Screen Workspace Styling for Write / Edit Article */
 .modalOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -138,7 +138,7 @@
 }
 
 .modalHeader {
-  padding: 16px 28px;
+  padding: 14px 28px;
   background: var(--navy);
   color: white;
   border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -148,9 +148,48 @@
   flex-shrink: 0;
 }
 
+.modalTitleWrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .modalTitle {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
+  color: white;
+}
+
+.draftBadge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #34C759;
+  background: rgba(52,199,89,0.15);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(52,199,89,0.3);
+}
+
+.modalHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.discardDraftBtn {
+  background: rgba(255,59,48,0.15);
+  color: #FF3B30;
+  border: 1px solid rgba(255,59,48,0.3);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.discardDraftBtn:hover {
+  background: #FF3B30;
   color: white;
 }
 
@@ -174,34 +213,87 @@
   color: #FF3B30;
 }
 
-.modalForm {
-  padding: 24px 32px;
+.modalEditorBody {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
   flex: 1;
-  overflow-y: auto;
-  max-width: 1000px;
-  margin: 0 auto;
   width: 100%;
+  height: calc(100vh - 128px);
+  overflow: hidden;
+  background: white;
 }
 
-.formRow {
+.editorSidebar {
+  width: 360px;
+  min-width: 320px;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  padding: 24px;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.editorCanvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px;
+  background: white;
+  height: 100%;
+  overflow: hidden;
+}
+
+.canvasHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.wordCountBadge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--gold-pale);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(201,162,39,0.3);
+}
+
+.fullArticleTextarea {
+  width: 100%;
+  flex: 1;
+  min-height: 350px;
+  padding: 20px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-family: inherit;
+  line-height: 1.7;
+  color: var(--navy);
+  outline: none;
+  transition: var(--transition);
+  resize: none;
+  background: #FAFAFA;
+}
+
+.fullArticleTextarea:focus {
+  border-color: var(--navy);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(11,31,58,0.06);
+}
+
+.formRowSplit {
+  display: flex;
+  gap: 12px;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.formGroupContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 300px;
 }
 
 .formLabel {
@@ -230,30 +322,28 @@
   box-shadow: 0 0 0 3px rgba(11,31,58,0.08);
 }
 
-.formContentTextarea {
-  flex: 1;
-  min-height: 280px;
-  resize: vertical;
-  line-height: 1.6;
-}
-
 .modalActions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
-  padding: 16px 32px;
-  background: var(--bg);
-  border-top: 1px solid var(--border);
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.1);
   flex-shrink: 0;
 }
 
+.footerButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .cancelBtn {
-  padding: 12px 24px;
+  padding: 11px 22px;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--border);
-  background: white;
-  color: var(--text-secondary);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.8);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -261,16 +351,16 @@
 }
 
 .cancelBtn:hover {
-  background: var(--bg-alt);
-  color: var(--navy);
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 
 .saveBtn {
-  padding: 12px 28px;
+  padding: 11px 26px;
   border-radius: var(--radius-md);
   border: none;
-  background: var(--navy);
-  color: var(--gold);
+  background: var(--gold);
+  color: var(--navy);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -278,7 +368,7 @@
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: var(--navy-light);
+  background: #e8b830;
 }
 
 .saveBtn:disabled {
@@ -498,22 +588,44 @@
     border-radius: 0;
   }
   .modalHeader {
-    padding: 14px 16px;
+    padding: 12px 16px;
   }
   .modalTitle {
-    font-size: 17px;
+    font-size: 16px;
   }
-  .modalForm {
-    padding: 16px;
-    gap: 14px;
-  }
-  .formRow {
+  .modalEditorBody {
     flex-direction: column;
-    gap: 14px;
+    overflow-y: auto;
+    height: auto;
+  }
+  .editorSidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px;
+    overflow-y: visible;
+    flex-shrink: 0;
+  }
+  .editorCanvas {
+    width: 100%;
+    padding: 16px;
+    overflow-y: visible;
+    flex: none;
+  }
+  .fullArticleTextarea {
+    min-height: 350px;
   }
   .modalActions {
     padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
     gap: 10px;
+  }
+  .footerInfo {
+    text-align: center;
+  }
+  .footerButtons {
+    width: 100%;
   }
   .cancelBtn, .saveBtn {
     flex: 1;

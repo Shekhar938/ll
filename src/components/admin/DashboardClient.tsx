@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ConsultationRequest } from '@/lib/types';
@@ -50,6 +50,32 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [formAuthor, setFormAuthor] = useState('Advocate Aastha');
   const [formTags, setFormTags] = useState('Legal Insights');
   const [savingBlog, setSavingBlog] = useState(false);
+
+  // Draft Cache State
+  const [lastSavedTime, setLastSavedTime] = useState<string>('');
+  const [hasRestoredDraft, setHasRestoredDraft] = useState<boolean>(false);
+
+  // Auto-save draft to localStorage whenever form fields change
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
+    
+    const draftData = {
+      title: formTitle,
+      slug: formSlug,
+      excerpt: formExcerpt,
+      content: formContent,
+      author: formAuthor,
+      tags: formTags,
+      savedAt: new Date().toISOString()
+    };
+
+    if (formTitle.trim() || formContent.trim() || formExcerpt.trim()) {
+      localStorage.setItem(draftKey, JSON.stringify(draftData));
+      const now = new Date();
+      setLastSavedTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    }
+  }, [formTitle, formSlug, formExcerpt, formContent, formAuthor, formTags, isModalOpen, editingPost]);
 
   const logout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' });
@@ -104,24 +130,107 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   // Blog CRUD actions
   const openNewBlogModal = () => {
     setEditingPost(null);
-    setFormTitle('');
-    setFormSlug('');
-    setFormExcerpt('');
-    setFormContent('');
-    setFormAuthor('Advocate Aastha');
-    setFormTags('Legal Insights, Indian Law');
+    const draftKey = 'nyaya_draft_new';
+    const savedDraft = typeof window !== 'undefined' ? localStorage.getItem(draftKey) : null;
+    
+    if (savedDraft) {
+      try {
+        const parsed = JSON.parse(savedDraft);
+        setFormTitle(parsed.title || '');
+        setFormSlug(parsed.slug || '');
+        setFormExcerpt(parsed.excerpt || '');
+        setFormContent(parsed.content || '');
+        setFormAuthor(parsed.author || 'Advocate Aastha');
+        setFormTags(parsed.tags || 'Legal Insights, Indian Law');
+        setHasRestoredDraft(true);
+        if (parsed.savedAt) {
+          const d = new Date(parsed.savedAt);
+          setLastSavedTime(d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+        }
+      } catch {
+        setFormTitle('');
+        setFormSlug('');
+        setFormExcerpt('');
+        setFormContent('');
+        setFormAuthor('Advocate Aastha');
+        setFormTags('Legal Insights, Indian Law');
+        setHasRestoredDraft(false);
+      }
+    } else {
+      setFormTitle('');
+      setFormSlug('');
+      setFormExcerpt('');
+      setFormContent('');
+      setFormAuthor('Advocate Aastha');
+      setFormTags('Legal Insights, Indian Law');
+      setHasRestoredDraft(false);
+      setLastSavedTime('');
+    }
     setIsModalOpen(true);
   };
 
   const openEditBlogModal = (post: BlogPost) => {
     setEditingPost(post);
-    setFormTitle(post.title);
-    setFormSlug(post.slug);
-    setFormExcerpt(post.excerpt);
-    setFormContent(post.content);
-    setFormAuthor(post.author);
-    setFormTags(post.tags ? post.tags.join(', ') : '');
+    const draftKey = `nyaya_draft_${post.id}`;
+    const savedDraft = typeof window !== 'undefined' ? localStorage.getItem(draftKey) : null;
+    
+    if (savedDraft) {
+      try {
+        const parsed = JSON.parse(savedDraft);
+        setFormTitle(parsed.title || post.title);
+        setFormSlug(parsed.slug || post.slug);
+        setFormExcerpt(parsed.excerpt || post.excerpt);
+        setFormContent(parsed.content || post.content);
+        setFormAuthor(parsed.author || post.author);
+        setFormTags(parsed.tags || (post.tags ? post.tags.join(', ') : ''));
+        setHasRestoredDraft(true);
+        if (parsed.savedAt) {
+          const d = new Date(parsed.savedAt);
+          setLastSavedTime(d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+        }
+      } catch {
+        setFormTitle(post.title);
+        setFormSlug(post.slug);
+        setFormExcerpt(post.excerpt);
+        setFormContent(post.content);
+        setFormAuthor(post.author);
+        setFormTags(post.tags ? post.tags.join(', ') : '');
+        setHasRestoredDraft(false);
+      }
+    } else {
+      setFormTitle(post.title);
+      setFormSlug(post.slug);
+      setFormExcerpt(post.excerpt);
+      setFormContent(post.content);
+      setFormAuthor(post.author);
+      setFormTags(post.tags ? post.tags.join(', ') : '');
+      setHasRestoredDraft(false);
+      setLastSavedTime('');
+    }
     setIsModalOpen(true);
+  };
+
+  const discardDraft = () => {
+    const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
+    localStorage.removeItem(draftKey);
+    setHasRestoredDraft(false);
+    setLastSavedTime('');
+    
+    if (editingPost) {
+      setFormTitle(editingPost.title);
+      setFormSlug(editingPost.slug);
+      setFormExcerpt(editingPost.excerpt);
+      setFormContent(editingPost.content);
+      setFormAuthor(editingPost.author);
+      setFormTags(editingPost.tags ? editingPost.tags.join(', ') : '');
+    } else {
+      setFormTitle('');
+      setFormSlug('');
+      setFormExcerpt('');
+      setFormContent('');
+      setFormAuthor('Advocate Aastha');
+      setFormTags('Legal Insights, Indian Law');
+    }
   };
 
   const handleSaveBlog = async (e: React.FormEvent) => {
@@ -162,6 +271,13 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
           setBlogs(prev => [data.post, ...prev]);
         }
       }
+
+      // Clear draft on successful publish
+      const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
+      localStorage.removeItem(draftKey);
+      setHasRestoredDraft(false);
+      setLastSavedTime('');
+
       setIsModalOpen(false);
       router.refresh();
     } catch (err) {
@@ -571,91 +687,133 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         )}
       </main>
 
-      {/* Full View Modal for Creating / Editing Blog Posts */}
+      {/* Full Screen Workspace for Creating / Editing Legal Articles */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
           <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+            {/* Top Fixed Header Bar */}
             <div className={styles.modalHeader}>
-              <h2 className={styles.modalTitle}>
-                {editingPost ? 'Edit Legal Article' : 'Write New Legal Article'}
-              </h2>
-              <button className={styles.modalClose} onClick={() => setIsModalOpen(false)} title="Close (Esc)">✕</button>
+              <div className={styles.modalTitleWrap}>
+                <h2 className={styles.modalTitle}>
+                  {editingPost ? 'Edit Legal Article' : 'Write New Legal Article'}
+                </h2>
+                {lastSavedTime && (
+                  <span className={styles.draftBadge}>
+                    💾 Cache Auto-saved {lastSavedTime}
+                  </span>
+                )}
+              </div>
+              <div className={styles.modalHeaderRight}>
+                {hasRestoredDraft && (
+                  <button
+                    type="button"
+                    className={styles.discardDraftBtn}
+                    onClick={discardDraft}
+                    title="Discard unsaved draft cache"
+                  >
+                    Discard Saved Cache
+                  </button>
+                )}
+                <button className={styles.modalClose} onClick={() => setIsModalOpen(false)} title="Close (Esc)">✕</button>
+              </div>
             </div>
-            <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalForm}>
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Article Title *</label>
-                <input
-                  type="text"
-                  className={styles.formInput}
-                  placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita 2023"
-                  value={formTitle}
-                  onChange={(e) => setFormTitle(e.target.value)}
-                  required
-                />
-              </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formGroup} style={{ flex: 1 }}>
-                  <label className={styles.formLabel}>Author Name</label>
+            {/* Main 2-Column Split Workspace */}
+            <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
+              {/* Left Metadata Sidebar */}
+              <aside className={styles.editorSidebar}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Article Title *</label>
                   <input
                     type="text"
                     className={styles.formInput}
-                    value={formAuthor}
-                    onChange={(e) => setFormAuthor(e.target.value)}
+                    placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023"
+                    value={formTitle}
+                    onChange={(e) => setFormTitle(e.target.value)}
+                    required
                   />
                 </div>
-                <div className={styles.formGroup} style={{ flex: 1 }}>
-                  <label className={styles.formLabel}>URL Slug (Optional)</label>
+
+                <div className={styles.formRowSplit}>
+                  <div className={styles.formGroup} style={{ flex: 1 }}>
+                    <label className={styles.formLabel}>Author Name</label>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      value={formAuthor}
+                      onChange={(e) => setFormAuthor(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.formGroup} style={{ flex: 1 }}>
+                    <label className={styles.formLabel}>URL Slug</label>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      placeholder="auto-generated"
+                      value={formSlug}
+                      onChange={(e) => setFormSlug(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Category Tags (comma-separated)</label>
                   <input
                     type="text"
                     className={styles.formInput}
-                    placeholder="auto-generated-if-empty"
-                    value={formSlug}
-                    onChange={(e) => setFormSlug(e.target.value)}
+                    placeholder="Criminal Law, BNS 2023, Legal Reform"
+                    value={formTags}
+                    onChange={(e) => setFormTags(e.target.value)}
                   />
                 </div>
-              </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Category Tags (comma-separated)</label>
-                <input
-                  type="text"
-                  className={styles.formInput}
-                  placeholder="Criminal Law, BNS 2023, Legal Reform"
-                  value={formTags}
-                  onChange={(e) => setFormTags(e.target.value)}
-                />
-              </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Summary / Excerpt</label>
+                  <textarea
+                    className={styles.formTextarea}
+                    style={{ height: 100 }}
+                    placeholder="Brief executive summary..."
+                    value={formExcerpt}
+                    onChange={(e) => setFormExcerpt(e.target.value)}
+                  />
+                </div>
+              </aside>
 
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Summary / Excerpt</label>
+              {/* Right Main Writing Canvas */}
+              <main className={styles.editorCanvas}>
+                <div className={styles.canvasHeader}>
+                  <label className={styles.formLabel}>Full Article Content (Markdown / Text) *</label>
+                  <span className={styles.wordCountBadge}>
+                    {formContent.trim() ? `${formContent.trim().split(/\s+/).length} words` : '0 words'}
+                  </span>
+                </div>
                 <textarea
-                  className={styles.formTextarea}
-                  style={{ height: 70 }}
-                  placeholder="Brief summary of the article..."
-                  value={formExcerpt}
-                  onChange={(e) => setFormExcerpt(e.target.value)}
-                />
-              </div>
-
-              <div className={`${styles.formGroup} ${styles.formGroupContent}`}>
-                <label className={styles.formLabel}>Full Article Content (Markdown or Text) *</label>
-                <textarea
-                  className={`${styles.formTextarea} ${styles.formContentTextarea}`}
-                  placeholder="Write full legal whitepaper or article content here..."
+                  className={styles.fullArticleTextarea}
+                  placeholder="Write full legal whitepaper or article content here... (Markdown supported)"
                   value={formContent}
                   onChange={(e) => setFormContent(e.target.value)}
                   required
                 />
-              </div>
+              </main>
             </form>
+
+            {/* Sticky Action Footer Bar */}
             <div className={styles.modalActions}>
-              <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>
-                Cancel
-              </button>
-              <button type="submit" form="blogForm" className={styles.saveBtn} disabled={savingBlog || !formTitle.trim() || !formContent.trim()}>
-                {savingBlog ? 'Saving Article...' : editingPost ? 'Update Article' : 'Publish Article'}
-              </button>
+              <div className={styles.footerInfo}>
+                {hasRestoredDraft ? (
+                  <span style={{ color: '#FF9F0A', fontSize: 13, fontWeight: 600 }}>⚡ Unsaved draft restored from browser cache</span>
+                ) : (
+                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>Draft automatically saved in browser local storage</span>
+                )}
+              </div>
+              <div className={styles.footerButtons}>
+                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>
+                  Cancel
+                </button>
+                <button type="submit" form="blogForm" className={styles.saveBtn} disabled={savingBlog || !formTitle.trim() || !formContent.trim()}>
+                  {savingBlog ? 'Saving Article...' : editingPost ? 'Update Article' : 'Publish Article'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
