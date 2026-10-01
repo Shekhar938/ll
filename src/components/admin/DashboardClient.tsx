@@ -734,43 +734,42 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 <aside className={styles.editorSidebar}>
                   <div className={styles.formGroup}>
                     <label className={styles.formLabel}>Article Title *</label>
-                    <input
-                      type="text"
-                      className={styles.formInput}
-                      placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023"
+                    <textarea
+                      rows={2}
+                      className={`${styles.formTextarea} ${styles.expandableInput}`}
+                      placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023: Structural Shifts and Judicial Implications"
                       value={formTitle}
                       onChange={(e) => setFormTitle(e.target.value)}
                       required
                     />
                   </div>
 
-                  <div className={styles.formRowSplit}>
-                    <div className={styles.formGroup} style={{ flex: 1 }}>
-                      <label className={styles.formLabel}>Author Name</label>
-                      <input
-                        type="text"
-                        className={styles.formInput}
-                        value={formAuthor}
-                        onChange={(e) => setFormAuthor(e.target.value)}
-                      />
-                    </div>
-                    <div className={styles.formGroup} style={{ flex: 1 }}>
-                      <label className={styles.formLabel}>URL Slug</label>
-                      <input
-                        type="text"
-                        className={styles.formInput}
-                        placeholder="auto-generated"
-                        value={formSlug}
-                        onChange={(e) => setFormSlug(e.target.value)}
-                      />
-                    </div>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Author Name</label>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      value={formAuthor}
+                      onChange={(e) => setFormAuthor(e.target.value)}
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>URL Slug</label>
+                    <textarea
+                      rows={2}
+                      className={`${styles.formTextarea} ${styles.expandableInput}`}
+                      placeholder="auto-generated-if-empty"
+                      value={formSlug}
+                      onChange={(e) => setFormSlug(e.target.value)}
+                    />
                   </div>
 
                   <div className={styles.formGroup}>
                     <label className={styles.formLabel}>Category Tags (comma-separated)</label>
-                    <input
-                      type="text"
-                      className={styles.formInput}
+                    <textarea
+                      rows={2}
+                      className={`${styles.formTextarea} ${styles.expandableInput}`}
                       placeholder="Criminal Law, BNS 2023, Legal Reform"
                       value={formTags}
                       onChange={(e) => setFormTags(e.target.value)}
@@ -780,9 +779,10 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                   <div className={styles.formGroup}>
                     <label className={styles.formLabel}>Summary / Excerpt</label>
                     <textarea
-                      className={styles.formTextarea}
-                      style={{ height: 100 }}
-                      placeholder="Brief executive summary..."
+                      rows={4}
+                      className={`${styles.formTextarea} ${styles.expandableInput}`}
+                      style={{ minHeight: 120 }}
+                      placeholder="Brief executive summary of the article..."
                       value={formExcerpt}
                       onChange={(e) => setFormExcerpt(e.target.value)}
                     />
