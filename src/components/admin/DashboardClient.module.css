@@ -748,7 +748,8 @@
 /* Blog Copilot Integrated Drawer (Desktop & Mobile Top-level Styles) */
 .copilotDrawer {
   width: 420px;
-  min-width: 360px;
+  min-width: 300px;
+  max-width: 70vw;
   background: #0B132B;
   color: #FFFFFF;
   border-left: 1px solid rgba(201, 162, 39, 0.3);
@@ -759,6 +760,44 @@
   box-shadow: -6px 0 24px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
   z-index: 20;
+  position: relative;
+}
+
+/* Draggable Resizer Handle */
+.copilotResizer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 12px;
+  cursor: col-resize;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+.copilotResizer:hover,
+.copilotResizerActive {
+  background: rgba(201, 162, 39, 0.25);
+}
+
+.copilotResizerHandle {
+  width: 4px;
+  height: 48px;
+  border-radius: 2px;
+  background: rgba(201, 162, 39, 0.6);
+  box-shadow: 0 0 8px rgba(201, 162, 39, 0.5);
+  transition: background 0.15s ease, height 0.15s ease;
+}
+
+.copilotResizer:hover .copilotResizerHandle,
+.copilotResizerActive .copilotResizerHandle {
+  background: #C9A227;
+  height: 80px;
+  box-shadow: 0 0 12px rgba(201, 162, 39, 0.8);
 }
 
 .copilotHeader {

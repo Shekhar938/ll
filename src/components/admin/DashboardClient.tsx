@@ -148,6 +148,36 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [loadingAi, setLoadingAi] = useState<boolean>(false);
   const [copilotToast, setCopilotToast] = useState<string>('');
 
+  // Blog Copilot Drag Resizer State
+  const [copilotWidth, setCopilotWidth] = useState<number>(440);
+  const [isResizingCopilot, setIsResizingCopilot] = useState<boolean>(false);
+
+  const startResizingCopilot = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizingCopilot(true);
+  };
+
+  useEffect(() => {
+    if (!isResizingCopilot) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const newWidth = window.innerWidth - e.clientX;
+      const clampedWidth = Math.max(300, Math.min(Math.min(950, window.innerWidth * 0.7), newWidth));
+      setCopilotWidth(clampedWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizingCopilot(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizingCopilot]);
+
   const sendAiAssistantRequest = async (action?: string, customPrompt?: string) => {
     const userText = customPrompt || aiInput;
     if (!action && !userText.trim()) return;
@@ -1032,9 +1062,21 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 </main>
               </form>
 
-              {/* Integrated Blog Copilot Drawer */}
+              {/* Integrated Draggable Blog Copilot Drawer */}
               {isAiCopilotOpen && (
-                <div className={styles.copilotDrawer}>
+                <div
+                  className={styles.copilotDrawer}
+                  style={{ width: `${copilotWidth}px` }}
+                >
+                  {/* Drag resizer handle on left border */}
+                  <div
+                    className={`${styles.copilotResizer} ${isResizingCopilot ? styles.copilotResizerActive : ''}`}
+                    onMouseDown={startResizingCopilot}
+                    title="Drag to resize Blog Copilot width"
+                  >
+                    <div className={styles.copilotResizerHandle} />
+                  </div>
+
                   <div className={styles.copilotHeader}>
                     <div className={styles.copilotTitle}>
                       <div className={styles.copilotBadgeIcon}>🖋️</div>
