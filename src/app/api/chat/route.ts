@@ -89,14 +89,38 @@ STRICT GUARDRAILS & CORE DIRECTIVES:
         }
       } catch (err: any) {
         lastError = err?.message || String(err);
-        console.warn(`[Gemini API] ${modelName} attempt failed:`, lastError);
+        console.warn(`[Gemini API SDK] ${modelName} attempt failed:`, lastError);
+      }
+    }
+
+    // Direct REST API Fallback if SDK calls fail
+    if (!responseText && apiKey) {
+      try {
+        const restUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+        const restRes = await fetch(restUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents,
+            systemInstruction: { parts: [{ text: systemInstruction }] },
+            generationConfig: { maxOutputTokens: 400, temperature: 0.2 }
+          })
+        });
+        const restData = await restRes.json();
+        if (restData?.candidates?.[0]?.content?.parts?.[0]?.text) {
+          responseText = restData.candidates[0].content.parts[0].text;
+        } else if (restData?.error?.message) {
+          lastError = restData.error.message;
+        }
+      } catch (restErr: any) {
+        lastError = restErr?.message || String(restErr);
       }
     }
 
     if (!responseText) {
       return NextResponse.json({ 
         success: false, 
-        reply: `I apologize, but I could not generate a response right now (${lastError || 'No model response'}). Please try again or use the Client Portal to request a consultation.` 
+        reply: `I apologize, but I could not generate a response right now. Please try again or use the Client Portal to request a consultation.` 
       });
     }
 
