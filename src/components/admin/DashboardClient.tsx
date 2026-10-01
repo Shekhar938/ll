@@ -1095,7 +1095,10 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                       <div className={styles.copilotBadgeIcon}>🖋️</div>
                       <div>
                         <h3>Blog Copilot</h3>
-                        <p>Legal Writing & Proofreading Assistant</p>
+                        <p className={styles.copilotSubtitle}>Legal Writing & Proofreading Assistant</p>
+                        <div className={styles.copilotCredentialBadge}>
+                          Advocate Aastha (ENR No. 3475/2026, Bihar State Bar Council)
+                        </div>
                       </div>
                     </div>
                     <button
