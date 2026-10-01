@@ -286,6 +286,29 @@ export async function getConsultationById(id: string): Promise<ConsultationReque
   return memoryStore.find(c => c.id === id) || null;
 }
 
+export async function getConsultationByCredentials(id: string, identifier: string): Promise<ConsultationRequest | null> {
+  const cleanId = id.trim().toUpperCase();
+  const cleanIdent = identifier.trim().toLowerCase();
+  
+  const pool = getPool();
+  if (pool) {
+    try {
+      const { rows } = await pool.query<ConsultationRequest>(
+        `SELECT * FROM consultations WHERE UPPER(id) = $1 AND (LOWER(mobile) = $2 OR LOWER(email) = $2) LIMIT 1`,
+        [cleanId, cleanIdent]
+      );
+      if (rows[0]) return rows[0];
+    } catch (error) {
+      console.warn('PostgreSQL query failed, searching in-memory store:', error);
+    }
+  }
+
+  return memoryStore.find(c => 
+    c.id.toUpperCase() === cleanId && 
+    (c.mobile.toLowerCase() === cleanIdent || c.email.toLowerCase() === cleanIdent)
+  ) || null;
+}
+
 export async function saveConsultation(c: ConsultationRequest): Promise<void> {
   const pool = getPool();
   if (pool) {

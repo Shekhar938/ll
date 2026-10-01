@@ -25,8 +25,8 @@ export default function Footer() {
 
         <div className={styles.links}>
           <div className={styles.col}>
-            <h4 className={styles.colTitle}>{t.footer.infoCol}</h4>
-            <Link href="/consult" className={styles.colLink}>{t.footer.clientPortal}</Link>
+            <Link href="/portal" className={styles.colLink}>Client Portal Access</Link>
+            <Link href="/consult" className={styles.colLink}>Book Legal Consultation</Link>
             <a href="/#areas" className={styles.colLink}>{t.footer.practiceAreas}</a>
             <a href="/#why" className={styles.colLink}>{t.footer.profile}</a>
           </div>
