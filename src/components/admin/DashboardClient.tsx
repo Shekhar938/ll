@@ -56,6 +56,61 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [hasRestoredDraft, setHasRestoredDraft] = useState<boolean>(false);
   const [focusMode, setFocusMode] = useState<boolean>(false);
 
+  // AI Legal Editor Copilot State
+  const [isAiCopilotOpen, setIsAiCopilotOpen] = useState<boolean>(false);
+  const [aiMessages, setAiMessages] = useState<Array<{ role: 'user' | 'model'; content: string }>>([]);
+  const [aiInput, setAiInput] = useState<string>('');
+  const [loadingAi, setLoadingAi] = useState<boolean>(false);
+
+  const sendAiAssistantRequest = async (action?: string, customPrompt?: string) => {
+    const userText = customPrompt || aiInput;
+    if (!action && !userText.trim()) return;
+
+    const newMessages = [...aiMessages];
+    if (userText.trim()) {
+      newMessages.push({ role: 'user', content: userText.trim() });
+      setAiMessages(newMessages);
+      setAiInput('');
+    }
+
+    setLoadingAi(true);
+    try {
+      const res = await fetch('/api/admin/blog-assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action,
+          prompt: userText,
+          articleContext: {
+            title: formTitle,
+            author: formAuthor,
+            slug: formSlug,
+            tags: formTags,
+            excerpt: formExcerpt,
+            content: formContent
+          },
+          messages: newMessages
+        })
+      });
+
+      const data = await res.json();
+      if (data.success && data.reply) {
+        setAiMessages(prev => [...prev, { role: 'model', content: data.reply }]);
+      } else {
+        setAiMessages(prev => [...prev, { role: 'model', content: data.reply || 'AI Legal Assistant unavailable.' }]);
+      }
+    } catch (err) {
+      console.error('Error with AI blog assistant:', err);
+      setAiMessages(prev => [...prev, { role: 'model', content: 'Network error contacting AI Legal Assistant.' }]);
+    } finally {
+      setLoadingAi(false);
+    }
+  };
+
+  const insertIntoContent = (text: string) => {
+    setFormContent(prev => prev ? `${prev}\n\n${text}` : text);
+  };
+
   // Auto-save draft to localStorage whenever form fields change
   useEffect(() => {
     if (!isModalOpen) return;
@@ -707,11 +762,19 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               <div className={styles.modalHeaderRight}>
                 <button
                   type="button"
+                  className={`${styles.copilotToggleBtn} ${isAiCopilotOpen ? styles.copilotToggleActive : ''}`}
+                  onClick={() => setIsAiCopilotOpen(!isAiCopilotOpen)}
+                  title="Toggle Dedicated AI Legal Editor Copilot"
+                >
+                  🤖 AI Legal Copilot
+                </button>
+                <button
+                  type="button"
                   className={`${styles.focusToggleBtn} ${focusMode ? styles.focusToggleActive : ''}`}
                   onClick={() => setFocusMode(!focusMode)}
                   title={focusMode ? "Show metadata sidebar" : "Focus writing mode (hide metadata)"}
                 >
-                  {focusMode ? '📑 Show Metadata' : '✨ Focus Writing Mode'}
+                  {focusMode ? '📑 Show Metadata' : '✨ Focus Mode'}
                 </button>
                 {hasRestoredDraft && (
                   <button
@@ -727,88 +790,174 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               </div>
             </div>
 
-            {/* Main Workspace */}
-            <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
-              {/* Left Metadata Sidebar (Hidden in Focus Mode) */}
-              {!focusMode && (
-                <aside className={styles.editorSidebar}>
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Article Title *</label>
-                    <textarea
-                      rows={2}
-                      className={`${styles.formTextarea} ${styles.expandableInput}`}
-                      placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023: Structural Shifts and Judicial Implications"
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
-                      required
-                    />
+            {/* Main Workspace with Optional AI Copilot Drawer */}
+            <div style={{ display: 'flex', flex: 1, height: 'calc(100vh - 128px)', overflow: 'hidden' }}>
+              <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
+                {/* Left Metadata Sidebar (Hidden in Focus Mode) */}
+                {!focusMode && (
+                  <aside className={styles.editorSidebar}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Article Title *</label>
+                      <textarea
+                        rows={2}
+                        className={`${styles.formTextarea} ${styles.expandableInput}`}
+                        placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023: Structural Shifts and Judicial Implications"
+                        value={formTitle}
+                        onChange={(e) => setFormTitle(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Author Name</label>
+                      <input
+                        type="text"
+                        className={styles.formInput}
+                        value={formAuthor}
+                        onChange={(e) => setFormAuthor(e.target.value)}
+                      />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>URL Slug</label>
+                      <textarea
+                        rows={2}
+                        className={`${styles.formTextarea} ${styles.expandableInput}`}
+                        placeholder="auto-generated-if-empty"
+                        value={formSlug}
+                        onChange={(e) => setFormSlug(e.target.value)}
+                      />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Category Tags (comma-separated)</label>
+                      <textarea
+                        rows={2}
+                        className={`${styles.formTextarea} ${styles.expandableInput}`}
+                        placeholder="Criminal Law, BNS 2023, Legal Reform"
+                        value={formTags}
+                        onChange={(e) => setFormTags(e.target.value)}
+                      />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Summary / Excerpt</label>
+                      <textarea
+                        rows={4}
+                        className={`${styles.formTextarea} ${styles.expandableInput}`}
+                        style={{ minHeight: 120 }}
+                        placeholder="Brief executive summary of the article..."
+                        value={formExcerpt}
+                        onChange={(e) => setFormExcerpt(e.target.value)}
+                      />
+                    </div>
+                  </aside>
+                )}
+
+                {/* Right Main Writing Canvas */}
+                <main className={`${styles.editorCanvas} ${focusMode ? styles.focusCanvas : ''}`}>
+                  <div className={styles.canvasHeader}>
+                    <label className={styles.formLabel}>
+                      {focusMode ? `Editing: ${formTitle || 'Untitled Article'} (Focus Writing Mode)` : 'Full Article Content (Markdown / Text) *'}
+                    </label>
+                    <span className={styles.wordCountBadge}>
+                      {formContent.trim() ? `${formContent.trim().split(/\s+/).length} words` : '0 words'}
+                    </span>
+                  </div>
+                  <textarea
+                    className={styles.fullArticleTextarea}
+                    placeholder="Write full legal whitepaper or article content here... (Markdown supported)"
+                    value={formContent}
+                    onChange={(e) => setFormContent(e.target.value)}
+                    required
+                  />
+                </main>
+              </form>
+
+              {/* Dedicated AI Legal Editor Copilot Drawer */}
+              {isAiCopilotOpen && (
+                <div className={styles.copilotDrawer}>
+                  <div className={styles.copilotHeader}>
+                    <div className={styles.copilotTitle}>
+                      <span>🤖</span>
+                      <div>
+                        <h3>AI Legal Copilot</h3>
+                        <p>Gemini AI · Indian Law Assistant</p>
+                      </div>
+                    </div>
+                    <button className={styles.modalClose} onClick={() => setIsAiCopilotOpen(false)} style={{ width: 28, height: 28, fontSize: 14 }}>✕</button>
                   </div>
 
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Author Name</label>
+                  {/* Quick Action Prompt Chips */}
+                  <div className={styles.copilotChips}>
+                    <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('review')}>
+                      ✨ Review Draft
+                    </button>
+                    <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('enhance')}>
+                      💡 Enhancements
+                    </button>
+                    <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('summary')}>
+                      📝 Auto Summary
+                    </button>
+                    <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('simplify')}>
+                      🎯 Simplify
+                    </button>
+                  </div>
+
+                  {/* Conversation History */}
+                  <div className={styles.copilotMessages}>
+                    {aiMessages.length === 0 ? (
+                      <div className={styles.copilotEmpty}>
+                        <span>⚖️</span>
+                        <p>Ask AI to review your article, check statutory accuracy (BNS/BNSS/BSA), or generate section drafts.</p>
+                      </div>
+                    ) : (
+                      aiMessages.map((msg, idx) => (
+                        <div key={idx} className={msg.role === 'user' ? styles.copilotUserMsg : styles.copilotModelMsg}>
+                          <div className={styles.copilotMsgRole}>{msg.role === 'user' ? 'You' : 'AI Copilot'}</div>
+                          <div className={styles.copilotMsgBody}>{msg.content}</div>
+                          {msg.role === 'model' && (
+                            <div className={styles.copilotMsgActions}>
+                              <button
+                                type="button"
+                                className={styles.copilotInsertBtn}
+                                onClick={() => insertIntoContent(msg.content)}
+                                title="Append text directly into article"
+                              >
+                                📌 Insert into Article
+                              </button>
+                              <button
+                                type="button"
+                                className={styles.copilotCopyBtn}
+                                onClick={() => navigator.clipboard.writeText(msg.content)}
+                                title="Copy to clipboard"
+                              >
+                                📋 Copy
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ))
+                    )}
+                    {loadingAi && <div className={styles.copilotLoading}>🤖 Analyzing legal draft...</div>}
+                  </div>
+
+                  {/* Input Row */}
+                  <form onSubmit={(e) => { e.preventDefault(); sendAiAssistantRequest(); }} className={styles.copilotInputRow}>
                     <input
-                      type="text"
-                      className={styles.formInput}
-                      value={formAuthor}
-                      onChange={(e) => setFormAuthor(e.target.value)}
+                      className={styles.copilotInput}
+                      placeholder="Ask AI to draft, edit, or check citations..."
+                      value={aiInput}
+                      onChange={(e) => setAiInput(e.target.value)}
+                      disabled={loadingAi}
                     />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>URL Slug</label>
-                    <textarea
-                      rows={2}
-                      className={`${styles.formTextarea} ${styles.expandableInput}`}
-                      placeholder="auto-generated-if-empty"
-                      value={formSlug}
-                      onChange={(e) => setFormSlug(e.target.value)}
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Category Tags (comma-separated)</label>
-                    <textarea
-                      rows={2}
-                      className={`${styles.formTextarea} ${styles.expandableInput}`}
-                      placeholder="Criminal Law, BNS 2023, Legal Reform"
-                      value={formTags}
-                      onChange={(e) => setFormTags(e.target.value)}
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Summary / Excerpt</label>
-                    <textarea
-                      rows={4}
-                      className={`${styles.formTextarea} ${styles.expandableInput}`}
-                      style={{ minHeight: 120 }}
-                      placeholder="Brief executive summary of the article..."
-                      value={formExcerpt}
-                      onChange={(e) => setFormExcerpt(e.target.value)}
-                    />
-                  </div>
-                </aside>
-              )}
-
-              {/* Right Main Writing Canvas */}
-              <main className={`${styles.editorCanvas} ${focusMode ? styles.focusCanvas : ''}`}>
-                <div className={styles.canvasHeader}>
-                  <label className={styles.formLabel}>
-                    {focusMode ? `Editing: ${formTitle || 'Untitled Article'} (Focus Writing Mode)` : 'Full Article Content (Markdown / Text) *'}
-                  </label>
-                  <span className={styles.wordCountBadge}>
-                    {formContent.trim() ? `${formContent.trim().split(/\s+/).length} words` : '0 words'}
-                  </span>
+                    <button type="submit" className={styles.copilotSendBtn} disabled={loadingAi || !aiInput.trim()}>
+                      Send
+                    </button>
+                  </form>
                 </div>
-                <textarea
-                  className={styles.fullArticleTextarea}
-                  placeholder="Write full legal whitepaper or article content here... (Markdown supported)"
-                  value={formContent}
-                  onChange={(e) => setFormContent(e.target.value)}
-                  required
-                />
-              </main>
-            </form>
+              )}
+            </div>
 
             {/* Sticky Action Footer Bar */}
             <div className={styles.modalActions}>
