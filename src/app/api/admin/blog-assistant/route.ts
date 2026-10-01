@@ -1,5 +1,10 @@
 import { GoogleGenAI } from '@google/genai';
 import { NextResponse } from 'next/server';
+import {
+  validateBlogCopilotInput,
+  sanitizeBlogCopilotOutput,
+  BLOG_COPILOT_SYSTEM_PROMPT,
+} from '@/lib/blogCopilotGuardrails';
 
 export async function POST(req: Request) {
   try {
@@ -9,16 +14,18 @@ export async function POST(req: Request) {
 
     const { action, articleContext, messages, prompt } = await req.json();
 
+    // Independent Input Guardrail Check
+    const inputGuard = validateBlogCopilotInput(prompt, messages);
+    if (!inputGuard.passed) {
+      return NextResponse.json({
+        success: true,
+        reply: inputGuard.guardrailResponse,
+        guardrailTriggered: true,
+      });
+    }
+
     const ai = new GoogleGenAI({ apiKey });
-
-    const systemInstruction = `You are the Senior AI Legal Content Strategist & Proofreader for Advocate Aastha (ENR No. 3475/2026, Bihar State Bar Council).
-Your job is to assist Advocate Aastha in drafting, auditing, improving, expanding, and reviewing high-impact legal articles, whitepapers, and statutory analyses for the "Nyaya Aastha" legal portal.
-
-CORE KNOWLEDGE & DIRECTIVES:
-1. Legal Expertise: Deep accuracy in Bharatiya Nyaya Sanhita (BNS 2023), Bharatiya Nagarik Suraksha Sanhita (BNSS 2023), Bharatiya Sakshya Adhiniyam (BSA 2023), DPDP Act 2023, RERA, Property Law, Family Law, Corporate Law, Constitutional Law, and Supreme Court / High Court precedents.
-2. Review & Enhancement: When reviewing or enhancing, provide actionable feedback, structural improvements, statutory section references, and clear copy-pasteable Markdown snippets.
-3. Tone & Quality: Maintain a polished, authoritative, highly professional legal voice suitable for publishing.
-4. Output Format: Clean Markdown formatting with headings, bold statutory terms, and bullet points.`;
+    const systemInstruction = BLOG_COPILOT_SYSTEM_PROMPT;
 
     const contextSummary = articleContext ? `
 CURRENT ARTICLE DRAFT CONTEXT:
@@ -79,7 +86,8 @@ CURRENT ARTICLE DRAFT CONTEXT:
         });
 
         if (response && response.text) {
-          return NextResponse.json({ success: true, reply: response.text, modelUsed: modelName });
+          const sanitizedReply = sanitizeBlogCopilotOutput(response.text);
+          return NextResponse.json({ success: true, reply: sanitizedReply, modelUsed: modelName });
         }
       } catch (err: any) {
         console.warn(`Gemini SDK model ${modelName} failed in blog-assistant:`, err.message);
@@ -103,9 +111,10 @@ CURRENT ARTICLE DRAFT CONTEXT:
       });
       const restData = await restRes.json();
       if (restData.candidates && restData.candidates[0]?.content?.parts[0]?.text) {
+        const sanitizedReply = sanitizeBlogCopilotOutput(restData.candidates[0].content.parts[0].text);
         return NextResponse.json({
           success: true,
-          reply: restData.candidates[0].content.parts[0].text,
+          reply: sanitizedReply,
           modelUsed: 'gemini-3.5-flash-lite-rest'
         });
       }

@@ -56,11 +56,12 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [hasRestoredDraft, setHasRestoredDraft] = useState<boolean>(false);
   const [focusMode, setFocusMode] = useState<boolean>(false);
 
-  // AI Legal Editor Copilot State
+  // Blog Copilot State
   const [isAiCopilotOpen, setIsAiCopilotOpen] = useState<boolean>(false);
   const [aiMessages, setAiMessages] = useState<Array<{ role: 'user' | 'model'; content: string }>>([]);
   const [aiInput, setAiInput] = useState<string>('');
   const [loadingAi, setLoadingAi] = useState<boolean>(false);
+  const [copilotToast, setCopilotToast] = useState<string>('');
 
   const sendAiAssistantRequest = async (action?: string, customPrompt?: string) => {
     const userText = customPrompt || aiInput;
@@ -97,11 +98,11 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       if (data.success && data.reply) {
         setAiMessages(prev => [...prev, { role: 'model', content: data.reply }]);
       } else {
-        setAiMessages(prev => [...prev, { role: 'model', content: data.reply || 'AI Legal Assistant unavailable.' }]);
+        setAiMessages(prev => [...prev, { role: 'model', content: data.reply || 'Blog Copilot is currently unavailable.' }]);
       }
     } catch (err) {
-      console.error('Error with AI blog assistant:', err);
-      setAiMessages(prev => [...prev, { role: 'model', content: 'Network error contacting AI Legal Assistant.' }]);
+      console.error('Error with Blog Copilot:', err);
+      setAiMessages(prev => [...prev, { role: 'model', content: 'Network error contacting Blog Copilot.' }]);
     } finally {
       setLoadingAi(false);
     }
@@ -836,9 +837,9 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                   type="button"
                   className={`${styles.copilotToggleBtn} ${isAiCopilotOpen ? styles.copilotToggleActive : ''}`}
                   onClick={() => setIsAiCopilotOpen(!isAiCopilotOpen)}
-                  title="Toggle Dedicated AI Legal Editor Copilot"
+                  title="Toggle Blog Copilot"
                 >
-                  🤖 AI Legal Copilot
+                  ✨ Blog Copilot
                 </button>
                 <button
                   type="button"
@@ -862,7 +863,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               </div>
             </div>
 
-            {/* Main Workspace with Optional AI Copilot Drawer */}
+            {/* Main Workspace with Integrated Blog Copilot Drawer */}
             <div style={{ display: 'flex', flex: 1, height: 'calc(100vh - 128px)', overflow: 'hidden' }}>
               <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
                 {/* Left Metadata Sidebar (Hidden in Focus Mode) */}
@@ -946,62 +947,85 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 </main>
               </form>
 
-              {/* Dedicated AI Legal Editor Copilot Drawer */}
+              {/* Integrated Blog Copilot Drawer */}
               {isAiCopilotOpen && (
                 <div className={styles.copilotDrawer}>
                   <div className={styles.copilotHeader}>
                     <div className={styles.copilotTitle}>
-                      <span>🤖</span>
+                      <div className={styles.copilotBadgeIcon}>🖋️</div>
                       <div>
-                        <h3>AI Legal Copilot</h3>
-                        <p>Gemini AI · Indian Law Assistant</p>
+                        <h3>Blog Copilot</h3>
+                        <p>Legal Writing & Proofreading Assistant</p>
                       </div>
                     </div>
-                    <button className={styles.modalClose} onClick={() => setIsAiCopilotOpen(false)} style={{ width: 28, height: 28, fontSize: 14 }}>✕</button>
+                    <button
+                      type="button"
+                      className={styles.modalClose}
+                      onClick={() => setIsAiCopilotOpen(false)}
+                      style={{ width: 28, height: 28, fontSize: 13 }}
+                      title="Hide Blog Copilot"
+                    >
+                      ✕
+                    </button>
                   </div>
 
                   {/* Quick Action Prompt Chips */}
                   <div className={styles.copilotChips}>
                     <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('review')}>
-                      ✨ Review Draft
+                      ✨ Audit & Review
                     </button>
                     <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('enhance')}>
-                      💡 Enhancements
+                      💡 Elevate Style
                     </button>
                     <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('summary')}>
                       📝 Auto Summary
                     </button>
                     <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('simplify')}>
-                      🎯 Simplify
+                      🎯 Simplify Text
                     </button>
                   </div>
+
+                  {/* Toast Notification */}
+                  {copilotToast && (
+                    <div className={styles.copilotToastBar}>
+                      {copilotToast}
+                    </div>
+                  )}
 
                   {/* Conversation History */}
                   <div className={styles.copilotMessages}>
                     {aiMessages.length === 0 ? (
                       <div className={styles.copilotEmpty}>
-                        <span>⚖️</span>
-                        <p>Ask AI to review your article, check statutory accuracy (BNS/BNSS/BSA), or generate section drafts.</p>
+                        <span style={{ fontSize: 32 }}>📜</span>
+                        <p>Ask Blog Copilot to draft section outlines, check statutory accuracy (BNS/BNSS/BSA), or polish your article style.</p>
                       </div>
                     ) : (
                       aiMessages.map((msg, idx) => (
                         <div key={idx} className={msg.role === 'user' ? styles.copilotUserMsg : styles.copilotModelMsg}>
-                          <div className={styles.copilotMsgRole}>{msg.role === 'user' ? 'You' : 'AI Copilot'}</div>
+                          <div className={styles.copilotMsgRole}>{msg.role === 'user' ? 'You' : 'Blog Copilot'}</div>
                           <div className={styles.copilotMsgBody}>{msg.content}</div>
                           {msg.role === 'model' && (
                             <div className={styles.copilotMsgActions}>
                               <button
                                 type="button"
                                 className={styles.copilotInsertBtn}
-                                onClick={() => insertIntoContent(msg.content)}
-                                title="Append text directly into article"
+                                onClick={() => {
+                                  insertIntoContent(msg.content);
+                                  setCopilotToast('✓ Inserted into article body!');
+                                  setTimeout(() => setCopilotToast(''), 2500);
+                                }}
+                                title="Append text directly into article body"
                               >
                                 📌 Insert into Article
                               </button>
                               <button
                                 type="button"
                                 className={styles.copilotCopyBtn}
-                                onClick={() => navigator.clipboard.writeText(msg.content)}
+                                onClick={() => {
+                                  navigator.clipboard.writeText(msg.content);
+                                  setCopilotToast('✓ Copied to clipboard!');
+                                  setTimeout(() => setCopilotToast(''), 2500);
+                                }}
                                 title="Copy to clipboard"
                               >
                                 📋 Copy
@@ -1011,14 +1035,14 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                         </div>
                       ))
                     )}
-                    {loadingAi && <div className={styles.copilotLoading}>🤖 Analyzing legal draft...</div>}
+                    {loadingAi && <div className={styles.copilotLoading}>🤖 Blog Copilot analyzing legal draft...</div>}
                   </div>
 
                   {/* Input Row */}
                   <form onSubmit={(e) => { e.preventDefault(); sendAiAssistantRequest(); }} className={styles.copilotInputRow}>
                     <input
                       className={styles.copilotInput}
-                      placeholder="Ask AI to draft, edit, or check citations..."
+                      placeholder="Ask Blog Copilot to draft, edit, or check citations..."
                       value={aiInput}
                       onChange={(e) => setAiInput(e.target.value)}
                       disabled={loadingAi}

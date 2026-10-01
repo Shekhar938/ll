@@ -717,25 +717,25 @@
     padding: 10px 12px;
     font-size: 13px;
   }
-/* AI Legal Editor Copilot Drawer */
+/* Blog Copilot Integrated Drawer */
 .copilotDrawer {
   width: 380px;
   min-width: 340px;
   background: var(--navy);
   color: white;
-  border-left: 1px solid rgba(255,255,255,0.1);
+  border-left: 1px solid rgba(201,162,39,0.25);
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  box-shadow: -8px 0 24px rgba(11,31,58,0.3);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
   flex-shrink: 0;
   z-index: 20;
 }
 
 .copilotHeader {
   padding: 14px 18px;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.3);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
@@ -748,8 +748,17 @@
   gap: 10px;
 }
 
-.copilotTitle span {
-  font-size: 22px;
+.copilotBadgeIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: rgba(201,162,39,0.2);
+  border: 1px solid rgba(201,162,39,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
 }
 
 .copilotTitle h3 {
@@ -770,13 +779,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.18);
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .copilotChip {
   background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
   border: 1px solid rgba(255,255,255,0.15);
   padding: 5px 10px;
   border-radius: var(--radius-full);
@@ -791,6 +800,16 @@
   background: var(--gold);
   color: var(--navy);
   border-color: var(--gold);
+}
+
+.copilotToastBar {
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  text-align: center;
+  animation: fadeIn 0.2s ease-in-out;
 }
 
 .copilotMessages {
@@ -812,10 +831,6 @@
   gap: 10px;
 }
 
-.copilotEmpty span {
-  font-size: 36px;
-}
-
 .copilotEmpty p {
   font-size: 12px;
   line-height: 1.5;
@@ -823,8 +838,8 @@
 
 .copilotUserMsg {
   align-self: flex-end;
-  background: rgba(201,162,39,0.2);
-  border: 1px solid rgba(201,162,39,0.4);
+  background: rgba(201,162,39,0.18);
+  border: 1px solid rgba(201,162,39,0.35);
   color: white;
   padding: 10px 14px;
   border-radius: 12px 12px 2px 12px;
@@ -834,9 +849,9 @@
 
 .copilotModelMsg {
   align-self: flex-start;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.92);
   padding: 12px 14px;
   border-radius: 12px 12px 12px 2px;
   max-width: 95%;
@@ -892,6 +907,10 @@
   cursor: pointer;
 }
 
+.copilotCopyBtn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
 .copilotLoading {
   font-size: 12px;
   color: var(--gold);
@@ -902,7 +921,7 @@
 
 .copilotInputRow {
   padding: 12px 14px;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.3);
   border-top: 1px solid rgba(255,255,255,0.1);
   display: flex;
   gap: 8px;
@@ -913,7 +932,7 @@
   padding: 9px 12px;
   border-radius: var(--radius-md);
   border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.4);
   color: white;
   font-size: 13px;
   font-family: inherit;
