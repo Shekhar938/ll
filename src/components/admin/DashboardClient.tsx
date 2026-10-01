@@ -154,7 +154,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   // Draft Cache State
   const [lastSavedTime, setLastSavedTime] = useState<string>('');
   const [hasRestoredDraft, setHasRestoredDraft] = useState<boolean>(false);
-  const [focusMode, setFocusMode] = useState<boolean>(false);
+  const [showMetadata, setShowMetadata] = useState<boolean>(true);
 
   // Blog Copilot State
   const [isAiCopilotOpen, setIsAiCopilotOpen] = useState<boolean>(false);
@@ -994,11 +994,11 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 </button>
                 <button
                   type="button"
-                  className={`${styles.focusToggleBtn} ${focusMode ? styles.focusToggleActive : ''}`}
-                  onClick={() => setFocusMode(!focusMode)}
-                  title={focusMode ? "Show metadata sidebar" : "Focus writing mode (hide metadata)"}
+                  className={`${styles.focusToggleBtn} ${!showMetadata ? styles.focusToggleActive : ''}`}
+                  onClick={() => setShowMetadata(!showMetadata)}
+                  title={showMetadata ? "Collapse metadata sidebar (Title, Slug, Category, Tags)" : "Expand metadata sidebar"}
                 >
-                  {focusMode ? '📑 Show Metadata' : '✨ Focus Mode'}
+                  {showMetadata ? '📑 Hide Metadata' : '📑 Show Metadata'}
                 </button>
                 {hasRestoredDraft && (
                   <button
@@ -1017,8 +1017,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
             {/* Main Workspace with Integrated Blog Copilot Drawer */}
             <div className={styles.modalWorkspace}>
               <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
-                {/* Left Metadata Sidebar (Hidden in Focus Mode) */}
-                {!focusMode && (
+                {/* Left Collapsible Metadata Sidebar */}
+                {showMetadata && (
                   <aside className={styles.editorSidebar}>
                     <div className={styles.formGroup}>
                       <label className={styles.formLabel}>Article Title *</label>
@@ -1079,10 +1079,10 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 )}
 
                 {/* Right Main Writing Canvas */}
-                <main className={`${styles.editorCanvas} ${focusMode ? styles.focusCanvas : ''}`}>
+                <main className={`${styles.editorCanvas} ${!showMetadata ? styles.focusCanvas : ''}`}>
                   <div className={styles.canvasHeader}>
                     <label className={styles.formLabel}>
-                      {focusMode ? `Editing: ${formTitle || 'Untitled Article'} (Focus Writing Mode)` : 'Full Article Content (Markdown / Text) *'}
+                      {!showMetadata ? `Editing: ${formTitle || 'Untitled Article'} (Metadata Collapsed)` : 'Full Article Content (Markdown / Text) *'}
                     </label>
                     <span className={styles.wordCountBadge}>
                       {formContent.trim() ? `${formContent.trim().split(/\s+/).length} words` : '0 words'}
