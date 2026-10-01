@@ -39,6 +39,19 @@ export async function initializeBlogDatabase() {
     `;
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_blog_slug ON blog_posts(slug);`;
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_blog_published ON blog_posts("publishedAt" DESC);`;
+
+    // Seed initial blog posts if table is empty
+    const { rows: countRows } = await pool.sql`SELECT COUNT(*)::int as count FROM blog_posts`;
+    if (countRows[0]?.count === 0) {
+      for (const post of memoryPosts) {
+        await pool.sql`
+          INSERT INTO blog_posts (id, slug, title, excerpt, content, author, "publishedAt", tags)
+          VALUES (${post.id}, ${post.slug}, ${post.title}, ${post.excerpt}, ${post.content}, ${post.author}, ${post.publishedAt}, ${JSON.stringify(post.tags || [])}::jsonb)
+          ON CONFLICT (id) DO NOTHING
+        `;
+      }
+      console.log('Seeded blog_posts table with initial data.');
+    }
   } catch (error) {
     console.error('Failed to initialize blog database:', error);
   }
@@ -133,7 +146,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   if (pool) {
     try {
       const { rows } = await pool.sql<BlogPost>`SELECT * FROM blog_posts ORDER BY "publishedAt" DESC`;
-      return rows;
+      if (rows.length > 0) return rows;
     } catch (error) {
       console.warn('PostgreSQL query failed, using in-memory blog store:', error);
     }
