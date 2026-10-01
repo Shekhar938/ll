@@ -26,6 +26,91 @@ const URGENCY_COLORS: Record<string, string> = {
   low: '#34C759',
 };
 
+function parseInlineMarkdown(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+      return <strong key={i} style={{ color: '#FFFFFF', fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith('*') && part.endsWith('*') && part.length >= 2 && !part.startsWith('**')) {
+      return <em key={i} style={{ fontStyle: 'italic', opacity: 0.9 }}>{part.slice(1, -1)}</em>;
+    }
+    if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
+      return <code key={i} style={{ background: 'rgba(255,255,255,0.15)', color: '#FCE8A6', padding: '2px 6px', borderRadius: 4, fontSize: '0.9em', fontFamily: 'monospace' }}>{part.slice(1, -1)}</code>;
+    }
+    return part;
+  });
+}
+
+function FormattedMarkdown({ content }: { content: string }) {
+  if (!content) return null;
+
+  const lines = content.split('\n');
+  const elements: React.ReactNode[] = [];
+  let listItems: string[] = [];
+
+  const flushList = (key: string) => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`ul-${key}`} style={{ paddingLeft: 18, margin: '8px 0', listStyleType: 'disc' }}>
+          {listItems.map((item, idx) => (
+            <li key={idx} style={{ marginBottom: 4 }}>
+              {parseInlineMarkdown(item)}
+            </li>
+          ))}
+        </ul>
+      );
+      listItems = [];
+    }
+  };
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      listItems.push(trimmed.slice(2));
+      return;
+    } else {
+      flushList(`${index}`);
+    }
+
+    if (!trimmed) {
+      elements.push(<div key={`sp-${index}`} style={{ height: 6 }} />);
+      return;
+    }
+
+    if (trimmed.startsWith('### ')) {
+      elements.push(
+        <h4 key={index} style={{ fontSize: 13, fontWeight: 700, color: '#FCE8A6', margin: '10px 0 4px 0' }}>
+          {parseInlineMarkdown(trimmed.slice(4))}
+        </h4>
+      );
+    } else if (trimmed.startsWith('## ')) {
+      elements.push(
+        <h3 key={index} style={{ fontSize: 14, fontWeight: 700, color: '#FCE8A6', margin: '12px 0 6px 0', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 4 }}>
+          {parseInlineMarkdown(trimmed.slice(3))}
+        </h3>
+      );
+    } else if (trimmed.startsWith('# ')) {
+      elements.push(
+        <h2 key={index} style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF', margin: '14px 0 6px 0' }}>
+          {parseInlineMarkdown(trimmed.slice(2))}
+        </h2>
+      );
+    } else {
+      elements.push(
+        <p key={index} style={{ margin: '4px 0', lineHeight: 1.6 }}>
+          {parseInlineMarkdown(line)}
+        </p>
+      );
+    }
+  });
+
+  flushList('final');
+
+  return <div style={{ wordBreak: 'break-word' }}>{elements}</div>;
+}
+
 export default function DashboardClient({ consultations, stats, initialBlogPosts = [] }: Props) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'consultations' | 'blogs'>('consultations');
@@ -1006,7 +1091,13 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                       aiMessages.map((msg, idx) => (
                         <div key={idx} className={msg.role === 'user' ? styles.copilotUserMsg : styles.copilotModelMsg}>
                           <div className={styles.copilotMsgRole}>{msg.role === 'user' ? 'You' : 'Blog Copilot'}</div>
-                          <div className={styles.copilotMsgBody}>{msg.content}</div>
+                          <div className={styles.copilotMsgBody}>
+                            {msg.role === 'model' ? (
+                              <FormattedMarkdown content={msg.content} />
+                            ) : (
+                              msg.content
+                            )}
+                          </div>
                           {msg.role === 'model' && (
                             <div className={styles.copilotMsgActions}>
                               <button
