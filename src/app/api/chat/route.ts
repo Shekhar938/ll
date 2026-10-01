@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const DEFAULT_KEY_B64 = 'QVEuQWI4Uk42STVrTWNwWGY5RTU2aG14OXN4U2RzQWEyOGZpc1pSckJrcUVTLXcyMzcyc3c=';
+    const DEFAULT_KEY_B64 = 'QVEuQWI4Uk42STVrTWNwWGY5RTU2aG14OWN4U2RzQWEyOGZpc1pSckJrcUVTLXcyMzcyc3c=';
     const fallbackKey = typeof Buffer !== 'undefined' ? Buffer.from(DEFAULT_KEY_B64, 'base64').toString('utf-8') : '';
     const apiKey = process.env.GEMINI_API_KEY || process.env.DATA_GEMINI_API_KEY || fallbackKey;
 
@@ -62,8 +62,6 @@ STRICT GUARDRAILS & CORE DIRECTIVES:
 - Include a short 1-line BCI disclaimer at the end.`;
 
     const FAST_MODELS = [
-      'gemini-2.5-flash-lite',
-      'gemini-2.5-flash',
       'gemini-3.5-flash-lite',
       'gemini-3.5-flash',
       'gemini-3.8-flash'
@@ -96,7 +94,7 @@ STRICT GUARDRAILS & CORE DIRECTIVES:
     // Direct REST API Fallback if SDK calls fail
     if (!responseText && apiKey) {
       try {
-        const restUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+        const restUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`;
         const restRes = await fetch(restUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
