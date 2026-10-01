@@ -11,7 +11,7 @@ export const translations = {
       subtitle: 'Official Portal',
       desc: 'Information portal for Advocate Aastha. Practicing across multiple legal disciplines in India.',
       enrollment: 'ENR No: 3475/2026',
-      bar: 'State Bar Council',
+      bar: 'Bihar State Bar Council',
       clientPortal: 'Client Portal',
       profile: 'Professional Profile'
     },
@@ -21,7 +21,7 @@ export const translations = {
       features: [
         {
           title: 'Bar Council Enrollment',
-          desc: 'Enrolled Advocate. Enrollment Number: ENR No. 3475/2026.',
+          desc: 'Enrolled with the Bihar State Bar Council. Enrollment Number: ENR No. 3475/2026.',
           icon: '⚖️'
         },
         {
@@ -76,7 +76,7 @@ export const translations = {
     footer: {
       brand: 'Nyaya Aastha',
       tagline: 'Advocate Aastha | Official Portal',
-      desc: 'Enrollment No: ENR No. 3475/2026. Strictly for informational purposes in compliance with BCI Rules.',
+      desc: 'Enrollment No: ENR No. 3475/2026 (Bihar State Bar Council). Strictly for informational purposes in compliance with BCI Rules.',
       infoCol: 'Information',
       clientPortal: 'Client Portal',
       practiceAreas: 'Practice Areas',
@@ -165,7 +165,7 @@ export const translations = {
       subtitle: 'आधिकारिक पोर्टल',
       desc: 'अधिवक्ता आस्था के लिए सूचना पोर्टल। भारत में कई कानूनी विषयों में अभ्यास कर रही हैं।',
       enrollment: 'नामांकन संख्या: ENR No. 3475/2026',
-      bar: 'राज्य बार काउंसिल',
+      bar: 'बिहार राज्य बार काउंसिल',
       clientPortal: 'क्लाइंट पोर्टल',
       profile: 'पेशेवर प्रोफ़ाइल'
     },
@@ -175,7 +175,7 @@ export const translations = {
       features: [
         {
           title: 'बार काउंसिल नामांकन',
-          desc: 'नामांकित अधिवक्ता। नामांकन संख्या: ENR No. 3475/2026।',
+          desc: 'बिहार राज्य बार काउंसिल में नामांकित। नामांकन संख्या: ENR No. 3475/2026।',
           icon: '⚖️'
         },
         {
@@ -230,7 +230,7 @@ export const translations = {
     footer: {
       brand: 'न्याय आस्था',
       tagline: 'अधिवक्ता आस्था | आधिकारिक पोर्टल',
-      desc: 'नामांकन संख्या: ENR No. 3475/2026. BCI नियमों के अनुपालन में केवल सूचनात्मक उद्देश्यों के लिए।',
+      desc: 'नामांकन संख्या: ENR No. 3475/2026 (बिहार राज्य बार काउंसिल)। BCI नियमों के अनुपालन में केवल सूचनात्मक उद्देश्यों के लिए।',
       infoCol: 'जानकारी',
       clientPortal: 'क्लाइंट पोर्टल',
       practiceAreas: 'अभ्यास क्षेत्र',
