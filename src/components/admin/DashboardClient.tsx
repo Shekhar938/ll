@@ -943,7 +943,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 </h2>
                 {lastSavedTime && (
                   <span className={styles.draftBadge}>
-                    💾 Cache Auto-saved {lastSavedTime}
+                    ✨ Auto-saved at {lastSavedTime}
                   </span>
                 )}
               </div>
@@ -969,9 +969,9 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                     type="button"
                     className={styles.discardDraftBtn}
                     onClick={discardDraft}
-                    title="Discard unsaved draft cache"
+                    title="Discard unsaved edits and reset draft"
                   >
-                    Discard Saved Cache
+                    Reset Unsaved Edits
                   </button>
                 )}
                 <button className={styles.modalClose} onClick={closeBlogModal} title="Close (Esc)">✕</button>
@@ -1195,9 +1195,9 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
             <div className={styles.modalActions}>
               <div className={styles.footerInfo}>
                 {hasRestoredDraft ? (
-                  <span style={{ color: '#FF9F0A', fontSize: 13, fontWeight: 600 }}>⚡ Unsaved draft restored from browser cache</span>
+                  <span style={{ color: '#FF9F0A', fontSize: 13, fontWeight: 600 }}>⚡ Restored your recent unsaved edits</span>
                 ) : (
-                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>Draft automatically saved in browser local storage</span>
+                  <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>Your draft is automatically saved as you write</span>
                 )}
               </div>
               <div className={styles.footerButtons}>
