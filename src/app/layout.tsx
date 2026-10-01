@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import DisclaimerModal from '@/components/DisclaimerModal';
+import ChatWidget from '@/components/ChatWidget';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 
 export const metadata: Metadata = {
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LanguageProvider>
           <DisclaimerModal />
           {children}
+          <ChatWidget />
         </LanguageProvider>
       </body>
     </html>
