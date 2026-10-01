@@ -190,13 +190,13 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       {/* Mobile Top Header Bar */}
       <header className={styles.mobileHeader}>
         <div className={styles.mobileTopRow}>
-          <div className={styles.sidebarLogo} style={{ padding: 0, margin: 0, border: 'none' }}>
+          <div className={styles.mobileLogo}>
             <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
               <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" fill="#C9A227" opacity="0.2"/>
               <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" stroke="#C9A227" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
-            <span className={styles.sidebarBrand}>Nyaya Aastha</span>
+            <span className={styles.mobileBrand}>Nyaya Aastha</span>
           </div>
           <div className={styles.mobileHeaderActions}>
             <Link href="/" className={styles.mobileNavIcon} target="_blank" title="View Live Site">
