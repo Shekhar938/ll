@@ -170,6 +170,19 @@ export default function ChatWidget() {
               </div>
             </div>
             <div className={styles.headerControls}>
+              {messages.length > 0 && (
+                <button
+                  className={styles.headerControlBtn}
+                  onClick={() => {
+                    setMessages([]);
+                    setInput('');
+                  }}
+                  aria-label="Reset Chat"
+                  title="Reset Chat / Start New Conversation"
+                >
+                  ↻
+                </button>
+              )}
               <button
                 className={styles.headerControlBtn}
                 onClick={() => setIsMinimized(true)}
