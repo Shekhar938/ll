@@ -415,14 +415,96 @@
 
 .saveNotesBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
+.mobileProfileHeader {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .aiGrid { grid-template-columns: 1fr 1fr; }
   .detailGrid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
   .sidebar { display: none; }
-  .main { margin-left: 0; max-width: 100%; padding: 20px 16px; }
+  
+  .mobileProfileHeader {
+    display: flex;
+    flex-direction: column;
+    background: var(--navy);
+    padding: 16px;
+    gap: 14px;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .mobileTopNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mobileBackBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .mobileHeaderBrand {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+  }
+  .mobileProfileInfo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .mobileProfileName {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+  .mobileProfileSub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+  .mobileContactRow {
+    display: flex;
+    gap: 8px;
+  }
+  .mobileContactRow .contactBtn {
+    flex: 1;
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+  .mobileStatusRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.06);
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+  }
+  .mobileStatusRow .statusSelect {
+    flex: 1;
+  }
+
+  .main {
+    margin-left: 0;
+    max-width: 100vw;
+    padding: 16px;
+    gap: 16px;
+  }
+  .aiCard, .detailCard {
+    padding: 18px 16px;
+  }
   .aiGrid { grid-template-columns: 1fr; }
-  .detailGrid { grid-template-columns: 1fr; }
+  .detailGrid { grid-template-columns: 1fr; gap: 14px; }
 }
+

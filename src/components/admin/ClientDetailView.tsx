@@ -39,7 +39,51 @@ export default function ClientDetailView({ consultation: initial }: Props) {
 
   return (
     <div className={styles.wrapper}>
-      {/* Sidebar */}
+      {/* Mobile Header Card */}
+      <header className={styles.mobileProfileHeader}>
+        <div className={styles.mobileTopNav}>
+          <Link href="/admin/dashboard" className={styles.mobileBackBtn}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Dashboard
+          </Link>
+          <span className={styles.mobileHeaderBrand}>Nyaya Aastha</span>
+        </div>
+
+        <div className={styles.mobileProfileInfo}>
+          <div className={styles.clientAvatar}>{c.fullName.charAt(0)}</div>
+          <div>
+            <h2 className={styles.mobileProfileName}>{c.fullName}</h2>
+            <p className={styles.mobileProfileSub}>{c.city}, {c.state} · <span className={styles.profileId}>{c.id}</span></p>
+          </div>
+        </div>
+
+        <div className={styles.mobileContactRow}>
+          <a href={`tel:${c.mobile}`} className={styles.contactBtn}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            Call
+          </a>
+          <a href={`https://wa.me/91${c.mobile}`} target="_blank" rel="noopener noreferrer" className={`${styles.contactBtn} ${styles.waBtn}`}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href={`mailto:${c.email}`} className={styles.contactBtn}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+        </div>
+
+        <div className={styles.mobileStatusRow}>
+          <label className={styles.statusLabel}>Status:</label>
+          <select className={styles.statusSelect} value={c.status} onChange={(e) => updateStatus(e.target.value)} disabled={saving}>
+            <option value="pending">Pending</option>
+            <option value="in-progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+      </header>
+
+      {/* Desktop Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarTop}>
           <Link href="/admin/dashboard" className={styles.backBtn}>
