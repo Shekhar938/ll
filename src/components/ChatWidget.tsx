@@ -15,31 +15,45 @@ const INITIAL_SUGGESTIONS = [
   'How do I request a consultation?'
 ];
 
+function FormattedLine({ line }: { line: string }) {
+  const isBullet = /^[*\-•]\s+/.test(line.trim());
+  const textToParse = isBullet ? line.trim().replace(/^[*\-•]\s+/, '') : line;
+  const parts = textToParse.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+
+  return (
+    <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+      {isBullet && <span style={{ color: '#C9A227', fontWeight: 'bold' }}>•</span>}
+      <div style={{ flex: 1 }}>
+        {parts.map((part, idx) => {
+          if (part.startsWith('**') && part.endsWith('**')) {
+            return (
+              <strong key={idx} style={{ color: '#0B1F3A', fontWeight: 600 }}>
+                {part.slice(2, -2)}
+              </strong>
+            );
+          }
+          if (part.startsWith('*') && part.endsWith('*') && part.length > 2 && !part.startsWith('**')) {
+            return <em key={idx} style={{ fontStyle: 'italic', opacity: 0.9 }}>{part.slice(1, -1)}</em>;
+          }
+          return part;
+        })}
+      </div>
+    </div>
+  );
+}
+
 function FormattedText({ content }: { content: string }) {
   const paragraphs = content.split('\n\n');
   
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       {paragraphs.map((p, pIdx) => {
-        const lines = p.split('\n');
+        const lines = p.split('\n').filter(l => l.trim().length > 0);
         return (
-          <div key={pIdx}>
-            {lines.map((line, lIdx) => {
-              const parts = line.split(/(\*\*.*?\*\*)/g);
-              const isBullet = line.trim().startsWith('* ') || line.trim().startsWith('- ');
-              const cleanLine = isBullet ? line.trim().replace(/^[\*\-]\s*/, '• ') : line;
-              
-              return (
-                <div key={lIdx} style={{ marginTop: lIdx > 0 ? '4px' : '0' }}>
-                  {parts.map((part, partIdx) => {
-                    if (part.startsWith('**') && part.endsWith('**')) {
-                      return <strong key={partIdx} style={{ color: '#0B1F3A', fontWeight: 600 }}>{part.slice(2, -2)}</strong>;
-                    }
-                    return isBullet ? cleanLine : part;
-                  })}
-                </div>
-              );
-            })}
+          <div key={pIdx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {lines.map((line, lIdx) => (
+              <FormattedLine key={lIdx} line={line} />
+            ))}
           </div>
         );
       })}
