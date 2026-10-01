@@ -5,6 +5,8 @@ import styles from './page.module.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+export const dynamic = 'force-dynamic';
+
 // Optional: Generates static routes at build time for speed
 // export async function generateStaticParams() {
 //   const posts = await getBlogPosts();

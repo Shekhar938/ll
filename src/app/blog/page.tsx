@@ -4,6 +4,8 @@ import styles from './page.module.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Blog | NyayaConnect',
   description: 'Legal insights, guides, and news from NyayaConnect.',
