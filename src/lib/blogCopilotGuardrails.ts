@@ -54,7 +54,7 @@ export function validateBlogCopilotInput(
         passed: false,
         rejectReason: 'Prompt injection or system prompt override attempt detected.',
         guardrailResponse:
-          '🛡️ **Blog Copilot Guardrail Warning**: Requests attempting to override system directives, extract system prompts, or bypass safety boundaries are blocked. Please rephrase your query to focus on legal writing or blog editing.',
+          '⚠️ Guardrail Notice: Requests attempting to override system directives or extract internal prompts are restricted. Please focus on legal writing or blog editing.',
       };
     }
   }
@@ -66,7 +66,7 @@ export function validateBlogCopilotInput(
         passed: false,
         rejectReason: 'Off-topic or harmful content request.',
         guardrailResponse:
-          '🛡️ **Blog Copilot Guardrail Warning**: Blog Copilot is specialized exclusively for assisting Advocate Aastha with legal articles, statutory proofreading (BNS/BNSS/BSA), and editorial content enhancement. Harmful or unrelated requests are blocked.',
+          '⚠️ Guardrail Notice: Blog Copilot is specialized exclusively for assisting Advocate Aastha with legal articles and statutory proofreading (BNS/BNSS/BSA). Non-legal requests are restricted.',
       };
     }
   }
@@ -78,7 +78,7 @@ export function validateBlogCopilotInput(
         passed: false,
         rejectReason: 'Casual off-topic query.',
         guardrailResponse:
-          '🛡️ **Blog Copilot Guardrail Warning**: I am specialized exclusively for assisting Advocate Aastha with legal article drafting, statutory proofreading (BNS/BNSS/BSA), and editorial content enhancement. Please ask a legal writing or blog editing question.',
+          '⚠️ Off-Topic Notice: Blog Copilot is specialized exclusively for legal article drafting, statutory proofreading (BNS/BNSS/BSA), and editorial content enhancement. Please ask a legal or writing question.',
       };
     }
   }
@@ -106,7 +106,7 @@ export const BLOG_COPILOT_SYSTEM_PROMPT = `You are the Senior Blog Copilot & Leg
 INDEPENDENT GUARDRAILS & MANDATE:
 1. Editorial & Domain Boundary: You assist Advocate Aastha exclusively in drafting, auditing, proofreading, structuring, and enhancing legal articles, whitepapers, statutory breakdowns, and public legal education posts.
 2. Off-Topic & Casual Chatter Guardrail: If the user asks an off-topic, non-legal, or casual/flirtatious question (e.g. "hey cutie", "tell a joke", unrelated trivia), ALWAYS respond with:
-   "🛡️ **Blog Copilot Guardrail Warning**: I am specialized exclusively for assisting Advocate Aastha with legal article drafting, statutory proofreading (BNS 2023 / BNSS 2023 / BSA 2023), and editorial content enhancement. Please ask a legal or article-editing question."
+   "⚠️ Off-Topic Notice: Blog Copilot is specialized exclusively for legal article drafting, statutory proofreading (BNS/BNSS/BSA), and editorial content enhancement. Please ask a legal or writing question."
 3. AI Generation & Originality Audit: When requested to perform an AI Generation & Plagiarism Audit, evaluate the text for:
    - Estimated AI Content Likelihood (0–100% score based on repetitive sentence structures, uniform length, and AI filler terms like "delve", "testament", "tapestry", "paramount", "pivotal", "in conclusion").
    - Plagiarism & Attribution Risk (flag unattributed statutory quotes or generic regurgitations missing specific legal analysis).

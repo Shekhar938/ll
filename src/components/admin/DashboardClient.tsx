@@ -147,6 +147,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [aiInput, setAiInput] = useState<string>('');
   const [loadingAi, setLoadingAi] = useState<boolean>(false);
   const [copilotToast, setCopilotToast] = useState<string>('');
+  const [guardrailPopup, setGuardrailPopup] = useState<string | null>(null);
 
   // Blog Copilot Drag Resizer State
   const [copilotWidth, setCopilotWidth] = useState<number>(440);
@@ -211,14 +212,21 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
 
       const data = await res.json();
       if (data.success && data.reply) {
-        const isGuard = !!data.isGuardrail || !!data.guardrailTriggered || data.reply.includes('🛡️');
-        setAiMessages(prev => [...prev, { role: 'model', content: data.reply, isGuardrail: isGuard }]);
+        const isGuard = !!data.isGuardrail || !!data.guardrailTriggered || data.reply.includes('🛡️') || data.reply.includes('Notice:');
+        if (isGuard) {
+          // Remove the off-topic user prompt from chat history to keep conversation clean
+          setAiMessages(prev => prev.slice(0, -1));
+          const cleanWarning = data.reply.replace(/🛡️\s*(\*\*)?Blog Copilot Guardrail Warning(\*\*)?:?\s*/gi, '').trim();
+          setGuardrailPopup(cleanWarning);
+        } else {
+          setAiMessages(prev => [...prev, { role: 'model', content: data.reply }]);
+        }
       } else {
-        setAiMessages(prev => [...prev, { role: 'model', content: data.reply || 'Blog Copilot is currently unavailable.', isGuardrail: true }]);
+        setGuardrailPopup('Blog Copilot is currently unavailable.');
       }
     } catch (err) {
       console.error('Error with Blog Copilot:', err);
-      setAiMessages(prev => [...prev, { role: 'model', content: 'Network error contacting Blog Copilot.', isGuardrail: true }]);
+      setGuardrailPopup('Network error contacting Blog Copilot.');
     } finally {
       setLoadingAi(false);
     }
@@ -1135,6 +1143,33 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                   {copilotToast && (
                     <div className={styles.copilotToastBar}>
                       {copilotToast}
+                    </div>
+                  )}
+
+                  {/* Dismissible Floating Guardrail Warning Popup */}
+                  {guardrailPopup && (
+                    <div className={styles.copilotGuardrailPopup}>
+                      <div className={styles.copilotGuardrailHeader}>
+                        <span>⚠️ Blog Copilot Notice</span>
+                        <button
+                          type="button"
+                          className={styles.copilotPopupCloseBtn}
+                          onClick={() => setGuardrailPopup(null)}
+                          title="Dismiss notice"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                      <div className={styles.copilotGuardrailBody}>
+                        {guardrailPopup}
+                      </div>
+                      <button
+                        type="button"
+                        className={styles.copilotPopupDismissBtn}
+                        onClick={() => setGuardrailPopup(null)}
+                      >
+                        Understood
+                      </button>
                     </div>
                   )}
 

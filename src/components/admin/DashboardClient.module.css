@@ -1158,4 +1158,72 @@
   }
 }
 
+.copilotGuardrailPopup {
+  position: absolute;
+  top: 75px;
+  left: 14px;
+  right: 14px;
+  z-index: 500;
+  background: #1C1405;
+  border: 1.5px solid #FF9F0A;
+  border-radius: var(--radius-lg, 12px);
+  padding: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 159, 10, 0.3);
+}
+
+.copilotGuardrailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 800;
+  color: #FF9F0A;
+  margin-bottom: 8px;
+}
+
+.copilotPopupCloseBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #FF9F0A;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.copilotPopupCloseBtn:hover {
+  background: rgba(255, 159, 10, 0.3);
+  color: #FFFFFF;
+}
+
+.copilotGuardrailBody {
+  font-size: 13px;
+  color: #FFE082;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.copilotPopupDismissBtn {
+  width: 100%;
+  padding: 8px 12px;
+  background: #FF9F0A;
+  color: #0B132B;
+  border: none;
+  border-radius: var(--radius-md, 6px);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.copilotPopupDismissBtn:hover {
+  background: #ffb340;
+}
+
 
