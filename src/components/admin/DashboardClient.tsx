@@ -455,6 +455,18 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen]);
 
+  // Lock body scroll when modal is open to prevent mobile address bar jumping & layout shifts
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isModalOpen]);
+
   const discardDraft = () => {
     const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
     localStorage.removeItem(draftKey);
@@ -980,7 +992,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
             </div>
 
             {/* Main Workspace with Integrated Blog Copilot Drawer */}
-            <div style={{ display: 'flex', flex: 1, height: 'calc(100vh - 128px)', overflow: 'hidden' }}>
+            <div className={styles.modalWorkspace}>
               <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalEditorBody}>
                 {/* Left Metadata Sidebar (Hidden in Focus Mode) */}
                 {!focusMode && (
