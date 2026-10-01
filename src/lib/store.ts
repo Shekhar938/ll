@@ -64,6 +64,28 @@ export async function initializeDatabase() {
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_consultations_created_at ON consultations("createdAt" DESC);`;
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_consultations_practice_area ON consultations("practiceArea");`;
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_consultations_urgency ON consultations(urgency);`;
+
+    // Seed initial consultations if table is empty on Vercel Postgres
+    const checkRes = await pool.query('SELECT COUNT(*)::int as count FROM consultations');
+    if ((checkRes.rows[0]?.count ?? 0) === 0) {
+      console.log('Seeding initial sample consultations into PostgreSQL database...');
+      for (const c of memoryStore) {
+        await pool.sql`
+          INSERT INTO consultations (
+            id, "createdAt", "updatedAt", status, "fullName", mobile, email, city, state, "preferredLanguage",
+            occupation, "practiceArea", "caseType", "caseSummary", "opponentName", court, "policeStation", "caseStage",
+            urgency, "preferredContactTime", "videoConsultation", documents, "aiSummary", "aiCategory", "aiPriority",
+            "aiDocuments", "aiDuration", "aiRiskLevel", "aiKeywords", "aiNextSteps", "internalNotes"
+          ) VALUES (
+            ${c.id}, ${c.createdAt}, ${c.updatedAt}, ${c.status}, ${c.fullName}, ${c.mobile}, ${c.email}, ${c.city}, ${c.state}, ${c.preferredLanguage},
+            ${c.occupation}, ${c.practiceArea}, ${c.caseType}, ${c.caseSummary}, ${c.opponentName}, ${c.court}, ${c.policeStation}, ${c.caseStage},
+            ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation ? true : false}::boolean, ${JSON.stringify(c.documents || [])}::jsonb, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
+            ${JSON.stringify(c.aiDocuments || [])}::jsonb, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords || [])}::jsonb, ${JSON.stringify(c.aiNextSteps || [])}::jsonb, ${c.internalNotes || ''}
+          )
+          ON CONFLICT (id) DO NOTHING;
+        `;
+      }
+    }
   } catch (error) {
     console.error('Failed to initialize database:', error);
   }
