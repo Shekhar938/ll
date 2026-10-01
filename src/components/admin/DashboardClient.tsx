@@ -30,13 +30,28 @@ function parseInlineMarkdown(text: string): React.ReactNode[] {
   const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
-      return <strong key={i} style={{ color: '#FFFFFF', fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
+      return <strong key={i} style={{ color: '#ffffff', fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
     }
     if (part.startsWith('*') && part.endsWith('*') && part.length >= 2 && !part.startsWith('**')) {
-      return <em key={i} style={{ fontStyle: 'italic', opacity: 0.9 }}>{part.slice(1, -1)}</em>;
+      return <em key={i} style={{ color: '#d2a8ff', fontStyle: 'italic' }}>{part.slice(1, -1)}</em>;
     }
     if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
-      return <code key={i} style={{ background: 'rgba(255,255,255,0.15)', color: '#FCE8A6', padding: '2px 6px', borderRadius: 4, fontSize: '0.9em', fontFamily: 'monospace' }}>{part.slice(1, -1)}</code>;
+      return (
+        <code
+          key={i}
+          style={{
+            background: '#21262d',
+            color: '#7ee787',
+            padding: '2px 6px',
+            borderRadius: 6,
+            fontSize: '0.88em',
+            fontFamily: 'ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace',
+            border: '1px solid #30363d',
+          }}
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
     }
     return part;
   });
@@ -52,9 +67,9 @@ function FormattedMarkdown({ content }: { content: string }) {
   const flushList = (key: string) => {
     if (listItems.length > 0) {
       elements.push(
-        <ul key={`ul-${key}`} style={{ paddingLeft: 18, margin: '8px 0', listStyleType: 'disc' }}>
+        <ul key={`ul-${key}`} style={{ paddingLeft: 20, margin: '8px 0', color: '#f0f6fc' }}>
           {listItems.map((item, idx) => (
-            <li key={idx} style={{ marginBottom: 4 }}>
+            <li key={idx} style={{ marginBottom: 4, color: '#f0f6fc', lineHeight: 1.6 }}>
               {parseInlineMarkdown(item)}
             </li>
           ))}
@@ -81,25 +96,25 @@ function FormattedMarkdown({ content }: { content: string }) {
 
     if (trimmed.startsWith('### ')) {
       elements.push(
-        <h4 key={index} style={{ fontSize: 13, fontWeight: 700, color: '#FCE8A6', margin: '10px 0 4px 0' }}>
+        <h4 key={index} style={{ fontSize: 14, fontWeight: 700, color: '#a5d6ff', margin: '10px 0 4px 0' }}>
           {parseInlineMarkdown(trimmed.slice(4))}
         </h4>
       );
     } else if (trimmed.startsWith('## ')) {
       elements.push(
-        <h3 key={index} style={{ fontSize: 14, fontWeight: 700, color: '#FCE8A6', margin: '12px 0 6px 0', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 4 }}>
+        <h3 key={index} style={{ fontSize: 15, fontWeight: 700, color: '#79c0ff', margin: '12px 0 6px 0', borderBottom: '1px solid #30363d', paddingBottom: 4 }}>
           {parseInlineMarkdown(trimmed.slice(3))}
         </h3>
       );
     } else if (trimmed.startsWith('# ')) {
       elements.push(
-        <h2 key={index} style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF', margin: '14px 0 6px 0' }}>
+        <h2 key={index} style={{ fontSize: 16, fontWeight: 800, color: '#58a6ff', margin: '14px 0 6px 0', borderBottom: '1px solid #30363d', paddingBottom: 4 }}>
           {parseInlineMarkdown(trimmed.slice(2))}
         </h2>
       );
     } else {
       elements.push(
-        <p key={index} style={{ margin: '4px 0', lineHeight: 1.6 }}>
+        <p key={index} style={{ margin: '5px 0', lineHeight: 1.65, color: '#f0f6fc', fontSize: 14 }}>
           {parseInlineMarkdown(line)}
         </p>
       );
@@ -108,7 +123,7 @@ function FormattedMarkdown({ content }: { content: string }) {
 
   flushList('final');
 
-  return <div style={{ wordBreak: 'break-word' }}>{elements}</div>;
+  return <div style={{ wordBreak: 'break-word', color: '#f0f6fc' }}>{elements}</div>;
 }
 
 export default function DashboardClient({ consultations, stats, initialBlogPosts = [] }: Props) {
