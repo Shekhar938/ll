@@ -69,6 +69,7 @@ STRICT GUARDRAILS & CORE DIRECTIVES:
       'gemini-3.8-flash'
     ];
     let responseText = '';
+    let lastError = '';
 
     for (const modelName of FAST_MODELS) {
       try {
@@ -87,14 +88,15 @@ STRICT GUARDRAILS & CORE DIRECTIVES:
           break;
         }
       } catch (err: any) {
-        console.warn(`[Gemini API] ${modelName} attempt failed:`, err?.message);
+        lastError = err?.message || String(err);
+        console.warn(`[Gemini API] ${modelName} attempt failed:`, lastError);
       }
     }
 
     if (!responseText) {
       return NextResponse.json({ 
         success: false, 
-        reply: "I apologize, but I could not generate a response right now. Please try again or use the Client Portal to request a consultation." 
+        reply: `I apologize, but I could not generate a response right now (${lastError || 'No model response'}). Please try again or use the Client Portal to request a consultation.` 
       });
     }
 
