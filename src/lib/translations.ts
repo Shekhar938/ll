@@ -10,8 +10,8 @@ export const translations = {
       title: 'Advocate Aastha',
       subtitle: 'Official Portal',
       desc: 'Information portal for Advocate Aastha. Practicing across multiple legal disciplines in India.',
-      enrollment: 'Enrollment No: D/4567/2015',
-      bar: 'Bar Council of Delhi',
+      enrollment: 'ENR No: 3475/2026',
+      bar: 'State Bar Council',
       clientPortal: 'Client Portal',
       profile: 'Professional Profile'
     },
@@ -21,7 +21,7 @@ export const translations = {
       features: [
         {
           title: 'Bar Council Enrollment',
-          desc: 'Enrolled with the Bar Council of Delhi since 2015. Enrollment Number: D/4567/2015.',
+          desc: 'Enrolled Advocate. Enrollment Number: ENR No. 3475/2026.',
           icon: '⚖️'
         },
         {
@@ -76,7 +76,7 @@ export const translations = {
     footer: {
       brand: 'Nyaya Aastha',
       tagline: 'Advocate Aastha | Official Portal',
-      desc: 'Enrollment No: D/4567/2015 (Bar Council of Delhi). Strictly for informational purposes in compliance with BCI Rules.',
+      desc: 'Enrollment No: ENR No. 3475/2026. Strictly for informational purposes in compliance with BCI Rules.',
       infoCol: 'Information',
       clientPortal: 'Client Portal',
       practiceAreas: 'Practice Areas',
@@ -86,7 +86,7 @@ export const translations = {
       terms: 'Terms of Service',
       disclaimer: 'Legal Disclaimer',
       contactCol: 'Contact',
-      address: '123, Lawyers Chamber, High Court Road, New Delhi – 110001',
+      address: '',
       copy: `© ${new Date().getFullYear()} Advocate Aastha. All rights reserved. | Not an advertisement or solicitation.`,
       admin: 'Admin'
     },
@@ -164,8 +164,8 @@ export const translations = {
       title: 'अधिवक्ता आस्था',
       subtitle: 'आधिकारिक पोर्टल',
       desc: 'अधिवक्ता आस्था के लिए सूचना पोर्टल। भारत में कई कानूनी विषयों में अभ्यास कर रही हैं।',
-      enrollment: 'नामांकन संख्या: D/4567/2015',
-      bar: 'दिल्ली बार काउंसिल',
+      enrollment: 'नामांकन संख्या: ENR No. 3475/2026',
+      bar: 'राज्य बार काउंसिल',
       clientPortal: 'क्लाइंट पोर्टल',
       profile: 'पेशेवर प्रोफ़ाइल'
     },
@@ -175,7 +175,7 @@ export const translations = {
       features: [
         {
           title: 'बार काउंसिल नामांकन',
-          desc: '2015 से दिल्ली बार काउंसिल में नामांकित। नामांकन संख्या: D/4567/2015।',
+          desc: 'नामांकित अधिवक्ता। नामांकन संख्या: ENR No. 3475/2026।',
           icon: '⚖️'
         },
         {
@@ -230,7 +230,7 @@ export const translations = {
     footer: {
       brand: 'न्याय आस्था',
       tagline: 'अधिवक्ता आस्था | आधिकारिक पोर्टल',
-      desc: 'नामांकन संख्या: D/4567/2015 (दिल्ली बार काउंसिल)। BCI नियमों के अनुपालन में केवल सूचनात्मक उद्देश्यों के लिए।',
+      desc: 'नामांकन संख्या: ENR No. 3475/2026. BCI नियमों के अनुपालन में केवल सूचनात्मक उद्देश्यों के लिए।',
       infoCol: 'जानकारी',
       clientPortal: 'क्लाइंट पोर्टल',
       practiceAreas: 'अभ्यास क्षेत्र',
@@ -240,7 +240,7 @@ export const translations = {
       terms: 'सेवा की शर्तें',
       disclaimer: 'कानूनी अस्वीकरण',
       contactCol: 'संपर्क',
-      address: '123, लॉयर्स चैंबर, हाई कोर्ट रोड, नई दिल्ली – 110001',
+      address: '',
       copy: `© ${new Date().getFullYear()} अधिवक्ता आस्था। सर्वाधिकार सुरक्षित। | यह विज्ञापन या आग्रह नहीं है।`,
       admin: 'एडमिन'
     },
