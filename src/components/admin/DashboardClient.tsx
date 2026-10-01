@@ -571,7 +571,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         )}
       </main>
 
-      {/* Modal for Creating / Editing Blog Posts */}
+      {/* Full View Modal for Creating / Editing Blog Posts */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
           <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
@@ -579,9 +579,9 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               <h2 className={styles.modalTitle}>
                 {editingPost ? 'Edit Legal Article' : 'Write New Legal Article'}
               </h2>
-              <button className={styles.modalClose} onClick={() => setIsModalOpen(false)}>✕</button>
+              <button className={styles.modalClose} onClick={() => setIsModalOpen(false)} title="Close (Esc)">✕</button>
             </div>
-            <form onSubmit={handleSaveBlog} className={styles.modalForm}>
+            <form id="blogForm" onSubmit={handleSaveBlog} className={styles.modalForm}>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>Article Title *</label>
                 <input
@@ -638,27 +638,25 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 />
               </div>
 
-              <div className={styles.formGroup}>
+              <div className={`${styles.formGroup} ${styles.formGroupContent}`}>
                 <label className={styles.formLabel}>Full Article Content (Markdown or Text) *</label>
                 <textarea
-                  className={styles.formTextarea}
-                  style={{ height: 220 }}
+                  className={`${styles.formTextarea} ${styles.formContentTextarea}`}
                   placeholder="Write full legal whitepaper or article content here..."
                   value={formContent}
                   onChange={(e) => setFormContent(e.target.value)}
                   required
                 />
               </div>
-
-              <div className={styles.modalActions}>
-                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>
-                  Cancel
-                </button>
-                <button type="submit" className={styles.saveBtn} disabled={savingBlog || !formTitle.trim() || !formContent.trim()}>
-                  {savingBlog ? 'Saving Article...' : editingPost ? 'Update Article' : 'Publish Article'}
-                </button>
-              </div>
             </form>
+            <div className={styles.modalActions}>
+              <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+              <button type="submit" form="blogForm" className={styles.saveBtn} disabled={savingBlog || !formTitle.trim() || !formContent.trim()}>
+                {savingBlog ? 'Saving Article...' : editingPost ? 'Update Article' : 'Publish Article'}
+              </button>
+            </div>
           </div>
         </div>
       )}
