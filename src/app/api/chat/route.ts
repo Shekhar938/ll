@@ -118,7 +118,7 @@ STRICT GUARDRAILS & CORE DIRECTIVES:
     if (!responseText) {
       return NextResponse.json({ 
         success: false, 
-        reply: `I apologize, but I could not generate a response right now. Please try again or use the Client Portal to request a consultation.` 
+        reply: `I apologize, but I could not generate a response right now (${lastError || 'No model response'}). Please try again or use the Client Portal to request a consultation.` 
       });
     }
 
