@@ -113,13 +113,13 @@
   padding: 16px;
   overflow-y: auto;
   display: flex;
-  flex-direction: flex-col;
+  flex-direction: column;
   gap: 12px;
 }
 
 .msgRow {
   display: flex;
-  margin-bottom: 12px;
+  width: 100%;
 }
 
 .msgUser {
@@ -156,25 +156,30 @@
 
 .suggestions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  gap: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 .chip {
   background: rgba(201, 162, 39, 0.1);
   border: 1px solid rgba(201, 162, 39, 0.3);
   color: var(--gold, #C9A227);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  text-align: left;
   cursor: pointer;
   transition: all 0.2s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .chip:hover {
   background: rgba(201, 162, 39, 0.25);
+  border-color: var(--gold, #C9A227);
 }
 
 .inputArea {
