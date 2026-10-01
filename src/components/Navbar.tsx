@@ -34,6 +34,7 @@ export default function Navbar() {
           <a href="/#areas" className={styles.link}>{t.nav.practiceAreas}</a>
           <a href="/#why" className={styles.link}>{t.nav.profile}</a>
           <a href="/#faq" className={styles.link}>{t.nav.faq}</a>
+          <Link href="/blog" className={styles.ctaBtn}>Blog</Link>
           <Link href="/consult" className={styles.ctaBtn}>{t.nav.clientPortal}</Link>
           <LanguageToggle />
         </div>
@@ -54,6 +55,7 @@ export default function Navbar() {
           <a href="/#areas" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.practiceAreas}</a>
           <a href="/#why" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.profile}</a>
           <a href="/#faq" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.faq}</a>
+          <Link href="/blog" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>Blog</Link>
           <Link href="/consult" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>{t.nav.clientPortal}</Link>
           <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center' }}>
             <LanguageToggle />

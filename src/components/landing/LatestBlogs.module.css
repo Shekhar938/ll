@@ -1,0 +1,126 @@
+.blogSection {
+  background: var(--bg);
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.card {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-outset-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-outset);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tag {
+  background: var(--bg);
+  box-shadow: var(--shadow-inset);
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.postTitle {
+  font-size: 1.4rem;
+  color: var(--navy);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.postTitle a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.postTitle a:hover {
+  color: var(--gold);
+}
+
+.excerpt {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.readMore {
+  font-weight: 600;
+  color: var(--gold);
+  text-decoration: none;
+  align-self: flex-start;
+  transition: color 0.2s ease;
+}
+
+.readMore:hover {
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+.footer {
+  text-align: center;
+}
+
+.viewAllBtn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--bg);
+  color: var(--navy);
+  border-radius: var(--radius-full);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-outset);
+  transition: all 0.2s ease;
+}
+
+.viewAllBtn:hover {
+  box-shadow: var(--shadow-inset);
+  color: var(--gold);
+}
