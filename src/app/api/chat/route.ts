@@ -12,17 +12,34 @@ export async function POST(req: Request) {
 
     if (!apiKey) {
       return NextResponse.json({ 
-        reply: "The AI Legal Assistant requires a GEMINI_API_KEY environment variable. Please configure GEMINI_API_KEY." 
+        reply: "The AI Legal Assistant requires a GEMINI_API_KEY environment variable. Please configure GEMINI_API_KEY in your project settings." 
       });
     }
 
     const ai = new GoogleGenAI({ apiKey });
 
-    // Format conversation history for Gemini API
-    const contents = messages.map((m: { role: string; content: string }) => ({
-      role: m.role === 'user' ? 'user' : 'model',
-      parts: [{ text: m.content }]
-    }));
+    // Ensure conversation starts with 'user' and alternates roles
+    const userFirstIndex = messages.findIndex((m: any) => m.role === 'user');
+    const validMessages = userFirstIndex >= 0 ? messages.slice(userFirstIndex) : messages;
+
+    const contents: Array<{ role: string; parts: Array<{ text: string }> }> = [];
+
+    for (const m of validMessages) {
+      const role = m.role === 'user' ? 'user' : 'model';
+      if (!m.content || typeof m.content !== 'string') continue;
+      
+      if (contents.length > 0 && contents[contents.length - 1].role === role) {
+        // Append to last message if role is duplicated
+        contents[contents.length - 1].parts[0].text += '\n\n' + m.content;
+      } else {
+        contents.push({ role, parts: [{ text: m.content }] });
+      }
+    }
+
+    // Fallback if contents is empty
+    if (contents.length === 0) {
+      contents.push({ role: 'user', parts: [{ text: 'Hello' }] });
+    }
 
     const systemInstruction = `You are Advocate Aastha's AI Legal Assistant on the "Nyaya Aastha" digital portal (Advocate Aastha, ENR No. 3475/2026, Bihar State Bar Council).
 
@@ -36,6 +53,7 @@ Important Compliance Rules:
 
     const candidateModels = ['gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
     let responseText = '';
+    let lastError = '';
 
     for (const modelName of candidateModels) {
       try {
@@ -49,11 +67,13 @@ Important Compliance Rules:
           break;
         }
       } catch (err: any) {
-        console.warn(`Model ${modelName} failed:`, err?.message);
+        lastError = err?.message || String(err);
+        console.warn(`Model ${modelName} failed:`, lastError);
       }
     }
 
     if (!responseText) {
+      console.error('All Gemini models failed. Last error:', lastError);
       responseText = "I apologize, but I could not generate a response. Please try asking again or submit your case details through the Client Portal.";
     }
 
