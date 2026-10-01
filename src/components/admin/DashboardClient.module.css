@@ -176,47 +176,73 @@
   gap: 12px;
 }
 
-.focusToggleBtn {
-  background: rgba(201,162,39,0.15);
-  color: var(--gold);
-  border: 1px solid rgba(201,162,39,0.4);
-  padding: 6px 14px;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
+/* Top Modal Header Action Buttons - Standardized Typography & High Contrast */
+.copilotToggleBtn,
+.focusToggleBtn,
+.discardDraftBtn {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.copilotToggleBtn {
+  background: rgba(201, 162, 39, 0.2);
+  color: #FCE8A6;
+  border: 1px solid rgba(201, 162, 39, 0.5);
+}
+
+.copilotToggleBtn:hover {
+  background: #C9A227;
+  color: #0B132B;
+  border-color: #C9A227;
+}
+
+.copilotToggleActive {
+  background: #C9A227 !important;
+  color: #0B132B !important;
+  border: 1px solid #C9A227 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 12px rgba(201, 162, 39, 0.5);
+}
+
+.focusToggleBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .focusToggleBtn:hover {
-  background: var(--gold);
-  color: var(--navy);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .focusToggleActive {
-  background: var(--gold);
-  color: var(--navy);
-  box-shadow: 0 0 12px rgba(201,162,39,0.4);
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  font-weight: 700 !important;
 }
 
 .discardDraftBtn {
-  background: rgba(255,59,48,0.15);
-  color: #FF3B30;
-  border: 1px solid rgba(255,59,48,0.3);
-  padding: 6px 12px;
-  border-radius: var(--radius-md);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
+  background: rgba(255, 59, 48, 0.18);
+  color: #FF6B6B;
+  border: 1px solid rgba(255, 59, 48, 0.4);
 }
 
 .discardDraftBtn:hover {
   background: #FF3B30;
   color: white;
+  border-color: #FF3B30;
 }
 
 .modalClose {
@@ -959,30 +985,16 @@
   cursor: not-allowed;
 }
 
-.copilotToggleBtn {
-  background: linear-gradient(135deg, #0B1F3A 0%, #1e3a66 100%);
-  color: var(--gold);
-  border: 1px solid rgba(201,162,39,0.5);
-  padding: 6px 14px;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: var(--transition);
+.copilotAuditChip {
+  background: rgba(201, 162, 39, 0.2) !important;
+  color: #FCE8A6 !important;
+  border: 1px solid rgba(201, 162, 39, 0.5) !important;
+  font-weight: 700 !important;
 }
 
-.copilotToggleBtn:hover {
-  background: var(--gold);
-  color: var(--navy);
-}
-
-.copilotToggleActive {
-  background: var(--gold);
-  color: var(--navy);
-  box-shadow: 0 0 12px rgba(201,162,39,0.5);
+.copilotAuditChip:hover {
+  background: #C9A227 !important;
+  color: #0B132B !important;
 }
 
 @media (max-width: 768px) {

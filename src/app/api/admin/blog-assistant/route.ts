@@ -45,6 +45,12 @@ CURRENT ARTICLE DRAFT CONTEXT:
       userInstruction = `Generate a compelling 2-sentence executive summary/excerpt and 5 relevant category tags for this article.`;
     } else if (action === 'simplify') {
       userInstruction = `Rewrite the key legal concepts in this article so they are easily understandable by common citizens while retaining strict legal accuracy.`;
+    } else if (action === 'plagiarism' || action === 'audit-originality') {
+      userInstruction = `Please perform a comprehensive AI Content Generation & Plagiarism Audit on this article draft. Provide:
+1. Estimated Originality Index (0-100%) and AI Content Probability.
+2. Detection Breakdown (flag overused AI cliché words like 'delve', 'testament', 'tapestry', or uniform sentence length).
+3. Attribution & Citation Risk (check for unreferenced statutory clauses or generic legal descriptions).
+4. Concrete Rewrites: Provide 2 specific sentence rewrites to maximize human authenticity and Advocate Aastha's legal voice.`;
     }
 
     const contents: Array<{ role: string; parts: Array<{ text: string }> }> = [];

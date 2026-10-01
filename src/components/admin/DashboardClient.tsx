@@ -971,6 +971,9 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
 
                   {/* Quick Action Prompt Chips */}
                   <div className={styles.copilotChips}>
+                    <button type="button" className={`${styles.copilotChip} ${styles.copilotAuditChip}`} onClick={() => sendAiAssistantRequest('audit-originality')}>
+                      🔍 Audit AI & Plagiarism
+                    </button>
                     <button type="button" className={styles.copilotChip} onClick={() => sendAiAssistantRequest('review')}>
                       ✨ Audit & Review
                     </button>
