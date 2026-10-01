@@ -17,12 +17,7 @@ const INITIAL_SUGGESTIONS = [
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: 'Hello! I am Advocate Aastha\'s AI Legal Assistant. How can I guide you regarding Indian law or booking a consultation today?'
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -37,7 +32,8 @@ export default function ChatWidget() {
     const text = textToSend || input.trim();
     if (!text || loading) return;
 
-    const newMessages: Message[] = [...messages, { role: 'user', content: text }];
+    const userMsg: Message = { role: 'user', content: text };
+    const newMessages: Message[] = [...messages, userMsg];
     setMessages(newMessages);
     if (!textToSend) setInput('');
     setLoading(true);
@@ -48,11 +44,22 @@ export default function ChatWidget() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: newMessages })
       });
+      
       const data = await res.json();
-      setMessages([...newMessages, { role: 'assistant', content: data.reply || 'No response received.' }]);
+      const assistantMsg: Message = {
+        role: 'assistant',
+        content: data.reply || 'No response received. Please try again.'
+      };
+      setMessages([...newMessages, assistantMsg]);
     } catch (err) {
-      console.error(err);
-      setMessages([...newMessages, { role: 'assistant', content: 'Connection error. Please try again or submit your query via the Client Portal.' }]);
+      console.error('Chat error:', err);
+      setMessages([
+        ...newMessages,
+        {
+          role: 'assistant',
+          content: 'Connection issue. Please try again or submit your query via the Client Portal.'
+        }
+      ]);
     } finally {
       setLoading(false);
     }
@@ -85,6 +92,13 @@ export default function ChatWidget() {
           </div>
 
           <div className={styles.body} ref={bodyRef}>
+            {/* Welcome banner message */}
+            <div className={`${styles.msgRow} ${styles.msgAi}`}>
+              <div className={`${styles.bubble} ${styles.bubbleAi}`}>
+                Hello! I am Advocate Aastha&apos;s AI Legal Assistant. How can I guide you regarding Indian law or booking a consultation today?
+              </div>
+            </div>
+
             {messages.map((msg, idx) => (
               <div key={idx} className={`${styles.msgRow} ${msg.role === 'user' ? styles.msgUser : styles.msgAi}`}>
                 <div className={`${styles.bubble} ${msg.role === 'user' ? styles.bubbleUser : styles.bubbleAi}`}>
@@ -103,7 +117,7 @@ export default function ChatWidget() {
               </div>
             )}
 
-            {messages.length === 1 && !loading && (
+            {messages.length === 0 && !loading && (
               <div className={styles.suggestions}>
                 {INITIAL_SUGGESTIONS.map((sug, i) => (
                   <button key={i} className={styles.chip} onClick={() => handleSend(sug)}>
