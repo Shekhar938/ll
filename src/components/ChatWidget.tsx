@@ -15,6 +15,38 @@ const INITIAL_SUGGESTIONS = [
   'How do I request a consultation?'
 ];
 
+function FormattedText({ content }: { content: string }) {
+  const paragraphs = content.split('\n\n');
+  
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      {paragraphs.map((p, pIdx) => {
+        const lines = p.split('\n');
+        return (
+          <div key={pIdx}>
+            {lines.map((line, lIdx) => {
+              const parts = line.split(/(\*\*.*?\*\*)/g);
+              const isBullet = line.trim().startsWith('* ') || line.trim().startsWith('- ');
+              const cleanLine = isBullet ? line.trim().replace(/^[\*\-]\s*/, '• ') : line;
+              
+              return (
+                <div key={lIdx} style={{ marginTop: lIdx > 0 ? '4px' : '0' }}>
+                  {parts.map((part, partIdx) => {
+                    if (part.startsWith('**') && part.endsWith('**')) {
+                      return <strong key={partIdx} style={{ color: '#FFFFFF', fontWeight: 600 }}>{part.slice(2, -2)}</strong>;
+                    }
+                    return isBullet ? cleanLine : part;
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -22,42 +54,48 @@ export default function ChatWidget() {
   const [loading, setLoading] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const scrollToBottom = () => {
     if (bodyRef.current) {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
     }
-  }, [messages, loading]);
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+    const timer = setTimeout(scrollToBottom, 50);
+    return () => clearTimeout(timer);
+  }, [messages, loading, isOpen]);
 
   const handleSend = async (textToSend?: string) => {
     const text = textToSend || input.trim();
     if (!text || loading) return;
 
     const userMsg: Message = { role: 'user', content: text };
-    const newMessages: Message[] = [...messages, userMsg];
-    setMessages(newMessages);
+    
+    setMessages(prev => [...prev, userMsg]);
     if (!textToSend) setInput('');
     setLoading(true);
 
     try {
+      const payloadMessages = [...messages, userMsg];
+      
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages })
+        body: JSON.stringify({ messages: payloadMessages })
       });
       
       const data = await res.json();
-      const assistantMsg: Message = {
-        role: 'assistant',
-        content: data.reply || 'No response received. Please try again.'
-      };
-      setMessages([...newMessages, assistantMsg]);
+      const replyText = data.reply || 'No response received. Please try again.';
+
+      setMessages(prev => [...prev, { role: 'assistant', content: replyText }]);
     } catch (err) {
-      console.error('Chat error:', err);
-      setMessages([
-        ...newMessages,
+      console.error('Chat API Error:', err);
+      setMessages(prev => [
+        ...prev,
         {
           role: 'assistant',
-          content: 'Connection issue. Please try again or submit your query via the Client Portal.'
+          content: 'Connection issue. Please check your internet or submit your query via the Client Portal.'
         }
       ]);
     } finally {
@@ -92,7 +130,7 @@ export default function ChatWidget() {
           </div>
 
           <div className={styles.body} ref={bodyRef}>
-            {/* Welcome banner message */}
+            {/* Welcome message */}
             <div className={`${styles.msgRow} ${styles.msgAi}`}>
               <div className={`${styles.bubble} ${styles.bubbleAi}`}>
                 Hello! I am Advocate Aastha&apos;s AI Legal Assistant. How can I guide you regarding Indian law or booking a consultation today?
@@ -102,7 +140,7 @@ export default function ChatWidget() {
             {messages.map((msg, idx) => (
               <div key={idx} className={`${styles.msgRow} ${msg.role === 'user' ? styles.msgUser : styles.msgAi}`}>
                 <div className={`${styles.bubble} ${msg.role === 'user' ? styles.bubbleUser : styles.bubbleAi}`}>
-                  {msg.content}
+                  {msg.role === 'assistant' ? <FormattedText content={msg.content} /> : msg.content}
                 </div>
               </div>
             ))}
@@ -128,20 +166,25 @@ export default function ChatWidget() {
             )}
           </div>
 
-          <div className={styles.inputArea}>
+          <form
+            className={styles.inputArea}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSend();
+            }}
+          >
             <input
               type="text"
               className={styles.input}
               placeholder="Ask about your legal query..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               disabled={loading}
             />
-            <button className={styles.sendBtn} onClick={() => handleSend()} disabled={loading || !input.trim()}>
+            <button type="submit" className={styles.sendBtn} disabled={loading || !input.trim()}>
               ➔
             </button>
-          </div>
+          </form>
 
           <div className={styles.footerBar}>
             Informational guide. Need formal representation?

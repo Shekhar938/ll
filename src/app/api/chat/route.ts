@@ -10,13 +10,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, reply: 'Invalid request format. Messages array is required.' }, { status: 400 });
     }
 
-    if (!apiKey) {
-      return NextResponse.json({ 
-        success: false,
-        reply: "The AI Legal Assistant requires a GEMINI_API_KEY. Please configure GEMINI_API_KEY in your environment settings." 
-      });
-    }
-
     const ai = new GoogleGenAI({ apiKey });
 
     // Clean conversation history: ensure starting with 'user' and alternating roles
