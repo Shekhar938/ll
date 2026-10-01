@@ -248,3 +248,91 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
   }
   return memoryPosts.find(p => p.slug === slug) || null;
 }
+
+export async function createBlogPost(data: {
+  title: string;
+  slug?: string;
+  excerpt: string;
+  content: string;
+  author?: string;
+  tags?: string[];
+}): Promise<BlogPost> {
+  const slug = data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const newPost: BlogPost = {
+    id: `post-${Date.now()}`,
+    slug,
+    title: data.title,
+    excerpt: data.excerpt,
+    content: data.content,
+    author: data.author || 'Advocate Aastha',
+    publishedAt: new Date().toISOString(),
+    tags: data.tags || ['Legal Insights']
+  };
+
+  const pool = getPool();
+  if (pool) {
+    try {
+      await pool.sql`
+        INSERT INTO blog_posts (id, slug, title, excerpt, content, author, "publishedAt", tags)
+        VALUES (${newPost.id}, ${newPost.slug}, ${newPost.title}, ${newPost.excerpt}, ${newPost.content}, ${newPost.author}, ${newPost.publishedAt}, ${JSON.stringify(newPost.tags)}::jsonb)
+      `;
+    } catch (err) {
+      console.error('Failed to create blog post in DB:', err);
+    }
+  }
+
+  memoryPosts.unshift(newPost);
+  return newPost;
+}
+
+export async function updateBlogPost(
+  id: string,
+  data: Partial<Omit<BlogPost, 'id' | 'publishedAt'>>
+): Promise<BlogPost | null> {
+  const existing = memoryPosts.find(p => p.id === id);
+  if (!existing) return null;
+
+  const updated: BlogPost = {
+    ...existing,
+    ...data,
+    slug: data.slug || (data.title ? data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : existing.slug)
+  };
+
+  const pool = getPool();
+  if (pool) {
+    try {
+      await pool.sql`
+        UPDATE blog_posts
+        SET slug = ${updated.slug},
+            title = ${updated.title},
+            excerpt = ${updated.excerpt},
+            content = ${updated.content},
+            author = ${updated.author},
+            tags = ${JSON.stringify(updated.tags || [])}::jsonb
+        WHERE id = ${id}
+      `;
+    } catch (err) {
+      console.error('Failed to update blog post in DB:', err);
+    }
+  }
+
+  const idx = memoryPosts.findIndex(p => p.id === id);
+  if (idx >= 0) memoryPosts[idx] = updated;
+
+  return updated;
+}
+
+export async function deleteBlogPost(id: string): Promise<boolean> {
+  const pool = getPool();
+  if (pool) {
+    try {
+      await pool.sql`DELETE FROM blog_posts WHERE id = ${id}`;
+    } catch (err) {
+      console.error('Failed to delete blog post from DB:', err);
+    }
+  }
+
+  const initialLength = memoryPosts.length;
+  memoryPosts = memoryPosts.filter(p => p.id !== id);
+  return memoryPosts.length < initialLength;
+}
