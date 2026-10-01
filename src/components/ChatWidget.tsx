@@ -33,7 +33,7 @@ function FormattedText({ content }: { content: string }) {
                 <div key={lIdx} style={{ marginTop: lIdx > 0 ? '4px' : '0' }}>
                   {parts.map((part, partIdx) => {
                     if (part.startsWith('**') && part.endsWith('**')) {
-                      return <strong key={partIdx} style={{ color: '#FFFFFF', fontWeight: 600 }}>{part.slice(2, -2)}</strong>;
+                      return <strong key={partIdx} style={{ color: '#0B1F3A', fontWeight: 600 }}>{part.slice(2, -2)}</strong>;
                     }
                     return isBullet ? cleanLine : part;
                   })}
