@@ -36,10 +36,6 @@ export default function Footer() {
             <Link href="/terms" className={styles.colLink}>{t.footer.terms}</Link>
             <Link href="/disclaimer" className={styles.colLink}>{t.footer.disclaimer}</Link>
           </div>
-          <div className={styles.col}>
-            <h4 className={styles.colTitle}>{t.footer.contactCol}</h4>
-            <p className={styles.address}>{t.footer.address}</p>
-          </div>
         </div>
       </div>
 
