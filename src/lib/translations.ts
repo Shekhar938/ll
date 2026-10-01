@@ -9,7 +9,7 @@ export const translations = {
     hero: {
       title: 'Advocate Aastha',
       subtitle: 'Official Portal',
-      desc: 'Information portal for Advocate Aastha. Practicing across multiple legal disciplines in India.',
+      desc: 'Official information portal for Advocate Aastha, practicing across Patna High Court and courts in Bihar & India.',
       enrollment: 'ENR No: 3475/2026',
       bar: 'Bihar State Bar Council',
       clientPortal: 'Client Portal',
@@ -86,7 +86,7 @@ export const translations = {
       terms: 'Terms of Service',
       disclaimer: 'Legal Disclaimer',
       contactCol: 'Contact',
-      address: '',
+      address: 'Lawyers Chamber, Patna High Court Road, Patna, Bihar – 800001',
       copy: `© ${new Date().getFullYear()} Advocate Aastha. All rights reserved. | Not an advertisement or solicitation.`,
       admin: 'Admin'
     },
@@ -163,7 +163,7 @@ export const translations = {
     hero: {
       title: 'अधिवक्ता आस्था',
       subtitle: 'आधिकारिक पोर्टल',
-      desc: 'अधिवक्ता आस्था के लिए सूचना पोर्टल। भारत में कई कानूनी विषयों में अभ्यास कर रही हैं।',
+      desc: 'अधिवक्ता आस्था के लिए आधिकारिक सूचना पोर्टल, पटना उच्च न्यायालय और बिहार तथा भारत की अदालतों में अभ्यास कर रही हैं।',
       enrollment: 'नामांकन संख्या: ENR No. 3475/2026',
       bar: 'बिहार राज्य बार काउंसिल',
       clientPortal: 'क्लाइंट पोर्टल',
@@ -240,7 +240,7 @@ export const translations = {
       terms: 'सेवा की शर्तें',
       disclaimer: 'कानूनी अस्वीकरण',
       contactCol: 'संपर्क',
-      address: '',
+      address: 'लॉयर्स चैंबर, पटना हाई कोर्ट रोड, पटना, बिहार – 800001',
       copy: `© ${new Date().getFullYear()} अधिवक्ता आस्था। सर्वाधिकार सुरक्षित। | यह विज्ञापन या आग्रह नहीं है।`,
       admin: 'एडमिन'
     },

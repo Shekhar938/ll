@@ -36,6 +36,12 @@ export default function Footer() {
             <Link href="/terms" className={styles.colLink}>{t.footer.terms}</Link>
             <Link href="/disclaimer" className={styles.colLink}>{t.footer.disclaimer}</Link>
           </div>
+          <div className={styles.col}>
+            <h4 className={styles.colTitle}>{t.footer.contactCol}</h4>
+            <p className={styles.address}>{t.footer.address}</p>
+            <a href="tel:+919999999999" className={styles.colLink}>+91 99999 99999</a>
+            <a href="mailto:contact@nyayaaastha.in" className={styles.colLink}>contact@nyayaaastha.in</a>
+          </div>
         </div>
       </div>
 
