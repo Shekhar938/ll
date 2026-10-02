@@ -21,8 +21,8 @@ export default function Navbar() {
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.brand}>
           <div className={styles.logo}>
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" fill="#C9A227" opacity="0.15"/>
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+              <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" fill="#C9A227" opacity="0.2"/>
               <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" stroke="#C9A227" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
@@ -34,8 +34,13 @@ export default function Navbar() {
           <a href="/#areas" className={styles.link}>{t.nav.practiceAreas}</a>
           <a href="/#why" className={styles.link}>{t.nav.profile}</a>
           <a href="/#faq" className={styles.link}>{t.nav.faq}</a>
-          <Link href="/portal" className={styles.ctaBtn}>🔑 Client Portal</Link>
-          <Link href="/consult" className={styles.ctaBtn}>Book Consultation</Link>
+          <Link href="/blog" className={styles.link}>Blog</Link>
+          <Link href="/portal" className={styles.clientPortalBtn} title="Existing clients login & case status tracking">
+            🔒 Already a Client?
+          </Link>
+          <Link href="/consult" className={styles.primaryCtaBtn}>
+            Book Consultation
+          </Link>
           <LanguageToggle />
         </div>
 
@@ -55,9 +60,13 @@ export default function Navbar() {
           <a href="/#areas" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.practiceAreas}</a>
           <a href="/#why" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.profile}</a>
           <a href="/#faq" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.faq}</a>
-          <Link href="/blog" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>Blog</Link>
-          <Link href="/portal" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>🔑 Client Portal</Link>
-          <Link href="/consult" className={styles.mobileCta} onClick={() => setMobileOpen(false)}>Book Consultation</Link>
+          <Link href="/blog" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Blog</Link>
+          <Link href="/consult" className={styles.mobilePrimaryCta} onClick={() => setMobileOpen(false)}>
+            📝 Book Legal Consultation
+          </Link>
+          <Link href="/portal" className={styles.mobileSecondaryCta} onClick={() => setMobileOpen(false)}>
+            🔒 Already a Client? Login / Status
+          </Link>
           <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center' }}>
             <LanguageToggle />
           </div>
