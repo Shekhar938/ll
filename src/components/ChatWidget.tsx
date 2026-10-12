@@ -9,10 +9,10 @@ interface Message {
 }
 
 const INITIAL_SUGGESTIONS = [
-  'What changed in BNS 2023?',
-  'How to claim RERA refund for delayed possession?',
-  'What are my rights under DPDP Act 2023?',
-  'How do I request a consultation?'
+  'How do I book a business consultation?',
+  'What services and advisory areas do you provide?',
+  'How does the Client Portal keep my project data secure?',
+  'Can I schedule a video meeting with your team?'
 ];
 
 function FormattedLine({ line }: { line: string }) {
@@ -175,11 +175,11 @@ export default function ChatWidget() {
         <div className={styles.chatWindow}>
           <div className={styles.header}>
             <div className={styles.headerInfo}>
-              <span style={{ fontSize: '1.2rem' }}>⚖️</span>
+              <span style={{ fontSize: '1.2rem' }}>💬</span>
               <div>
-                <div className={styles.headerTitle}>Legal Assistant</div>
+                <div className={styles.headerTitle}>ClientFlow Assistant</div>
                 <div className={styles.headerSub}>
-                  <span className={styles.badge}></span> Online • Indian Law AI
+                  <span className={styles.badge}></span> Online • Business & Consultation Guide
                 </div>
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function ChatWidget() {
             {/* Welcome message */}
             <div className={`${styles.msgRow} ${styles.msgAi}`}>
               <div className={`${styles.bubble} ${styles.bubbleAi}`}>
-                Hello! I am Advocate Aastha&apos;s AI Legal Assistant. How can I guide you regarding Indian law or booking a consultation today?
+                Hello! I am your ClientFlow Assistant. How can I assist you with exploring our business services, scheduling a consultation, or navigating the Client Portal today?
               </div>
             </div>
 

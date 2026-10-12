@@ -224,8 +224,8 @@ export default function ClientPortalPage() {
         <header className={styles.header}>
           <div className={styles.headerInner}>
             <Link href="/" className={styles.brand}>
-              <div className={styles.logo}>⚖️</div>
-              <span className={styles.brandText}>Advocate Aastha</span>
+              <div className={styles.logo}>💼</div>
+              <span className={styles.brandText}>ClientFlow</span>
               <span className={styles.brandBadge}>Client Portal</span>
             </Link>
           </div>
@@ -251,7 +251,7 @@ export default function ClientPortalPage() {
               </svg>
             </div>
             <div>
-              <span className={styles.brandText}>Advocate Aastha</span>
+              <span className={styles.brandText}>ClientFlow</span>
               <span className={styles.brandBadge}>Client Portal</span>
             </div>
           </Link>
@@ -335,7 +335,7 @@ export default function ClientPortalPage() {
                   className={styles.demoBtn}
                   onClick={() => handlePresetLogin('NYC-2026-0814-03', '9876543211')}
                 >
-                  <span className={styles.demoBtnName}>📌 Aastha Sharma (Mutual Divorce & Custody)</span>
+                  <span className={styles.demoBtnName}>📌 Jordan Hayes (Strategy & Advisory)</span>
                   <span className={styles.demoBtnMeta}>ID: NYC-2026-0814-03 | Mobile: 9876543211</span>
                 </button>
               </div>
@@ -725,11 +725,11 @@ export default function ClientPortalPage() {
               </div>
             )}
 
-            {/* TAB 5: LEGAL TEAM NOTES */}
+            {/* TAB 5: TEAM NOTES */}
             {activeTab === 'notes' && (
               <div className={styles.detailCard}>
                 <div className={styles.cardHeader}>
-                  <h3 className={styles.cardTitle}>💬 Advocate Aastha's Office Notes</h3>
+                  <h3 className={styles.cardTitle}>💬 Executive Team Notes & Advisories</h3>
                 </div>
                 {consultation.internalNotes ? (
                   <div style={{ background: 'var(--bg)', padding: 18, borderRadius: 'var(--radius-md)', borderLeft: '4px solid #C9A227', fontSize: 15, lineHeight: 1.7 }}>

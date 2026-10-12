@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       title,
       excerpt: excerpt || title,
       content,
-      author: author || 'Advocate Aastha',
+      author: author || 'Business Admin',
       tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()) : ['Legal Insights']
     });
 

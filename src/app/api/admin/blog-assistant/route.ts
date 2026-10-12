@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     const contextSummary = articleContext ? `
 CURRENT ARTICLE DRAFT CONTEXT:
 - Title: ${articleContext.title || 'Untitled'}
-- Author: ${articleContext.author || 'Advocate Aastha'}
+- Author: ${articleContext.author || 'Business Admin'}
 - Tags: ${articleContext.tags || 'None'}
 - Summary: ${articleContext.excerpt || 'None'}
 - Content Snippet: ${articleContext.content ? articleContext.content.slice(0, 3000) : 'None'}
@@ -38,19 +38,19 @@ CURRENT ARTICLE DRAFT CONTEXT:
 
     let userInstruction = prompt || '';
     if (action === 'review') {
-      userInstruction = `Please conduct a comprehensive legal review of this article draft. Check for legal accuracy (especially BNS 2023/BNSS/BSA alignment), structural clarity, flow, and suggest 3 concrete enhancements.`;
+      userInstruction = `Please conduct a comprehensive editorial review of this article draft. Check for domain depth, clarity, flow, narrative coherence, and suggest 3 concrete enhancements.`;
     } else if (action === 'enhance') {
-      userInstruction = `Please suggest 3 headline improvements, structural sub-headings, and statutory citations to elevate this article to publication quality.`;
+      userInstruction = `Please suggest 3 engaging headline improvements, structural sub-headings, and strategic takeaways to elevate this article to executive publication quality.`;
     } else if (action === 'summary') {
       userInstruction = `Generate a compelling 2-sentence executive summary/excerpt and 5 relevant category tags for this article.`;
     } else if (action === 'simplify') {
-      userInstruction = `Rewrite the key legal concepts in this article so they are easily understandable by common citizens while retaining strict legal accuracy.`;
+      userInstruction = `Rewrite the key complex concepts in this article so they are easily understandable by business clients while retaining domain rigor.`;
     } else if (action === 'plagiarism' || action === 'audit-originality') {
       userInstruction = `Please perform a comprehensive AI Content Generation & Plagiarism Audit on this article draft. Provide:
 1. Estimated Originality Index (0-100%) and AI Content Probability.
 2. Detection Breakdown (flag overused AI cliché words like 'delve', 'testament', 'tapestry', or uniform sentence length).
-3. Attribution & Citation Risk (check for unreferenced statutory clauses or generic legal descriptions).
-4. Concrete Rewrites: Provide 2 specific sentence rewrites to maximize human authenticity and Advocate Aastha's legal voice.`;
+3. Attribution & Citation Risk (check for unreferenced statistics or generic statements).
+4. Concrete Rewrites: Provide 2 specific sentence rewrites to maximize human authenticity and compelling thought leadership voice.`;
     }
 
     const contents: Array<{ role: string; parts: Array<{ text: string }> }> = [];

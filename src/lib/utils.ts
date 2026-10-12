@@ -12,36 +12,36 @@ export function formatDate(dateStr: string): string {
 }
 
 export const PRACTICE_AREAS = [
-  'Criminal Law',
-  'Civil Law',
-  'Property Law',
-  'Family Law',
-  'Corporate Law',
-  'Consumer Law',
-  'Labour Law',
-  'Tax Law',
-  'Cyber Crime',
-  'Banking Law',
-  'Arbitration',
-  'Employment Law',
+  'Business Strategy',
+  'Corporate Advisory',
+  'Financial Consulting',
+  'Legal & Compliance',
+  'Technology & Cloud',
+  'Client Operations',
+  'HR & Talent Strategy',
+  'Consumer & Commerce',
+  'Cyber & Information Security',
+  'Fintech & Banking Solutions',
+  'Marketing & Brand Strategy',
+  'Performance Analytics',
 ];
 
 export const CASE_TYPES: Record<string, string[]> = {
-  'Criminal Law': ['Bail Application', 'Anticipatory Bail', 'Quashing', 'Trial Defense', 'Appeal'],
-  'Civil Law': ['Recovery Suit', 'Injunction', 'Declaration', 'Specific Performance', 'Damages'],
-  'Property Law': ['Title Dispute', 'Possession', 'Partition', 'Injunction', 'Registration'],
-  'Family Law': ['Divorce', 'Custody', 'Maintenance', 'Domestic Violence', 'Adoption'],
-  'Corporate Law': ['Incorporation', 'Compliance', 'Merger', 'Dispute Resolution', 'IPR'],
-  'Consumer Law': ['Product Defect', 'Service Deficiency', 'Misleading Advertisement', 'Refund'],
-  'Labour Law': ['Wrongful Termination', 'Gratuity', 'PF Dispute', 'ESIC', 'Wage Dispute'],
-  'Tax Law': ['Income Tax', 'GST', 'Customs', 'Assessment', 'Penalty Waiver'],
-  'Cyber Crime': ['Online Fraud', 'Data Breach', 'Cyberstalking', 'Hacking', 'Identity Theft'],
-  'Banking Law': ['Loan Recovery', 'Cheque Bounce', 'NPA', 'SARFAESI', 'Debt Recovery'],
-  'Arbitration': ['Commercial Dispute', 'Construction', 'International', 'Enforcement of Award'],
-  'Employment Law': ['Discrimination', 'Harassment', 'Wrongful Dismissal', 'Benefits Dispute'],
+  'Business Strategy': ['Growth Strategy', 'Market Entry', 'Business Plan Review', 'Competitive Analysis', 'Partnerships'],
+  'Corporate Advisory': ['Corporate Governance', 'Board Advisory', 'Restructuring', 'Mergers & Acquisitions', 'Stakeholder Alignment'],
+  'Financial Consulting': ['Cash Flow Optimization', 'Financial Audit Prep', 'Valuation Advisory', 'Cost Reduction', 'Capital Raising'],
+  'Legal & Compliance': ['Commercial Contracts', 'Regulatory Compliance', 'Risk Assessment', 'Policy Formulation', 'Dispute Advisory'],
+  'Technology & Cloud': ['Digital Transformation', 'Architecture Review', 'Vendor Selection', 'Cloud Migration', 'Data Governance'],
+  'Client Operations': ['Process Automation', 'Service Desk Modernization', 'CRM Workflow Setup', 'SLA Optimization', 'Client Onboarding'],
+  'HR & Talent Strategy': ['Organizational Design', 'Executive Search Advisory', 'Compensation & Benefits', 'Employee Policies', 'Culture Audit'],
+  'Consumer & Commerce': ['Product Strategy', 'E-commerce Operations', 'Vendor Agreements', 'Customer Experience Review', 'Pricing Strategy'],
+  'Cyber & Information Security': ['Security Posture Audit', 'Privacy Compliance (GDPR/DPDP)', 'Incident Response Planning', 'Access Control Review', 'Threat Analysis'],
+  'Fintech & Banking Solutions': ['Payment Integration Advisory', 'Banking Relations', 'Lending Framework Review', 'Fintech Licensing', 'Debt Advisory'],
+  'Marketing & Brand Strategy': ['Brand Positioning', 'Inbound Lead Strategy', 'Content Architecture', 'Campaign Architecture', 'Reputation Management'],
+  'Performance Analytics': ['KPI Scorecards', 'Executive Dashboards', 'Operational Efficiency Audit', 'Unit Economics', 'Cost-Benefit Analysis'],
 };
 
-export const STATES = ['Bihar'];
+export const STATES = ['General', 'National', 'International'];
 
 export const BIHAR_DISTRICTS = [
   'Araria', 'Arwal', 'Aurangabad', 'Banka', 'Begusarai', 'Bhagalpur', 'Bhojpur', 

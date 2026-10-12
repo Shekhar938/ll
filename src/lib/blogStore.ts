@@ -264,7 +264,7 @@ export async function createBlogPost(data: {
     title: data.title,
     excerpt: data.excerpt,
     content: data.content,
-    author: data.author || 'Advocate Aastha',
+    author: data.author || 'Business Admin',
     publishedAt: new Date().toISOString(),
     tags: data.tags || ['Legal Insights']
   };

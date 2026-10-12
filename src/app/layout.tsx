@@ -5,24 +5,24 @@ import ChatWidget from '@/components/ChatWidget';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 
 export const metadata: Metadata = {
-  title: 'Nyaya Aastha – Legal Guidance You Can Trust',
+  title: 'ClientFlow – Modern Client Management & Consultation Platform',
   description:
-    'Connect with Advocate Aastha. Secure, private, and transparent legal guidance at your fingertips.',
-  keywords: 'legal consultation India, advocate, lawyer, legal advice, Aastha',
-  authors: [{ name: 'Advocate Aastha' }],
+    'Secure, private, and streamlined client engagement, appointment scheduling, and portal management for modern businesses.',
+  keywords: 'client management, consultation booking, client portal, CRM, business consulting, appointment scheduling',
+  authors: [{ name: 'ClientFlow' }],
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Nyaya Aastha',
+    title: 'ClientFlow',
   },
   openGraph: {
-    title: 'Nyaya Aastha – Legal Guidance You Can Trust',
-    description: 'Secure, private, and transparent legal guidance by Advocate Aastha.',
+    title: 'ClientFlow – Modern Client Management & Consultation Platform',
+    description: 'Streamlined client intake, consultations, secure document sharing, and client portal for modern businesses.',
     type: 'website',
-    locale: 'en_IN',
-    url: 'https://nyayaaastha.in',
-    siteName: 'Nyaya Aastha – Legal Guidance You Can Trust',
+    locale: 'en_US',
+    url: 'https://clientflow.app',
+    siteName: 'ClientFlow – Client Management Platform',
   },
 };
 

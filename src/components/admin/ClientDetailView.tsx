@@ -46,7 +46,7 @@ export default function ClientDetailView({ consultation: initial }: Props) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             Dashboard
           </Link>
-          <span className={styles.mobileHeaderBrand}>Nyaya Aastha</span>
+          <span className={styles.mobileHeaderBrand}>ClientFlow</span>
         </div>
 
         <div className={styles.mobileProfileInfo}>
@@ -96,7 +96,7 @@ export default function ClientDetailView({ consultation: initial }: Props) {
               <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" stroke="#C9A227" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
-            <span>Nyaya Aastha</span>
+            <span>ClientFlow</span>
           </div>
         </div>
 

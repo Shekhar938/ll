@@ -26,7 +26,7 @@ export default function Footer() {
         <div className={styles.links}>
           <div className={styles.col}>
             <Link href="/portal" className={styles.colLink}>Client Portal Access</Link>
-            <Link href="/consult" className={styles.colLink}>Book Legal Consultation</Link>
+            <Link href="/consult" className={styles.colLink}>Book Consultation</Link>
             <a href="/#areas" className={styles.colLink}>{t.footer.practiceAreas}</a>
             <a href="/#why" className={styles.colLink}>{t.footer.profile}</a>
           </div>
@@ -39,8 +39,8 @@ export default function Footer() {
           <div className={styles.col}>
             <h4 className={styles.colTitle}>{t.footer.contactCol}</h4>
             <p className={styles.address}>{t.footer.address}</p>
-            <a href="tel:+919999999999" className={styles.colLink}>+91 99999 99999</a>
-            <a href="mailto:contact@nyayaaastha.in" className={styles.colLink}>contact@nyayaaastha.in</a>
+            <a href="tel:+18005550199" className={styles.colLink}>+1 (800) 555-0199</a>
+            <a href="mailto:support@clientflow.app" className={styles.colLink}>support@clientflow.app</a>
           </div>
         </div>
       </div>

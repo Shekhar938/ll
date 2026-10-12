@@ -27,7 +27,7 @@ export default function Navbar() {
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
-          <span className={styles.brandText}>Nyaya Aastha</span>
+          <span className={styles.brandText}>ClientFlow</span>
         </Link>
 
         <div className={styles.links}>
@@ -62,7 +62,7 @@ export default function Navbar() {
           <a href="/#faq" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t.nav.faq}</a>
           <Link href="/blog" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Blog</Link>
           <Link href="/consult" className={styles.mobilePrimaryCta} onClick={() => setMobileOpen(false)}>
-            📝 Book Legal Consultation
+            📝 Book Consultation
           </Link>
           <Link href="/portal" className={styles.mobileSecondaryCta} onClick={() => setMobileOpen(false)}>
             🔒 Already a Client? Login / Status

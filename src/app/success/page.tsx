@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Thank You – NyayaConnect',
+  title: 'Thank You – ClientFlow',
   description: 'Your consultation request has been submitted successfully.',
 };
 
@@ -21,7 +21,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
 
         <h1 className={styles.heading}>Request Submitted!</h1>
         <p className={styles.message}>
-          Your consultation request has been received. Our advocate will review your case and contact you at your preferred time.
+          Your consultation request has been received. Our team will review your requirements and reach out to you at your preferred time.
         </p>
 
         {id && (

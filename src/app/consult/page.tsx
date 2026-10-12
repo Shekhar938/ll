@@ -6,8 +6,8 @@ import ConsultForm from '@/components/consult/ConsultForm';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Request Consultation – NyayaConnect',
-  description: 'Submit your legal consultation request securely. Describe your issue, upload documents, and get expert legal guidance.',
+  title: 'Book a Consultation – ClientFlow',
+  description: 'Submit your consultation request securely. Share your project requirements, upload documents, and connect with our team.',
 };
 
 export default function ConsultPage() {

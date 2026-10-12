@@ -7,8 +7,8 @@ import Footer from '@/components/Footer';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Blog | NyayaConnect',
-  description: 'Legal insights, guides, and news from NyayaConnect.',
+  title: 'Blog & Articles | ClientFlow',
+  description: 'Business insights, advisory guides, and industry analysis from ClientFlow.',
 };
 
 export default async function BlogIndex() {
@@ -22,7 +22,7 @@ export default async function BlogIndex() {
       <Navbar />
       <main className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Legal Insights & Guides</h1>
+          <h1 className={styles.title}>Insights & Industry Guides</h1>
           <p className={styles.subtitle}>Stay informed about your rights and Indian law.</p>
         </div>
 

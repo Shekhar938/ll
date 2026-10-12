@@ -1,149 +1,147 @@
 export const translations = {
   en: {
     nav: {
-      practiceAreas: 'Practice Areas',
-      profile: 'Professional Profile',
+      practiceAreas: 'Services',
+      profile: 'About Us',
       faq: 'FAQ',
       clientPortal: 'Client Portal',
     },
     hero: {
-      title: 'Advocate Aastha',
-      subtitle: 'Official Portal',
-      desc: 'Official information portal for Advocate Aastha, practicing across Patna High Court and courts in Bihar & India.',
-      enrollment: 'ENR No: 3475/2026',
-      bar: 'Bihar State Bar Council',
+      title: 'ClientFlow',
+      subtitle: 'Client Portal & Consultation Engine',
+      desc: 'All-in-one client management, consultation scheduling, and secure digital collaboration platform built for professional businesses and consultants.',
+      enrollment: 'Enterprise Grade Security',
+      bar: 'Client Management & Portal System',
       clientPortal: 'Client Portal',
-      profile: 'Professional Profile'
+      profile: 'Platform Overview'
     },
     whyUs: {
-      title: 'Professional Profile',
-      subtitle: 'Background and academic qualifications.',
+      title: 'Platform Overview',
+      subtitle: 'Everything your business needs to manage client lifecycles.',
       features: [
         {
-          title: 'Bar Council Enrollment',
-          desc: 'Enrolled with the Bihar State Bar Council. Enrollment Number: ENR No. 3475/2026.',
-          icon: '⚖️'
+          title: 'Consultation & Scheduling',
+          desc: 'Seamless client booking with automated triage, category routing, and calendar coordination.',
+          icon: '📅'
         },
         {
-          title: 'Academic Qualifications',
-          desc: 'B.A. LL.B. (Hons.) from National Law University. LL.M. in Corporate Law.',
-          icon: '🎓'
+          title: 'Secure Client Portal',
+          desc: 'End-to-end client workspace for tracking case/project status, uploading files, and reviewing updates.',
+          icon: '🔒'
         },
         {
-          title: 'Client Portal',
-          desc: 'This digital portal allows clients to securely share case documents and request appointments online.',
+          title: 'Business Content & Publishing',
+          desc: 'Integrated editorial workspace and AI Copilot for knowledge base publishing and client advisories.',
           icon: '💻'
         }
       ]
     },
     practiceAreas: {
-      badge: 'Practice Areas',
-      heading: 'Areas of Legal Practice',
-      sub: 'Information regarding broad areas of legal practice undertaken by Advocate Aastha.',
+      badge: 'Solutions & Services',
+      heading: 'Business & Advisory Solutions',
+      sub: 'Flexible service modules and consultation categories tailored to your organization.',
       areas: [
-        { icon: '⚖️', title: 'Criminal Law', desc: 'Bail applications, trial defense, FIR matters, anticipatory bail, and criminal appeals.' },
-        { icon: '📋', title: 'Civil Law', desc: 'Recovery suits, injunctions, specific performance, and civil dispute resolution.' },
-        { icon: '🏠', title: 'Property Law', desc: 'Title disputes, property registration, possession matters, and partition suits.' },
-        { icon: '👨👩👧', title: 'Family Law', desc: 'Divorce proceedings, child custody, maintenance, domestic violence, and adoption.' },
-        { icon: '🏢', title: 'Corporate Law', desc: 'Company incorporation, compliance, mergers, acquisitions, and shareholder disputes.' },
-        { icon: '🛒', title: 'Consumer Law', desc: 'Product defects, service deficiencies, misleading advertisements, and refund matters.' },
-        { icon: '👔', title: 'Labour Law', desc: 'Wrongful termination, gratuity, PF disputes, and workplace rights protection.' },
-        { icon: '💰', title: 'Tax Law', desc: 'Income tax disputes, GST matters, customs, assessments, and penalty waivers.' },
-        { icon: '💻', title: 'Cyber Crime', desc: 'Online fraud, data breaches, cyberstalking, hacking incidents, and digital crimes.' },
-        { icon: '🏦', title: 'Banking Law', desc: 'Loan recovery, cheque bounce cases, NPA matters, and SARFAESI proceedings.' },
-        { icon: '🤝', title: 'Arbitration', desc: 'Commercial disputes, enforcement of awards, and alternative dispute resolution.' },
-        { icon: '💼', title: 'Employment Law', desc: 'Discrimination, harassment, wrongful dismissal, and employment benefits disputes.' },
+        { icon: '📊', title: 'Business Strategy', desc: 'Market analysis, business plan formulation, growth strategies, and execution roadmaps.' },
+        { icon: '💼', title: 'Corporate Advisory', desc: 'Governance, structural restructuring, stakeholder alignment, and board compliance.' },
+        { icon: '💰', title: 'Financial Consulting', desc: 'Cash flow forecasting, audit readiness, valuation, and capital allocation strategies.' },
+        { icon: '🛡️', title: 'Legal & Compliance', desc: 'Regulatory compliance, contract workflows, dispute risk review, and risk management.' },
+        { icon: '💻', title: 'Technology & Cloud', desc: 'Digital transformation, software systems evaluation, data governance, and tech roadmap.' },
+        { icon: '🤝', title: 'Client Operations', desc: 'Service desk optimization, CRM setup, process automation, and retention strategy.' },
+        { icon: '👔', title: 'HR & Talent Strategy', desc: 'Workforce structuring, leadership hiring, policy handbooks, and team development.' },
+        { icon: '🛒', title: 'Consumer & Commerce', desc: 'Product lifecycle advisory, vendor agreements, refund governance, and customer care.' },
+        { icon: '🔐', title: 'Cyber & Information Security', desc: 'Security audits, data privacy compliance (DPDP/GDPR), and threat mitigation.' },
+        { icon: '🏦', title: 'Fintech & Banking Solutions', desc: 'Payment rails integration, debt advisory, loan structures, and fintech compliance.' },
+        { icon: '🌐', title: 'Marketing & Brand Strategy', desc: 'Inbound pipeline architecture, content strategy, positioning, and market penetration.' },
+        { icon: '📈', title: 'Performance Analytics', desc: 'KPI scorecards, operational metrics, executive dashboards, and efficiency audits.' },
       ]
     },
     faq: {
       badge: 'FAQ',
       heading: 'Frequently Asked Questions',
-      sub: 'Information regarding the digital consultation process.',
+      sub: 'Learn how our consultation booking and client portal keep your engagements seamless.',
       stillQuestions: 'Still have questions?',
-      submitQuery: 'Please submit your query via the portal for further information.',
+      submitQuery: 'Please submit your inquiry via the portal for personalized support.',
       clientPortalBtn: 'Access Client Portal',
       faqs: [
-        { q: 'Is my information kept confidential?', a: 'Absolutely. All your personal details, case information, and uploaded documents are encrypted and stored securely. We never share your information with any third party. Your privacy is our highest priority.' },
-        { q: 'How long does it take to receive a response?', a: 'We respond to all consultation requests within 24 hours. Urgent matters (marked as High priority) are typically addressed within 2-4 hours during business hours.' },
-        { q: 'What types of documents can I upload?', a: 'You can upload PDF files, Word documents (DOCX), and image files (JPG, PNG). Each file can be up to 20 MB in size. This allows you to share FIR copies, court orders, agreements, and other relevant legal documents.' },
-        { q: 'Is this a free consultation service?', a: 'The initial consultation request is completely free. Once you submit your details, our advocate will review your case and contact you to discuss the consultation process and any applicable fees.' },
-        { q: 'Can I request a video consultation?', a: 'Yes, video consultations are available. During the consultation request form, you can indicate your preference for a video call. Our advocate will schedule a suitable time with you.' },
-        { q: 'What happens after I submit my consultation request?', a: 'After submission, our system generates a case summary and our advocate reviews your matter. You will receive a call or message at your preferred contact time. A unique case ID is generated for tracking your request.' },
-        { q: 'Can I track my consultation request?', a: 'Yes. After submission, you will receive a unique consultation ID. You can use this ID to track the status of your request. Our team will also proactively keep you informed about any updates.' },
-        { q: 'Do you handle cases from all states in India?', a: 'Yes, we accept consultation requests from clients across all states and union territories of India. Consultations can be conducted in person, by phone, or via video call.' },
+        { q: 'Is client information kept confidential and secure?', a: 'Yes, absolutely. All client communications, records, and uploaded attachments are encrypted at rest and in transit. Your business data remains strictly confidential and protected.' },
+        { q: 'How quickly does the team respond to consultation requests?', a: 'Consultation inquiries are acknowledged immediately, and a specialist will contact you within 24 hours. High-priority inquiries receive same-day priority review.' },
+        { q: 'What types of documents can clients upload?', a: 'You can upload PDF files, Word documents (DOCX), spreadsheets, and high-resolution images (JPG, PNG) up to 20 MB each.' },
+        { q: 'Can clients schedule virtual video meetings?', a: 'Yes. When booking a consultation, you can select video conferencing or phone call based on your preference.' },
+        { q: 'How does the Client Portal login work?', a: 'Clients receive a Consultation ID upon submission. By entering this ID or their registered mobile number, clients can securely review project status, messages, and office notes anytime.' },
+        { q: 'Can this platform support multiple service departments?', a: 'Yes, ClientFlow provides multi-category routing across strategy, finance, technology, compliance, and client operations.' },
       ]
     },
     footer: {
-      brand: 'Nyaya Aastha',
-      tagline: 'Advocate Aastha | Official Portal',
-      desc: 'Enrollment No: ENR No. 3475/2026 (Bihar State Bar Council). Strictly for informational purposes in compliance with BCI Rules.',
-      infoCol: 'Information',
+      brand: 'ClientFlow',
+      tagline: 'Client Management & Portal System',
+      desc: 'Modern platform for consultation scheduling, secure client management, and automated collaboration.',
+      infoCol: 'Navigation',
       clientPortal: 'Client Portal',
-      practiceAreas: 'Practice Areas',
-      profile: 'Professional Profile',
-      legalCol: 'Legal',
+      practiceAreas: 'Services',
+      profile: 'Platform Overview',
+      legalCol: 'Legal & Terms',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
-      disclaimer: 'Legal Disclaimer',
-      contactCol: 'Contact',
-      address: 'Lawyers Chamber, Patna High Court Road, Patna, Bihar – 800001',
-      copy: `© ${new Date().getFullYear()} Advocate Aastha. All rights reserved. | Not an advertisement or solicitation.`,
-      admin: 'Admin'
+      disclaimer: 'Terms of Engagement',
+      contactCol: 'Support & Inquiries',
+      address: 'ClientFlow Technologies • Enterprise Business Hub',
+      copy: `© ${new Date().getFullYear()} ClientFlow. All rights reserved.`,
+      admin: 'Admin Portal'
     },
     disclaimerModal: {
-      title: 'Disclaimer',
-      p1: 'The Bar Council of India does not permit advertisement or solicitation by advocates in any form or manner.',
-      p2: 'By accessing this website (www.nyayaaastha.in), you acknowledge and confirm that you are seeking information relating to Advocate Aastha of your own accord and that there has been no form of solicitation, advertisement, or inducement by Advocate Aastha or her members.',
-      p3: 'The content of this website is for informational purposes only and should not be interpreted as soliciting or advertisement. No material/information provided on this website should be construed as legal advice.',
+      title: 'Terms of Engagement & Privacy Notice',
+      p1: 'Welcome to ClientFlow. By proceeding, you agree to access our professional services and client consultation platform.',
+      p2: 'All communications, appointment bookings, and uploaded records submitted through this application are processed securely in accordance with our privacy practices.',
+      p3: 'Information provided on this site is for general business guidance. Specific advisory engagements are formalized upon mutual agreement.',
       decline: 'Decline',
-      accept: 'I Agree'
+      accept: 'I Understand & Accept'
     },
     consult: {
-      page: { title: 'Request a Consultation', sub: 'Fill in the details below and we will get back to you promptly.' },
-      steps: { 1: 'Personal Info', 2: 'Legal Matter', 3: 'Priority', 4: 'Documents', 5: 'Review' },
-      nav: { back: 'Back', next: 'Next', submit: 'Submit Request', submitting: 'Submitting...' },
+      page: { title: 'Book a Consultation', sub: 'Fill in your details below and our team will get in touch promptly.' },
+      steps: { 1: 'Contact Info', 2: 'Inquiry Details', 3: 'Priority & Schedule', 4: 'Documents', 5: 'Review & Submit' },
+      nav: { back: 'Back', next: 'Next', submit: 'Submit Consultation Request', submitting: 'Submitting...' },
       step1: {
-        title: 'Personal Information', desc: 'Tell us about yourself so we can reach you with the right guidance.',
-        fullName: 'Full Name', fullNamePlaceholder: 'Rajesh Kumar',
-        mobile: 'Mobile Number', mobilePlaceholder: '9XXXXXXXXX',
-        email: 'Email Address', emailPlaceholder: 'rajesh@example.com',
-        occupation: 'Occupation', occupationPlaceholder: 'e.g. Business Owner, Teacher',
-        city: 'City (District)', citySelect: 'Select District',
-        state: 'State', prefLang: 'Preferred Language', langSelect: 'Select Language',
+        title: 'Contact Information', desc: 'Tell us about yourself so our team can connect with the right guidance.',
+        fullName: 'Full Name', fullNamePlaceholder: 'Alex Morgan',
+        mobile: 'Contact Number', mobilePlaceholder: '9XXXXXXXXX',
+        email: 'Email Address', emailPlaceholder: 'alex@example.com',
+        occupation: 'Organization / Role', occupationPlaceholder: 'e.g. Founder, Operations Director, Manager',
+        city: 'City / Region', citySelect: 'Select Region',
+        state: 'State / Province', prefLang: 'Preferred Language', langSelect: 'Select Language',
         errors: {
-          fullName: 'Full name is required', mobileReq: 'Mobile number is required', mobileInv: 'Enter a valid 10-digit Indian mobile number',
+          fullName: 'Full name is required', mobileReq: 'Contact number is required', mobileInv: 'Enter a valid 10-digit number',
           emailReq: 'Email is required', emailInv: 'Enter a valid email address', cityReq: 'City is required', stateReq: 'Please select a state'
         }
       },
       step2: {
-        title: 'Legal Matter Details', desc: 'Provide basic details about your legal requirement.',
-        practiceArea: 'Practice Area', selectPractice: 'Select Practice Area', caseType: 'Case Type', selectCaseType: 'Select Case Type', 
-        caseSummary: 'Brief Case Summary', summaryPlaceholder: 'Describe your issue briefly...',
-        opponent: 'Opposing Party Name (If any)', opponentPlaceholder: 'Name of opponent or organization',
-        court: 'Relevant Court / Jurisdiction', courtPlaceholder: 'e.g. Delhi High Court',
-        station: 'Police Station', stationPlaceholder: 'e.g. Connaught Place PS', 
-        stage: 'Current Stage of Case', selectStage: 'Select Stage', optional: '(if applicable)',
-        errors: { practiceArea: 'Please select a practice area', caseType: 'Please select a case type', caseSummary: 'Please provide a brief summary', summaryShort: 'Please provide at least 30 characters', caseStage: 'Please select a case stage' }
+        title: 'Inquiry & Requirements', desc: 'Provide overview details about your project or consultation requirement.',
+        practiceArea: 'Service Category', selectPractice: 'Select Service Category', caseType: 'Inquiry Type', selectCaseType: 'Select Inquiry Type', 
+        caseSummary: 'Inquiry Summary', summaryPlaceholder: 'Describe your objectives, current challenges, or specific needs...',
+        opponent: 'Organization / Counterparty (Optional)', opponentPlaceholder: 'Related company or entity name',
+        court: 'Jurisdiction / Industry Sector', courtPlaceholder: 'e.g. Technology / FinTech / National',
+        station: 'Department / Reference Code', stationPlaceholder: 'e.g. Operations Unit 4', 
+        stage: 'Current Project Stage', selectStage: 'Select Stage', optional: '(if applicable)',
+        errors: { practiceArea: 'Please select a service category', caseType: 'Please select an inquiry type', caseSummary: 'Please provide a brief summary', summaryShort: 'Please provide at least 30 characters', caseStage: 'Please select a project stage' }
       },
       step3: {
-        title: 'Priority & Preferences', desc: 'Let us know how urgently you need assistance.',
-        urgency: 'How urgent is this matter?', urgLow: 'Low (Within a week)', urgMed: 'Medium (Within 2-3 days)', urgHigh: 'High (Within 24 hours)',
+        title: 'Priority & Scheduling', desc: 'Let us know how urgently you need assistance.',
+        urgency: 'How urgent is this inquiry?', urgLow: 'Standard (Within a week)', urgMed: 'Medium (Within 2-3 days)', urgHigh: 'Priority (Within 24 hours)',
         contactTime: 'Preferred Contact Time', timeMorn: 'Morning (10 AM - 1 PM)', timeAft: 'Afternoon (2 PM - 5 PM)', timeEve: 'Evening (6 PM - 8 PM)',
-        video: 'Request Video Consultation', videoDesc: 'I would prefer a video call over a phone call if possible.'
+        video: 'Request Video Consultation', videoDesc: 'I would prefer a video meeting over a phone call if possible.'
       },
       step4: {
-        title: 'Supporting Documents', desc: 'Upload any relevant documents (FIR, Notices, Agreements) to help us understand your case better.',
-        uploadBtn: 'Click or drag files here to upload', uploadSub: 'Supported: PDF, JPG, PNG (Max 20MB per file)'
+        title: 'Supporting Documents', desc: 'Upload any relevant project briefs, contracts, or reference files.',
+        uploadBtn: 'Click or drag files here to upload', uploadSub: 'Supported: PDF, JPG, PNG, DOCX (Max 20MB per file)'
       },
       step5: {
-        title: 'Review & Submit', desc: 'Please review your details before submitting the request.',
-        edit: 'Edit', personal: 'Personal', legal: 'Legal Matter', prefs: 'Preferences', docs: 'Documents', noDocs: 'No documents uploaded',
+        title: 'Review & Submit', desc: 'Please review your consultation details before submitting.',
+        edit: 'Edit', personal: 'Contact Info', legal: 'Inquiry Details', prefs: 'Preferences', docs: 'Documents', noDocs: 'No documents uploaded',
         submitError: 'Something went wrong. Please try again.',
-        consent: 'By submitting, you agree to our Privacy Policy and Terms of Service. Your information is encrypted and confidential.'
+        consent: 'By submitting, you agree to our Privacy Policy and Terms of Service. Your data is encrypted and secure.'
       }
     },
     languages: { 'English': 'English', 'Hindi': 'Hindi' },
-    states: { 'Bihar': 'Bihar' },
+    states: { 'Bihar': 'Bihar', 'General': 'General' },
     districts: {
       'Araria': 'Araria', 'Arwal': 'Arwal', 'Aurangabad': 'Aurangabad', 'Banka': 'Banka', 'Begusarai': 'Begusarai', 'Bhagalpur': 'Bhagalpur', 'Bhojpur': 'Bhojpur', 
       'Buxar': 'Buxar', 'Darbhanga': 'Darbhanga', 'East Champaran': 'East Champaran', 'Gaya': 'Gaya', 'Gopalganj': 'Gopalganj', 'Jamui': 'Jamui', 'Jehanabad': 'Jehanabad', 
@@ -155,100 +153,98 @@ export const translations = {
   },
   hi: {
     nav: {
-      practiceAreas: 'अभ्यास क्षेत्र',
-      profile: 'पेशेवर प्रोफ़ाइल',
+      practiceAreas: 'सेवाएं',
+      profile: 'हमारे बारे में',
       faq: 'सामान्य प्रश्न',
       clientPortal: 'क्लाइंट पोर्टल',
     },
     hero: {
-      title: 'अधिवक्ता आस्था',
-      subtitle: 'आधिकारिक पोर्टल',
-      desc: 'अधिवक्ता आस्था के लिए आधिकारिक सूचना पोर्टल, पटना उच्च न्यायालय और बिहार तथा भारत की अदालतों में अभ्यास कर रही हैं।',
-      enrollment: 'नामांकन संख्या: ENR No. 3475/2026',
-      bar: 'बिहार राज्य बार काउंसिल',
+      title: 'ClientFlow',
+      subtitle: 'क्लाइंट पोर्टल और परामर्श इंजन',
+      desc: 'पेशेवर व्यवसायों और सलाहकारों के लिए निर्मित संपूर्ण क्लाइंट प्रबंधन, परामर्श शेड्यूलिंग और सुरक्षित डिजिटल सहयोग प्लेटफ़ॉर्म।',
+      enrollment: 'एंटरप्राइज-ग्रेड सुरक्षा',
+      bar: 'क्लाइंट प्रबंधन और पोर्टल सिस्टम',
       clientPortal: 'क्लाइंट पोर्टल',
-      profile: 'पेशेवर प्रोफ़ाइल'
+      profile: 'प्लेटफ़ॉर्म विवरण'
     },
     whyUs: {
-      title: 'पेशेवर प्रोफ़ाइल',
-      subtitle: 'पृष्ठभूमि और शैक्षणिक योग्यता।',
+      title: 'प्लेटफ़ॉर्म विवरण',
+      subtitle: 'क्लाइंट जीवनचक्र प्रबंधित करने के लिए आपके व्यवसाय की हर ज़रूरत।',
       features: [
         {
-          title: 'बार काउंसिल नामांकन',
-          desc: 'बिहार राज्य बार काउंसिल में नामांकित। नामांकन संख्या: ENR No. 3475/2026।',
-          icon: '⚖️'
+          title: 'परामर्श और शेड्यूलिंग',
+          desc: 'स्वचालित ट्राइएज और कैलेंडर समन्वय के साथ निर्बाध क्लाइंट बुकिंग।',
+          icon: '📅'
         },
         {
-          title: 'शैक्षणिक योग्यता',
-          desc: 'नेशनल लॉ यूनिवर्सिटी से बी.ए. एलएल.बी. (ऑनर्स)। कॉर्पोरेट लॉ में एलएल.एम।',
-          icon: '🎓'
+          title: 'सुरक्षित क्लाइंट पोर्टल',
+          desc: 'स्थिति ट्रैक करने, दस्तावेज़ अपलोड करने और अपडेट देखने के लिए सुरक्षित वर्कस्पेस।',
+          icon: '🔒'
         },
         {
-          title: 'क्लाइंट पोर्टल',
-          desc: 'यह डिजिटल पोर्टल ग्राहकों को सुरक्षित रूप से केस दस्तावेज़ साझा करने और ऑनलाइन अपॉइंटमेंट का अनुरोध करने की अनुमति देता है।',
+          title: 'व्यावसायिक सामग्री और प्रकाशन',
+          desc: 'नॉलेज बेस प्रकाशन और क्लाइंट परामर्श के लिए एकीकृत संपादकीय वर्कस्पेस।',
           icon: '💻'
         }
       ]
     },
     practiceAreas: {
-      badge: 'अभ्यास क्षेत्र',
-      heading: 'कानूनी अभ्यास के क्षेत्र',
-      sub: 'अधिवक्ता आस्था द्वारा किए गए कानूनी अभ्यास के व्यापक क्षेत्रों के बारे में जानकारी।',
+      badge: 'समाधान और सेवाएं',
+      heading: 'व्यावसायिक और सलाहकार समाधान',
+      sub: 'आपके संगठन के अनुकूल लचीले सेवा मॉड्यूल और परामर्श श्रेणियां।',
       areas: [
-        { icon: '⚖️', title: 'आपराधिक कानून', desc: 'जमानत आवेदन, ट्रायल डिफेंस, एफआईआर मामले, अग्रिम जमानत, और आपराधिक अपील।' },
-        { icon: '📋', title: 'सिविल कानून', desc: 'वसूली के मुकदमे, निषेधाज्ञा, विशिष्ट प्रदर्शन, और दीवानी विवाद समाधान।' },
-        { icon: '🏠', title: 'संपत्ति कानून', desc: 'शीर्षक विवाद, संपत्ति पंजीकरण, कब्जा मामले, और विभाजन के मुकदमे।' },
-        { icon: '👨👩👧', title: 'पारिवारिक कानून', desc: 'तलाक की कार्यवाही, बाल संरक्षण, भरण-पोषण, घरेलू हिंसा, और गोद लेना।' },
-        { icon: '🏢', title: 'कॉर्पोरेट कानून', desc: 'कंपनी निगमन, अनुपालन, विलय, अधिग्रहण, और शेयरधारक विवाद।' },
-        { icon: '🛒', title: 'उपभोक्ता कानून', desc: 'उत्पाद दोष, सेवा की कमियां, भ्रामक विज्ञापन, और धनवापसी के मामले।' },
-        { icon: '👔', title: 'श्रम कानून', desc: 'गलत तरीके से बर्खास्तगी, ग्रेच्युटी, पीएफ विवाद, और कार्यस्थल अधिकार संरक्षण।' },
-        { icon: '💰', title: 'कर कानून', desc: 'आयकर विवाद, जीएसटी मामले, सीमा शुल्क, मूल्यांकन, और जुर्माना छूट।' },
-        { icon: '💻', title: 'साइबर अपराध', desc: 'ऑनलाइन धोखाधड़ी, डेटा उल्लंघन, साइबरस्टॉकिंग, हैकिंग की घटनाएं, और डिजिटल अपराध।' },
-        { icon: '🏦', title: 'बैंकिंग कानून', desc: 'ऋण वसूली, चेक बाउंस मामले, एनपीए मामले, और सरफेसी कार्यवाही।' },
-        { icon: '🤝', title: 'मध्यस्थता', desc: 'वाणिज्यिक विवाद, पुरस्कारों का प्रवर्तन, और वैकल्पिक विवाद समाधान।' },
-        { icon: '💼', title: 'रोजगार कानून', desc: 'भेदभाव, उत्पीड़न, गलत तरीके से बर्खास्तगी, और रोजगार लाभ विवाद।' },
+        { icon: '📊', title: 'व्यावसायिक रणनीति', desc: 'बाजार विश्लेषण, व्यवसाय योजना निर्माण, और विकास रणनीतियाँ।' },
+        { icon: '💼', title: 'कॉर्पोरेट सलाहकार', desc: 'शासन, संरचनात्मक पुनर्गठन, और अनुपालन समीक्षा।' },
+        { icon: '💰', title: 'वित्तीय परामर्श', desc: 'कैश फ्लो पूर्वानुमान, ऑडिट तैयारी, और पूंजी आवंटन।' },
+        { icon: '🛡️', title: 'कानूनी और अनुपालन', desc: 'नियामक अनुपालन, अनुबंध वर्कफ़्लो, और जोखिम प्रबंधन।' },
+        { icon: '💻', title: 'प्रौद्योगिकी और क्लाउड', desc: 'डिजिटल परिवर्तन, सॉफ्टवेयर सिस्टम मूल्यांकन, और टेक रोडमैप।' },
+        { icon: '🤝', title: 'क्लाइंट संचालन', desc: 'सर्विस डेस्क अनुकूलन, सीआरएम सेटअप, और प्रोसेस ऑटोमेशन।' },
+        { icon: '👔', title: 'मानव संसाधन रणनीति', desc: 'कार्यबल संरचना, नेतृत्व भर्ती, और टीम विकास।' },
+        { icon: '🛒', title: 'उपभोक्ता और वाणिज्य', desc: 'उत्पाद जीवनचक्र सलाह, विक्रेता समझौते, और ग्राहक सेवा।' },
+        { icon: '🔐', title: 'साइबर और डेटा सुरक्षा', desc: 'सुरक्षा ऑडिट, डेटा गोपनीयता अनुपालन (DPDP/GDPR), और सुरक्षा।' },
+        { icon: '🏦', title: 'फिनटेक और बैंकिंग', desc: 'पेमेंट एकीकरण, ऋण सलाहकार, और वित्तीय अनुपालन।' },
+        { icon: '🌐', title: 'विपणन और ब्रांड रणनीति', desc: 'कंटेंट रणनीति, ब्रांड स्थिति, और बाजार विस्तार।' },
+        { icon: '📈', title: 'प्रदर्शन विश्लेषण', desc: 'केपीआई स्कोरकार्ड, परिचालन मेट्रिक्स, और दक्षता ऑडिट।' },
       ]
     },
     faq: {
       badge: 'सामान्य प्रश्न',
       heading: 'अक्सर पूछे जाने वाले प्रश्न',
-      sub: 'डिजिटल परामर्श प्रक्रिया के बारे में जानकारी।',
+      sub: 'जानें कि हमारी परामर्श बुकिंग और क्लाइंट पोर्टल आपके काम को कैसे आसान बनाते हैं।',
       stillQuestions: 'क्या अभी भी प्रश्न हैं?',
-      submitQuery: 'अधिक जानकारी के लिए कृपया पोर्टल के माध्यम से अपनी क्वेरी सबमिट करें।',
+      submitQuery: 'व्यक्तिगत सहायता के लिए कृपया पोर्टल के माध्यम से अपनी क्वेरी सबमिट करें।',
       clientPortalBtn: 'क्लाइंट पोर्टल तक पहुंचें',
       faqs: [
-        { q: 'क्या मेरी जानकारी गोपनीय रखी जाती है?', a: 'बिल्कुल। आपके सभी व्यक्तिगत विवरण, केस की जानकारी, और अपलोड किए गए दस्तावेज़ एन्क्रिप्टेड और सुरक्षित रूप से संग्रहीत किए जाते हैं। हम कभी भी किसी तीसरे पक्ष के साथ आपकी जानकारी साझा नहीं करते हैं। आपकी गोपनीयता हमारी सर्वोच्च प्राथमिकता है।' },
-        { q: 'प्रतिक्रिया प्राप्त करने में कितना समय लगता है?', a: 'हम 24 घंटों के भीतर सभी परामर्श अनुरोधों का जवाब देते हैं। तत्काल मामलों (उच्च प्राथमिकता के रूप में चिह्नित) को आमतौर पर व्यावसायिक घंटों के दौरान 2-4 घंटों के भीतर संबोधित किया जाता है।' },
-        { q: 'मैं किस प्रकार के दस्तावेज़ अपलोड कर सकता हूँ?', a: 'आप पीडीएफ फाइलें, वर्ड दस्तावेज़ (DOCX), और छवि फाइलें (JPG, PNG) अपलोड कर सकते हैं। प्रत्येक फाइल आकार में 20 एमबी तक हो सकती है। इससे आप एफआईआर की प्रतियां, अदालत के आदेश, समझौते, और अन्य प्रासंगिक कानूनी दस्तावेज़ साझा कर सकते हैं।' },
-        { q: 'क्या यह एक मुफ्त परामर्श सेवा है?', a: 'प्रारंभिक परामर्श अनुरोध पूरी तरह से मुफ्त है। एक बार जब आप अपना विवरण सबमिट करते हैं, तो हमारे अधिवक्ता आपके मामले की समीक्षा करेंगे और परामर्श प्रक्रिया और किसी भी लागू शुल्क पर चर्चा करने के लिए आपसे संपर्क करेंगे।' },
-        { q: 'क्या मैं वीडियो परामर्श का अनुरोध कर सकता हूँ?', a: 'हां, वीडियो परामर्श उपलब्ध हैं। परामर्श अनुरोध फ़ॉर्म के दौरान, आप वीडियो कॉल के लिए अपनी प्राथमिकता का संकेत दे सकते हैं। हमारे अधिवक्ता आपके साथ उपयुक्त समय निर्धारित करेंगे।' },
-        { q: 'अपना परामर्श अनुरोध सबमिट करने के बाद क्या होता है?', a: 'सबमिशन के बाद, हमारा सिस्टम एक केस सारांश उत्पन्न करता है और हमारे अधिवक्ता आपके मामले की समीक्षा करते हैं। आपको अपने पसंदीदा संपर्क समय पर एक कॉल या संदेश प्राप्त होगा। आपके अनुरोध को ट्रैक करने के लिए एक अद्वितीय केस आईडी उत्पन्न की जाती है।' },
-        { q: 'क्या मैं अपने परामर्श अनुरोध को ट्रैक कर सकता हूँ?', a: 'हाँ। सबमिशन के बाद, आपको एक अद्वितीय परामर्श आईडी प्राप्त होगी। आप इस आईडी का उपयोग अपने अनुरोध की स्थिति को ट्रैक करने के लिए कर सकते हैं। हमारी टीम आपको किसी भी अपडेट के बारे में सक्रिय रूप से सूचित रखेगी।' },
-        { q: 'क्या आप भारत के सभी राज्यों के मामलों को संभालते हैं?', a: 'हां, हम भारत के सभी राज्यों और केंद्र शासित प्रदेशों के ग्राहकों से परामर्श अनुरोध स्वीकार करते हैं। परामर्श व्यक्तिगत रूप से, फोन द्वारा, या वीडियो कॉल के माध्यम से आयोजित किए जा सकते हैं।' },
+        { q: 'क्या क्लाइंट की जानकारी सुरक्षित और गोपनीय है?', a: 'हाँ, बिल्कुल। सभी संचार, रिकॉर्ड और अपलोड किए गए दस्तावेज़ पूरी तरह से एन्क्रिप्टेड और सुरक्षित हैं।' },
+        { q: 'परामर्श अनुरोधों का उत्तर कितनी जल्दी मिलता है?', a: 'सभी पूछताछ का 24 घंटों के भीतर समाधान किया जाता है। प्राथमिकता वाली पूछताछ की उसी दिन समीक्षा की जाती है।' },
+        { q: 'क्लाइंट किस प्रकार के दस्तावेज़ अपलोड कर सकते हैं?', a: 'आप पीडीएफ, वर्ड दस्तावेज़, स्प्रेडशीट और चित्र (अधिकतम 20MB) अपलोड कर सकते हैं।' },
+        { q: 'क्या वीडियो परामर्श उपलब्ध हैं?', a: 'हाँ, बुकिंग के दौरान आप फ़ोन कॉल या वीडियो कॉन्फ्रेंसिंग चुन सकते हैं।' },
+        { q: 'क्लाइंट पोर्टल कैसे काम करता है?', a: 'सबमिशन पर आपको एक कंसल्टेशन आईडी मिलती है जिससे आप किसी भी समय स्थिति और नोट्स देख सकते हैं।' },
+        { q: 'क्या यह कई सेवा श्रेणियों का समर्थन करता है?', a: 'हाँ, ClientFlow रणनीति, वित्त, प्रौद्योगिकी और संचालन श्रेणियों का समर्थन करता है।' },
       ]
     },
     footer: {
-      brand: 'न्याय आस्था',
-      tagline: 'अधिवक्ता आस्था | आधिकारिक पोर्टल',
-      desc: 'नामांकन संख्या: ENR No. 3475/2026 (बिहार राज्य बार काउंसिल)। BCI नियमों के अनुपालन में केवल सूचनात्मक उद्देश्यों के लिए।',
-      infoCol: 'जानकारी',
+      brand: 'ClientFlow',
+      tagline: 'क्लाइंट प्रबंधन और पोर्टल सिस्टम',
+      desc: 'परामर्श शेड्यूलिंग, सुरक्षित क्लाइंट प्रबंधन और सहयोग के लिए आधुनिक प्लेटफ़ॉर्म।',
+      infoCol: 'नेविगेशन',
       clientPortal: 'क्लाइंट पोर्टल',
-      practiceAreas: 'अभ्यास क्षेत्र',
-      profile: 'पेशेवर प्रोफ़ाइल',
-      legalCol: 'कानूनी',
+      practiceAreas: 'सेवाएं',
+      profile: 'प्लेटफ़ॉर्म विवरण',
+      legalCol: 'कानूनी और शर्तें',
       privacy: 'गोपनीयता नीति',
       terms: 'सेवा की शर्तें',
-      disclaimer: 'कानूनी अस्वीकरण',
-      contactCol: 'संपर्क',
-      address: 'लॉयर्स चैंबर, पटना हाई कोर्ट रोड, पटना, बिहार – 800001',
-      copy: `© ${new Date().getFullYear()} अधिवक्ता आस्था। सर्वाधिकार सुरक्षित। | यह विज्ञापन या आग्रह नहीं है।`,
-      admin: 'एडमिन'
+      disclaimer: 'नियम व शर्तें',
+      contactCol: 'सहायता और संपर्क',
+      address: 'ClientFlow Technologies • बिजनेस हब',
+      copy: `© ${new Date().getFullYear()} ClientFlow. सर्वाधिकार सुरक्षित।`,
+      admin: 'एडमिन पोर्टल'
     },
     disclaimerModal: {
-      title: 'अस्वीकरण',
-      p1: 'बार काउंसिल ऑफ इंडिया अधिवक्ताओं द्वारा किसी भी रूप या तरीके से विज्ञापन या आग्रह की अनुमति नहीं देता है।',
-      p2: 'इस वेबसाइट (www.nyayaaastha.in) तक पहुंचकर, आप स्वीकार करते हैं और पुष्टि करते हैं कि आप अपनी स्वेच्छा से अधिवक्ता आस्था से संबंधित जानकारी मांग रहे हैं और अधिवक्ता आस्था या उनके सदस्यों द्वारा किसी भी प्रकार का आग्रह, विज्ञापन या प्रलोभन नहीं दिया गया है।',
-      p3: 'इस वेबसाइट की सामग्री केवल सूचना के उद्देश्यों के लिए है और इसे आग्रह या विज्ञापन के रूप में व्याख्या नहीं किया जाना चाहिए। इस वेबसाइट पर प्रदान की गई किसी भी सामग्री/जानकारी को कानूनी सलाह के रूप में नहीं माना जाना चाहिए।',
+      title: 'नियम व शर्तें एवं गोपनीयता सूचना',
+      p1: 'ClientFlow में आपका स्वागत है। आगे बढ़कर, आप हमारे पेशेवर सेवाओं और परामर्श प्लेटफ़ॉर्म तक पहुंचने के लिए सहमत होते हैं।',
+      p2: 'इस एप्लिकेशन के माध्यम से सबमिट किए गए सभी रिकॉर्ड हमारी गोपनीयता नीतियों के अनुसार सुरक्षित रूप से संसाधित किए जाते हैं।',
+      p3: 'इस साइट पर दी गई जानकारी सामान्य व्यावसायिक मार्गदर्शन के लिए है। विशिष्ट सलाहकार सेवाएं आपसी सहमति पर आधारित होती हैं।',
       decline: 'अस्वीकार',
       accept: 'मैं सहमत हूँ'
     },

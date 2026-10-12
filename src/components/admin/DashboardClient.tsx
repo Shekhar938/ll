@@ -147,7 +147,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [formSlug, setFormSlug] = useState('');
   const [formExcerpt, setFormExcerpt] = useState('');
   const [formContent, setFormContent] = useState('');
-  const [formAuthor, setFormAuthor] = useState('Advocate Aastha');
+  const [formAuthor, setFormAuthor] = useState('Business Admin');
   const [formTags, setFormTags] = useState('Legal Insights');
   const [savingBlog, setSavingBlog] = useState(false);
 
@@ -367,8 +367,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         setFormSlug(parsed.slug || '');
         setFormExcerpt(parsed.excerpt || '');
         setFormContent(parsed.content || '');
-        setFormAuthor(parsed.author || 'Advocate Aastha');
-        setFormTags(parsed.tags || 'Legal Insights, Indian Law');
+        setFormAuthor(parsed.author || 'Business Admin');
+        setFormTags(parsed.tags || 'Business Strategy, Industry Insights');
         setHasRestoredDraft(true);
         if (parsed.savedAt) {
           const d = new Date(parsed.savedAt);
@@ -379,8 +379,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         setFormSlug('');
         setFormExcerpt('');
         setFormContent('');
-        setFormAuthor('Advocate Aastha');
-        setFormTags('Legal Insights, Indian Law');
+        setFormAuthor('Business Admin');
+        setFormTags('Business Strategy, Industry Insights');
         setHasRestoredDraft(false);
       }
     } else {
@@ -388,8 +388,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       setFormSlug('');
       setFormExcerpt('');
       setFormContent('');
-      setFormAuthor('Advocate Aastha');
-      setFormTags('Legal Insights, Indian Law');
+      setFormAuthor('Business Admin');
+      setFormTags('Business Strategy, Industry Insights');
       setHasRestoredDraft(false);
       setLastSavedTime('');
     }
@@ -508,8 +508,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       setFormSlug('');
       setFormExcerpt('');
       setFormContent('');
-      setFormAuthor('Advocate Aastha');
-      setFormTags('Legal Insights, Indian Law');
+      setFormAuthor('Business Admin');
+      setFormTags('Business Strategy, Industry Insights');
     }
   };
 
@@ -592,7 +592,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" stroke="#C9A227" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
             </svg>
-            <span className={styles.mobileBrand}>Nyaya Aastha</span>
+            <span className={styles.mobileBrand}>ClientFlow</span>
           </div>
           <div className={styles.mobileHeaderActions}>
             <Link href="/" className={styles.mobileNavIcon} target="_blank" title="View Live Site">
@@ -628,7 +628,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
             <path d="M14 2L3 8V20L14 26L25 20V8L14 2Z" stroke="#C9A227" strokeWidth="2" strokeLinejoin="round"/>
             <path d="M8 14H20M14 8V20" stroke="#C9A227" strokeWidth="2" strokeLinecap="round"/>
           </svg>
-          <span className={styles.sidebarBrand}>Nyaya Aastha</span>
+          <span className={styles.sidebarBrand}>ClientFlow</span>
         </div>
         <nav className={styles.sidebarNav}>
           <button
@@ -1120,7 +1120,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                         <h3>Blog Copilot</h3>
                         <p className={styles.copilotSubtitle}>Legal Writing & Proofreading Assistant</p>
                         <div className={styles.copilotCredentialBadge}>
-                          Advocate Aastha (ENR No. 3475/2026, Bihar State Bar Council)
+                          Business Content & Publishing Assistant
                         </div>
                       </div>
                     </div>

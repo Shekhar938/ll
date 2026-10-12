@@ -12,7 +12,7 @@ export default function Hero() {
         <div className={styles.content}>
           <div className={`${styles.badge} animate-fadeInUp`}>
             <span className={styles.badgePulse} />
-            Advocate Aastha's Digital Practice
+            Enterprise Client Consultation Platform
           </div>
           
           <h1 className={`${styles.title} animate-fadeInUp`} style={{ animationDelay: '0.1s' }}>
@@ -37,7 +37,7 @@ export default function Hero() {
         <div className={`${styles.imageWrap} animate-scaleIn`} style={{ animationDelay: '0.3s' }}>
           <Image 
             src="/images/hero.png" 
-            alt="Advocate Aastha" 
+            alt="ClientFlow Platform" 
             width={600} 
             height={600} 
             className={styles.illustration}

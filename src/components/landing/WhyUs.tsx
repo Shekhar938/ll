@@ -5,18 +5,18 @@ import styles from './WhyUs.module.css';
 
 const FEATURES = [
   {
-    title: 'Bar Council Enrollment',
-    desc: 'Enrolled with the Bar Council of Delhi since 2015. Enrollment Number: D/4567/2015.',
-    icon: '⚖️'
+    title: 'Consultation & Scheduling',
+    desc: 'Seamless client booking with automated triage, category routing, and calendar coordination.',
+    icon: '📅'
   },
   {
-    title: 'Academic Qualifications',
-    desc: 'B.A. LL.B. (Hons.) from National Law University. LL.M. in Corporate Law.',
-    icon: '🎓'
+    title: 'Secure Client Portal',
+    desc: 'End-to-end client workspace for tracking case/project status, uploading files, and reviewing updates.',
+    icon: '🔒'
   },
   {
-    title: 'Client Portal',
-    desc: 'This digital portal allows clients to securely share case documents and request appointments online.',
+    title: 'Business Content & Publishing',
+    desc: 'Integrated editorial workspace and AI Copilot for knowledge base publishing and client advisories.',
     icon: '💻'
   }
 ];

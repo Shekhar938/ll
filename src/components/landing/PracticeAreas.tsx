@@ -4,18 +4,18 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import styles from './PracticeAreas.module.css';
 
 const areas = [
-  { icon: '⚖️', title: 'Criminal Law', desc: 'Bail applications, trial defense, FIR matters, anticipatory bail, and criminal appeals.' },
-  { icon: '📋', title: 'Civil Law', desc: 'Recovery suits, injunctions, specific performance, and civil dispute resolution.' },
-  { icon: '🏠', title: 'Property Law', desc: 'Title disputes, property registration, possession matters, and partition suits.' },
-  { icon: '👨👩👧', title: 'Family Law', desc: 'Divorce proceedings, child custody, maintenance, domestic violence, and adoption.' },
-  { icon: '🏢', title: 'Corporate Law', desc: 'Company incorporation, compliance, mergers, acquisitions, and shareholder disputes.' },
-  { icon: '🛒', title: 'Consumer Law', desc: 'Product defects, service deficiencies, misleading advertisements, and refund matters.' },
-  { icon: '👔', title: 'Labour Law', desc: 'Wrongful termination, gratuity, PF disputes, and workplace rights protection.' },
-  { icon: '💰', title: 'Tax Law', desc: 'Income tax disputes, GST matters, customs, assessments, and penalty waivers.' },
-  { icon: '💻', title: 'Cyber Crime', desc: 'Online fraud, data breaches, cyberstalking, hacking incidents, and digital crimes.' },
-  { icon: '🏦', title: 'Banking Law', desc: 'Loan recovery, cheque bounce cases, NPA matters, and SARFAESI proceedings.' },
-  { icon: '🤝', title: 'Arbitration', desc: 'Commercial disputes, enforcement of awards, and alternative dispute resolution.' },
-  { icon: '💼', title: 'Employment Law', desc: 'Discrimination, harassment, wrongful dismissal, and employment benefits disputes.' },
+  { icon: '📊', title: 'Business Strategy', desc: 'Market analysis, business plan formulation, growth strategies, and execution roadmaps.' },
+  { icon: '💼', title: 'Corporate Advisory', desc: 'Governance, structural restructuring, stakeholder alignment, and board compliance.' },
+  { icon: '💰', title: 'Financial Consulting', desc: 'Cash flow forecasting, audit readiness, valuation, and capital allocation strategies.' },
+  { icon: '🛡️', title: 'Legal & Compliance', desc: 'Regulatory compliance, contract workflows, dispute risk review, and risk management.' },
+  { icon: '💻', title: 'Technology & Cloud', desc: 'Digital transformation, software systems evaluation, data governance, and tech roadmap.' },
+  { icon: '🤝', title: 'Client Operations', desc: 'Service desk optimization, CRM setup, process automation, and retention strategy.' },
+  { icon: '👔', title: 'HR & Talent Strategy', desc: 'Workforce structuring, leadership hiring, policy handbooks, and team development.' },
+  { icon: '🛒', title: 'Consumer & Commerce', desc: 'Product lifecycle advisory, vendor agreements, refund governance, and customer care.' },
+  { icon: '🔐', title: 'Cyber & Information Security', desc: 'Security audits, data privacy compliance (DPDP/GDPR), and threat mitigation.' },
+  { icon: '🏦', title: 'Fintech & Banking Solutions', desc: 'Payment rails integration, debt advisory, loan structures, and fintech compliance.' },
+  { icon: '🌐', title: 'Marketing & Brand Strategy', desc: 'Inbound pipeline architecture, content strategy, positioning, and market penetration.' },
+  { icon: '📈', title: 'Performance Analytics', desc: 'KPI scorecards, operational metrics, executive dashboards, and efficiency audits.' },
 ];
 
 export default function PracticeAreas() {
