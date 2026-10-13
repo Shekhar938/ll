@@ -1,7 +1,7 @@
 {
-  "name": "NyayaConnect",
-  "short_name": "NyayaConnect",
-  "description": "Legal Guidance You Can Trust",
+  "name": "ClientFlow - Client Management & Consultation Platform",
+  "short_name": "ClientFlow",
+  "description": "Enterprise Client Management, Consultation Scheduling & Client Portal",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F5F7FA",
@@ -19,6 +19,6 @@
       "type": "image/png"
     }
   ],
-  "categories": ["legal", "business", "productivity"],
-  "lang": "en-IN"
+  "categories": ["business", "productivity", "management"],
+  "lang": "en"
 }

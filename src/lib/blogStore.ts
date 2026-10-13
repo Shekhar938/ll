@@ -61,6 +61,19 @@ export async function initializeBlogDatabase() {
   }
 }
 
+let blogInitPromise: Promise<void> | null = null;
+export async function ensureBlogDatabaseInitialized(): Promise<void> {
+  const pool = getPool();
+  if (!pool) return;
+  if (!blogInitPromise) {
+    blogInitPromise = initializeBlogDatabase().catch((err) => {
+      console.error('Failed to auto-initialize blog database:', err);
+      blogInitPromise = null;
+    });
+  }
+  return blogInitPromise;
+}
+
 // Memory fallback with strategic business thought-leadership articles
 let memoryPosts: BlogPost[] = [
   {
@@ -161,6 +174,7 @@ Resilient balance sheets provide significant offensive advantages during market 
 ];
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
+  await ensureBlogDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -174,6 +188,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  await ensureBlogDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -194,6 +209,7 @@ export async function createBlogPost(data: {
   author?: string;
   tags?: string[];
 }): Promise<BlogPost> {
+  await ensureBlogDatabaseInitialized();
   const slug = data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const newPost: BlogPost = {
     id: `post-${Date.now()}`,
@@ -226,6 +242,7 @@ export async function updateBlogPost(
   id: string,
   data: Partial<Omit<BlogPost, 'id' | 'publishedAt'>>
 ): Promise<BlogPost | null> {
+  await ensureBlogDatabaseInitialized();
   const existing = memoryPosts.find(p => p.id === id);
   if (!existing) return null;
 
@@ -260,6 +277,7 @@ export async function updateBlogPost(
 }
 
 export async function deleteBlogPost(id: string): Promise<boolean> {
+  await ensureBlogDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {

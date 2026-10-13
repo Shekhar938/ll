@@ -1,77 +1,73 @@
-# NyayaConnect – Legal Consultation Platform
+# ClientFlow – Client Management, Consultation & Portal Platform
 
-A premium, mobile-first legal consultation web application for Indian advocates.
+ClientFlow is an enterprise-grade client management, consultation scheduling, and client portal web application designed for modern business owners, consultants, and service agencies.
 
-## 🚀 Quick Start
+---
+
+## 🚀 Quick Start (Local Development)
 
 ```bash
+# 1. Install dependencies
 npm install
+
+# 2. Run local development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 🔐 Admin Panel
+---
 
-Visit [http://localhost:3000/admin](http://localhost:3000/admin)
+## 🔐 Admin Dashboard
 
-Default password: `nyaya2024`
+Visit [http://localhost:3000/admin](http://localhost:3000/admin) to manage client inquiries, review projects, and publish thought-leadership articles.
 
-To change the admin password, set the environment variable:
-```
-ADMIN_PASSWORD=your_secure_password
-```
+- **Default Password**: `admin2024`
+- To customize the admin password, set `ADMIN_PASSWORD` in your environment.
 
-## 📁 Project Structure
+---
 
-```
-src/
-├── app/
-│   ├── api/
-│   │   ├── consult/          # Consultation CRUD APIs
-│   │   └── admin/            # Admin auth APIs
-│   ├── admin/                # Admin panel pages
-│   ├── consult/              # Consultation form
-│   ├── success/              # Thank you page
-│   └── page.tsx              # Landing page
-├── components/
-│   ├── admin/                # Admin UI components
-│   ├── consult/              # Multi-step form
-│   └── landing/              # Landing page sections
-└── lib/
-    ├── store.ts              # JSON file-based data store
-    ├── types.ts              # TypeScript interfaces
-    ├── auth.ts               # Cookie-based session auth
-    ├── ai.ts                 # Mock AI case analysis
-    └── utils.ts              # Shared constants & helpers
-data/
-└── consultations.json        # Auto-created on first submission
-```
+## 🚢 Deploying to Vercel (Production)
 
-## 🌟 Features
+Deploying the `clientmanage` branch to Vercel as an independent application:
 
-- **Landing Page** – Hero, Practice Areas (12), Why Us, Testimonials carousel, FAQ accordion, Footer
-- **5-Step Consultation Form** – Personal Info, Legal Matter, Priority, Document Upload, Review
-- **Document Upload** – Drag & drop, PDF/DOCX/images, 20MB limit
-- **AI Case Analysis** – Automated summary, risk level, keywords, next steps (no API key needed)
-- **Admin Dashboard** – Stats, filterable data table, status management
-- **Client Details** – AI summary, case info, document list, internal notes
-- **PWA Ready** – Installable on Android
+1. **Import Project into Vercel**:
+   - Go to [vercel.com/dashboard](https://vercel.com/dashboard) and click **"Add New..."** ➔ **"Project"**.
+   - Select the `Shekhar938/ll` repository.
 
-## 🚢 Deploy to Vercel
+2. **Configure Production Branch**:
+   - Change **Production Branch** from `master` to **`clientmanage`**.
+   - Set **Project Name** (e.g. `clientflow-portal`).
 
-```bash
-npm install -g vercel
-vercel
-```
+3. **Add Environment Variables**:
+   In the Vercel project configuration, add:
+   - `GEMINI_API_KEY`: Your Google Gemini API key.
+   - `ADMIN_PASSWORD`: Your admin dashboard password (defaults to `admin2024`).
+   - `SESSION_SECRET`: A secure random string for encrypted sessions.
+   - `POSTGRES_URL` *(Optional)*: Vercel Postgres or external PostgreSQL database connection string. If omitted, the application seamlessly runs on its built-in in-memory database with pre-populated demo accounts.
 
-Set environment variable on Vercel: `ADMIN_PASSWORD=your_password`
+4. **Click "Deploy"**:
+   - Vercel will automatically build the application and assign a live production URL.
 
-> **Note:** Vercel is serverless – the JSON data store will reset on each deployment. For production, switch `src/lib/store.ts` to use a database like Vercel Postgres or Planetscale.
+---
 
 ## 🔧 Environment Variables
 
-| Variable | Default | Description |
-|---|---|---|
-| `ADMIN_PASSWORD` | `nyaya2024` | Admin panel password |
-| `SESSION_SECRET` | `nyaya-secret-key-change-in-production` | Cookie signing secret |
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `GEMINI_API_KEY` | Optional | Built-in fallback | Powers live strategic triage and Editorial Copilot |
+| `POSTGRES_URL` / `DATA_POSTGRES_URL` | Optional | In-memory fallback | PostgreSQL database connection string |
+| `ADMIN_PASSWORD` | Optional | `admin2024` | Admin dashboard authentication password |
+| `SESSION_SECRET` | Optional | Built-in key | Secret key for signing session tokens |
+| `NEXT_PUBLIC_SITE_URL` | Optional | `https://clientflow.app` | Canonical URL for SEO and sitemap generation |
+
+---
+
+## 🌟 Key Features
+
+- **Client Portal** – Secure login for clients to track engagement progress, edit project details, and access assigned consultant notes.
+- **5-Step Consultation Engine** – Client contact details, service category selection, scheduling preferences, and encrypted document uploads.
+- **Strategic AI Triage** – Automated project categorization, priority scoring, document checklists, and milestone recommendations.
+- **Admin Dashboard** – Real-time project overview, search/filtering, status updates, and client dossiers.
+- **Articles & Knowledge Base** – Integrated markdown publishing suite with built-in AI Editorial Copilot.
+- **Automated Database Auto-Healing** – Auto-creates PostgreSQL schema tables and seeds initial data on first launch.

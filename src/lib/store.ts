@@ -65,30 +65,57 @@ export async function initializeDatabase() {
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_consultations_practice_area ON consultations("practiceArea");`;
     await pool.sql`CREATE INDEX IF NOT EXISTS idx_consultations_urgency ON consultations(urgency);`;
 
-    // Seed initial consultations if table is empty on Vercel Postgres
-    const checkRes = await pool.query('SELECT COUNT(*)::int as count FROM consultations');
-    if ((checkRes.rows[0]?.count ?? 0) === 0) {
-      console.log('Seeding initial sample consultations into PostgreSQL database...');
-      for (const c of memoryStore) {
-        await pool.sql`
-          INSERT INTO consultations (
-            id, "createdAt", "updatedAt", status, "fullName", mobile, email, city, state, "preferredLanguage",
-            occupation, "practiceArea", "caseType", "caseSummary", "opponentName", court, "policeStation", "caseStage",
-            urgency, "preferredContactTime", "videoConsultation", documents, "aiSummary", "aiCategory", "aiPriority",
-            "aiDocuments", "aiDuration", "aiRiskLevel", "aiKeywords", "aiNextSteps", "internalNotes"
-          ) VALUES (
-            ${c.id}, ${c.createdAt}, ${c.updatedAt}, ${c.status}, ${c.fullName}, ${c.mobile}, ${c.email}, ${c.city}, ${c.state}, ${c.preferredLanguage},
-            ${c.occupation}, ${c.practiceArea}, ${c.caseType}, ${c.caseSummary}, ${c.opponentName}, ${c.court}, ${c.policeStation}, ${c.caseStage},
-            ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation ? true : false}::boolean, ${JSON.stringify(c.documents || [])}::jsonb, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
-            ${JSON.stringify(c.aiDocuments || [])}::jsonb, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords || [])}::jsonb, ${JSON.stringify(c.aiNextSteps || [])}::jsonb, ${c.internalNotes || ''}
-          )
-          ON CONFLICT (id) DO NOTHING;
-        `;
-      }
+    // Seed and synchronize sample consultations into PostgreSQL database
+    for (const c of memoryStore) {
+      await pool.sql`
+        INSERT INTO consultations (
+          id, "createdAt", "updatedAt", status, "fullName", mobile, email, city, state, "preferredLanguage",
+          occupation, "practiceArea", "caseType", "caseSummary", "opponentName", court, "policeStation", "caseStage",
+          urgency, "preferredContactTime", "videoConsultation", documents, "aiSummary", "aiCategory", "aiPriority",
+          "aiDocuments", "aiDuration", "aiRiskLevel", "aiKeywords", "aiNextSteps", "internalNotes"
+        ) VALUES (
+          ${c.id}, ${c.createdAt}, ${c.updatedAt}, ${c.status}, ${c.fullName}, ${c.mobile}, ${c.email}, ${c.city}, ${c.state}, ${c.preferredLanguage},
+          ${c.occupation}, ${c.practiceArea}, ${c.caseType}, ${c.caseSummary}, ${c.opponentName}, ${c.court}, ${c.policeStation}, ${c.caseStage},
+          ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation ? true : false}::boolean, ${JSON.stringify(c.documents || [])}::jsonb, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
+          ${JSON.stringify(c.aiDocuments || [])}::jsonb, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords || [])}::jsonb, ${JSON.stringify(c.aiNextSteps || [])}::jsonb, ${c.internalNotes || ''}
+        )
+        ON CONFLICT (id) DO UPDATE SET
+          "fullName" = EXCLUDED."fullName",
+          "practiceArea" = EXCLUDED."practiceArea",
+          "caseType" = EXCLUDED."caseType",
+          "caseSummary" = EXCLUDED."caseSummary",
+          "opponentName" = EXCLUDED."opponentName",
+          court = EXCLUDED.court,
+          "policeStation" = EXCLUDED."policeStation",
+          "caseStage" = EXCLUDED."caseStage",
+          "aiSummary" = EXCLUDED."aiSummary",
+          "aiCategory" = EXCLUDED."aiCategory",
+          "aiPriority" = EXCLUDED."aiPriority",
+          "aiDocuments" = EXCLUDED."aiDocuments",
+          "aiDuration" = EXCLUDED."aiDuration",
+          "aiRiskLevel" = EXCLUDED."aiRiskLevel",
+          "aiKeywords" = EXCLUDED."aiKeywords",
+          "aiNextSteps" = EXCLUDED."aiNextSteps",
+          "internalNotes" = EXCLUDED."internalNotes";
+      `;
     }
+    console.log('Synchronized consultations table with latest business data.');
   } catch (error) {
     console.error('Failed to initialize database:', error);
   }
+}
+
+let dbInitPromise: Promise<void> | null = null;
+export async function ensureDatabaseInitialized(): Promise<void> {
+  const pool = getPool();
+  if (!pool) return;
+  if (!dbInitPromise) {
+    dbInitPromise = initializeDatabase().catch((err) => {
+      console.error('Failed to auto-initialize database:', err);
+      dbInitPromise = null;
+    });
+  }
+  return dbInitPromise;
 }
 
 const memoryStore: ConsultationRequest[] = [
@@ -207,6 +234,7 @@ export async function getFilteredConsultations(filter: FetchConsultationsFilter 
   rows: ConsultationRequest[];
   total: number;
 }> {
+  await ensureDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -283,6 +311,7 @@ export async function getFilteredConsultations(filter: FetchConsultationsFilter 
 }
 
 export async function getAllConsultations(): Promise<ConsultationRequest[]> {
+  await ensureDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -296,6 +325,7 @@ export async function getAllConsultations(): Promise<ConsultationRequest[]> {
 }
 
 export async function getConsultationById(id: string): Promise<ConsultationRequest | null> {
+  await ensureDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -309,6 +339,7 @@ export async function getConsultationById(id: string): Promise<ConsultationReque
 }
 
 export async function getConsultationByCredentials(id: string, identifier: string): Promise<ConsultationRequest | null> {
+  await ensureDatabaseInitialized();
   const cleanId = id.trim().toUpperCase();
   const cleanIdent = identifier.trim().toLowerCase();
   
@@ -332,6 +363,7 @@ export async function getConsultationByCredentials(id: string, identifier: strin
 }
 
 export async function saveConsultation(c: ConsultationRequest): Promise<void> {
+  await ensureDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -340,12 +372,12 @@ export async function saveConsultation(c: ConsultationRequest): Promise<void> {
           id, "createdAt", "updatedAt", status, "fullName", mobile, email, city, state, "preferredLanguage",
           occupation, "practiceArea", "caseType", "caseSummary", "opponentName", court, "policeStation", "caseStage",
           urgency, "preferredContactTime", "videoConsultation", documents, "aiSummary", "aiCategory", "aiPriority",
-          "aiDocuments", "aiDuration", "aiRiskLevel", "aiKeywords", "aiNextSteps"
+          "aiDocuments", "aiDuration", "aiRiskLevel", "aiKeywords", "aiNextSteps", "internalNotes"
         ) VALUES (
           ${c.id}, ${c.createdAt}, ${c.updatedAt}, ${c.status}, ${c.fullName}, ${c.mobile}, ${c.email}, ${c.city}, ${c.state}, ${c.preferredLanguage},
           ${c.occupation}, ${c.practiceArea}, ${c.caseType}, ${c.caseSummary}, ${c.opponentName}, ${c.court}, ${c.policeStation}, ${c.caseStage},
           ${c.urgency}, ${c.preferredContactTime}, ${c.videoConsultation ? true : false}::boolean, ${JSON.stringify(c.documents || [])}::jsonb, ${c.aiSummary}, ${c.aiCategory}, ${c.aiPriority},
-          ${JSON.stringify(c.aiDocuments || [])}::jsonb, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords || [])}::jsonb, ${JSON.stringify(c.aiNextSteps || [])}::jsonb
+          ${JSON.stringify(c.aiDocuments || [])}::jsonb, ${c.aiDuration}, ${c.aiRiskLevel}, ${JSON.stringify(c.aiKeywords || [])}::jsonb, ${JSON.stringify(c.aiNextSteps || [])}::jsonb, ${c.internalNotes || ''}
         )
       `;
     } catch (error) {
@@ -370,6 +402,7 @@ const ALLOWED_COLUMNS = new Set([
 ]);
 
 export async function updateConsultation(id: string, updates: Partial<ConsultationRequest>): Promise<ConsultationRequest | null> {
+  await ensureDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {
@@ -408,6 +441,7 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
 }
 
 export async function deleteConsultation(id: string): Promise<boolean> {
+  await ensureDatabaseInitialized();
   const pool = getPool();
   if (pool) {
     try {

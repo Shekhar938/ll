@@ -18,7 +18,7 @@ export async function GET() {
     if (!consultation) {
       return NextResponse.json(
         { authenticated: false, error: 'Case data not found' },
-        { status: 444 }
+        { status: 404 }
       );
     }
 
