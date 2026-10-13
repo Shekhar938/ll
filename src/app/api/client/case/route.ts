@@ -36,7 +36,7 @@ export async function PATCH(request: Request) {
     if (typeof body.preferredContactTime === 'string') allowedUpdates.preferredContactTime = body.preferredContactTime;
     if (typeof body.videoConsultation === 'boolean') allowedUpdates.videoConsultation = body.videoConsultation;
 
-    // Legal Matter Details
+    // Project & Engagement Details
     if (typeof body.caseSummary === 'string') allowedUpdates.caseSummary = body.caseSummary;
     if (typeof body.opponentName === 'string') allowedUpdates.opponentName = body.opponentName;
     if (typeof body.court === 'string') allowedUpdates.court = body.court;
@@ -58,7 +58,7 @@ export async function PATCH(request: Request) {
   } catch (error) {
     console.error('Client case update error:', error);
     return NextResponse.json(
-      { error: 'Failed to update case details.' },
+      { error: 'Failed to update project details.' },
       { status: 500 }
     );
   }

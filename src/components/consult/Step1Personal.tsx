@@ -5,7 +5,7 @@ import NavButtons from './NavButtons';
 import fieldStyles from './FormField.module.css';
 import styles from './Steps.module.css';
 import { FormData } from './ConsultForm';
-import { STATES, LANGUAGES, BIHAR_DISTRICTS } from '@/lib/utils';
+import { STATES, LANGUAGES, MAJOR_CITIES } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Props { data: FormData; update: (u: Partial<FormData>) => void; onNext: () => void; }
@@ -59,10 +59,16 @@ export default function Step1Personal({ data, update, onNext }: Props) {
         </div>
         <div className={fieldStyles.group}>
           <label className={fieldStyles.label}>{t.consult.step1.city} <span className={fieldStyles.required}>*</span></label>
-          <select className={`${fieldStyles.select} ${field('city')}`} value={data.city} onChange={(e) => { update({ city: e.target.value }); setErrors((p) => ({ ...p, city: '' })); }}>
-            <option value="">{t.consult.step1.citySelect}</option>
-            {BIHAR_DISTRICTS.map((d) => <option key={d} value={d}>{(t.districts as Record<string, string>)[d] || d}</option>)}
-          </select>
+          <input
+            list="city-suggestions"
+            className={`${fieldStyles.input} ${field('city')}`}
+            placeholder="e.g. New York, London, Mumbai"
+            value={data.city}
+            onChange={(e) => { update({ city: e.target.value }); setErrors((p) => ({ ...p, city: '' })); }}
+          />
+          <datalist id="city-suggestions">
+            {MAJOR_CITIES.map((c) => <option key={c} value={c} />)}
+          </datalist>
           {errors.city && <span className={fieldStyles.errorMsg}>{errors.city}</span>}
         </div>
         <div className={fieldStyles.group}>

@@ -36,8 +36,8 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
           <div className={styles.step}>
             <div className={styles.stepNum}>1</div>
             <div>
-              <p className={styles.stepTitle}>Case Review</p>
-              <p className={styles.stepDesc}>Our advocate reviews your case details</p>
+              <p className={styles.stepTitle}>Requirements Review</p>
+              <p className={styles.stepDesc}>Our consulting team reviews your project requirements</p>
             </div>
           </div>
           <div className={styles.stepLine} />
@@ -52,8 +52,8 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
           <div className={styles.step}>
             <div className={styles.stepNum}>3</div>
             <div>
-              <p className={styles.stepTitle}>Consultation</p>
-              <p className={styles.stepDesc}>Professional legal guidance provided</p>
+              <p className={styles.stepTitle}>Strategy Consultation</p>
+              <p className={styles.stepDesc}>Tailored advisory and actionable roadmap provided</p>
             </div>
           </div>
         </div>

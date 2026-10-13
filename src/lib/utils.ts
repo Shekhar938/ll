@@ -43,14 +43,12 @@ export const CASE_TYPES: Record<string, string[]> = {
 
 export const STATES = ['General', 'National', 'International'];
 
-export const BIHAR_DISTRICTS = [
-  'Araria', 'Arwal', 'Aurangabad', 'Banka', 'Begusarai', 'Bhagalpur', 'Bhojpur', 
-  'Buxar', 'Darbhanga', 'East Champaran', 'Gaya', 'Gopalganj', 'Jamui', 'Jehanabad', 
-  'Kaimur', 'Katihar', 'Khagaria', 'Kishanganj', 'Lakhisarai', 'Madhepura', 'Madhubani', 
-  'Munger', 'Muzaffarpur', 'Nalanda', 'Nawada', 'Patna', 'Purnia', 'Rohtas', 'Saharsa', 
-  'Samastipur', 'Saran', 'Sheikhpura', 'Sheohar', 'Sitamarhi', 'Siwan', 'Supaul', 
-  'Vaishali', 'West Champaran'
+export const MAJOR_CITIES = [
+  'Bengaluru', 'Berlin', 'Chicago', 'Delhi NCR', 'Dubai', 'Dublin', 'London', 'Los Angeles',
+  'Mumbai', 'New York', 'Paris', 'San Francisco', 'Seattle', 'Singapore', 'Sydney', 'Tokyo', 'Toronto'
 ];
+
+export const BIHAR_DISTRICTS = MAJOR_CITIES;
 
 export const LANGUAGES = [
   'English', 'Hindi'

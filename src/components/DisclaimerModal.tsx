@@ -8,7 +8,7 @@ export default function DisclaimerModal() {
   const { t } = useLanguage();
 
   useEffect(() => {
-    const hasAccepted = localStorage.getItem('bci_disclaimer_accepted');
+    const hasAccepted = localStorage.getItem('clientflow_terms_accepted') || localStorage.getItem('bci_disclaimer_accepted');
     if (!hasAccepted) {
       setIsOpen(true);
       document.body.style.overflow = 'hidden';
@@ -16,7 +16,7 @@ export default function DisclaimerModal() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('bci_disclaimer_accepted', 'true');
+    localStorage.setItem('clientflow_terms_accepted', 'true');
     setIsOpen(false);
     document.body.style.overflow = 'unset';
   };
@@ -31,7 +31,7 @@ export default function DisclaimerModal() {
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <div className={styles.icon}>⚖️</div>
+          <div className={styles.icon}>💼</div>
           <h2 className={styles.title}>{t.disclaimerModal.title}</h2>
         </div>
         

@@ -129,10 +129,10 @@ export default function ChatWidget() {
             setIsOpen(true);
             setIsMinimized(false);
           }}
-          aria-label="Open Legal AI Assistant"
+          aria-label="Open AI Assistant"
         >
           <span className={styles.badge}></span>
-          <span>⚖️ AI Legal Guide</span>
+          <span>✨ Client Assistant</span>
         </button>
       )}
 
@@ -140,7 +140,7 @@ export default function ChatWidget() {
         <div className={styles.minimizedBar} onClick={() => setIsMinimized(false)} title="Click to expand chat">
           <div className={styles.headerInfo}>
             <span className={styles.badge}></span>
-            <span className={styles.minimizedTitle}>⚖️ Legal Assistant</span>
+            <span className={styles.minimizedTitle}>✨ ClientFlow Assistant</span>
             {messages.length > 0 && <span className={styles.countBadge}>{messages.length}</span>}
           </div>
           <div className={styles.headerControls}>
@@ -266,7 +266,7 @@ export default function ChatWidget() {
             <input
               type="text"
               className={styles.input}
-              placeholder="Ask about your legal query..."
+              placeholder="Ask about our services, consultations, or portal..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
@@ -277,9 +277,9 @@ export default function ChatWidget() {
           </form>
 
           <div className={styles.footerBar}>
-            Informational guide. Need formal representation?
+            Informational guide. Need a custom engagement?
             <Link href="/consult" className={styles.footerLink} onClick={() => setIsOpen(false)}>
-              Client Portal
+              Book Consultation
             </Link>
           </div>
         </div>

@@ -70,7 +70,7 @@ export default function Step5Review({ data, onBack, onEdit, onSubmit, submitting
             </div>
             <div className={styles.reviewItem}>
               <div className={styles.reviewLabel}>{t.consult.step1.city}, {t.consult.step1.state}</div>
-              <div className={styles.reviewValue}>{data.city ? (t.districts as Record<string,string>)[data.city] : ''}, {data.state ? (t.states as Record<string,string>)[data.state] : ''}</div>
+              <div className={styles.reviewValue}>{data.city ? ((t.districts as Record<string,string>)?.[data.city] || data.city) : ''}, {data.state ? ((t.states as Record<string,string>)?.[data.state] || data.state) : ''}</div>
             </div>
             <div className={styles.reviewItem}>
               <div className={styles.reviewLabel}>{t.consult.step1.prefLang}</div>

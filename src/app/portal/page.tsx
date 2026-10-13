@@ -142,7 +142,7 @@ export default function ClientPortalPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setConsultation(data.case);
-        setUpdateSuccess('✨ Case details updated successfully!');
+        setUpdateSuccess('✨ Project details updated successfully!');
         setTimeout(() => setUpdateSuccess(''), 4000);
       }
     } catch (err) {
@@ -317,7 +317,7 @@ export default function ClientPortalPage() {
                   className={styles.demoBtn}
                   onClick={() => handlePresetLogin('NYC-2026-0814-01', '9812345678')}
                 >
-                  <span className={styles.demoBtnName}>📌 Rajesh Kumar (Property Encroachment Suit)</span>
+                  <span className={styles.demoBtnName}>📌 Rajesh Kumar (Corporate Advisory & Restructuring)</span>
                   <span className={styles.demoBtnMeta}>ID: NYC-2026-0814-01 | Mobile: 9812345678</span>
                 </button>
 
@@ -326,7 +326,7 @@ export default function ClientPortalPage() {
                   className={styles.demoBtn}
                   onClick={() => handlePresetLogin('NYC-2026-0814-02', '9876543210')}
                 >
-                  <span className={styles.demoBtnName}>📌 Vikram Aditya (Cyber Fraud & Phishing Claim)</span>
+                  <span className={styles.demoBtnName}>📌 Vikram Aditya (Cyber Security & DPDP Compliance)</span>
                   <span className={styles.demoBtnMeta}>ID: NYC-2026-0814-02 | Mobile: 9876543210</span>
                 </button>
 
@@ -335,7 +335,7 @@ export default function ClientPortalPage() {
                   className={styles.demoBtn}
                   onClick={() => handlePresetLogin('NYC-2026-0814-03', '9876543211')}
                 >
-                  <span className={styles.demoBtnName}>📌 Jordan Hayes (Strategy & Advisory)</span>
+                  <span className={styles.demoBtnName}>📌 Jordan Hayes (Global Strategy & Advisory)</span>
                   <span className={styles.demoBtnMeta}>ID: NYC-2026-0814-03 | Mobile: 9876543211</span>
                 </button>
               </div>
@@ -368,13 +368,13 @@ export default function ClientPortalPage() {
             {/* Stepper Card for Real-Time Status Tracking */}
             <div className={styles.stepperCard}>
               <div className={styles.stepperHeader}>
-                <h3 className={styles.stepperTitle}>Case Progress Lifecycle</h3>
+                <h3 className={styles.stepperTitle}>Engagement Lifecycle Progress</h3>
                 <span className={`${styles.statusBadge} ${
                   consultation.status === 'pending' ? styles.statusPending :
                   consultation.status === 'in-progress' ? styles.statusInProgress :
                   consultation.status === 'resolved' ? styles.statusResolved : styles.statusArchived
                 }`}>
-                  ● {consultation.status === 'pending' ? 'Pending Legal Review' : consultation.status}
+                  ● {consultation.status === 'pending' ? 'Pending Review' : consultation.status}
                 </span>
               </div>
 
@@ -391,12 +391,12 @@ export default function ClientPortalPage() {
 
                 <div className={`${styles.stepItem} ${consultation.status === 'in-progress' ? styles.stepActive : (consultation.status === 'resolved' ? styles.stepDone : '')}`}>
                   <div className={styles.stepCircle}>{consultation.status === 'resolved' ? '✓' : '3'}</div>
-                  <span className={styles.stepLabel}>3. Court / Action</span>
+                  <span className={styles.stepLabel}>3. Active Engagement</span>
                 </div>
 
                 <div className={`${styles.stepItem} ${consultation.status === 'resolved' ? styles.stepDone : ''}`}>
                   <div className={styles.stepCircle}>4</div>
-                  <span className={styles.stepLabel}>4. Resolved & Decreed</span>
+                  <span className={styles.stepLabel}>4. Completed & Delivered</span>
                 </div>
               </div>
             </div>
@@ -407,14 +407,14 @@ export default function ClientPortalPage() {
                 className={`${styles.tabBtn} ${activeTab === 'overview' ? styles.tabActive : ''}`}
                 onClick={() => setActiveTab('overview')}
               >
-                📊 Case Overview
+                📊 Project Overview
               </button>
 
               <button
                 className={`${styles.tabBtn} ${activeTab === 'edit' ? styles.tabActive : ''}`}
                 onClick={() => setActiveTab('edit')}
               >
-                ✏️ Edit Case & Contact Info
+                ✏️ Edit Project & Contact Info
               </button>
 
               <button
@@ -428,14 +428,14 @@ export default function ClientPortalPage() {
                 className={`${styles.tabBtn} ${activeTab === 'ai' ? styles.tabActive : ''}`}
                 onClick={() => setActiveTab('ai')}
               >
-                🧠 AI Next Steps & Preparation
+                🧠 AI Strategy & Preparation
               </button>
 
               <button
                 className={`${styles.tabBtn} ${activeTab === 'notes' ? styles.tabActive : ''}`}
                 onClick={() => setActiveTab('notes')}
               >
-                💬 Legal Team Updates
+                💬 Executive Team Updates
               </button>
             </div>
 
@@ -446,41 +446,41 @@ export default function ClientPortalPage() {
               <div className={styles.cardGrid}>
                 <div className={styles.detailCard}>
                   <div className={styles.cardHeader}>
-                    <h3 className={styles.cardTitle}>⚖️ Legal Matter Overview</h3>
+                    <h3 className={styles.cardTitle}>💼 Engagement & Scope Overview</h3>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Practice Area</div>
+                    <div className={styles.detailLabel}>Service Category</div>
                     <div className={styles.detailValue}>{consultation.practiceArea}</div>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Case Type</div>
+                    <div className={styles.detailLabel}>Inquiry Type</div>
                     <div className={styles.detailValue}>{consultation.caseType}</div>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Case Summary</div>
+                    <div className={styles.detailLabel}>Inquiry Summary</div>
                     <div className={styles.detailValue}>{consultation.caseSummary}</div>
                   </div>
                 </div>
 
                 <div className={styles.detailCard}>
                   <div className={styles.cardHeader}>
-                    <h3 className={styles.cardTitle}>🏛️ Court & Proceedings Info</h3>
+                    <h3 className={styles.cardTitle}>🏢 Organization & Scope Details</h3>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Opponent Party Name</div>
+                    <div className={styles.detailLabel}>Organization / Counterparty</div>
                     <div className={styles.detailValue}>{consultation.opponentName || 'N/A'}</div>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Court Jurisdiction</div>
+                    <div className={styles.detailLabel}>Industry / Sector</div>
                     <div className={styles.detailValue}>{consultation.court || 'N/A'}</div>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Police Station</div>
+                    <div className={styles.detailLabel}>Department / Ref Code</div>
                     <div className={styles.detailValue}>{consultation.policeStation || 'N/A'}</div>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Current Case Stage</div>
-                    <div className={styles.detailValue}>{consultation.caseStage || 'Initial Filing'}</div>
+                    <div className={styles.detailLabel}>Current Project Stage</div>
+                    <div className={styles.detailValue}>{consultation.caseStage || 'Planning & Scope'}</div>
                   </div>
                 </div>
 
@@ -510,7 +510,7 @@ export default function ClientPortalPage() {
             {activeTab === 'edit' && (
               <div className={styles.detailCard}>
                 <div className={styles.cardHeader}>
-                  <h3 className={styles.cardTitle}>✏️ Update Your Case Details</h3>
+                  <h3 className={styles.cardTitle}>✏️ Update Your Project Details</h3>
                 </div>
                 <form onSubmit={handleSaveEdit} className={styles.editSection}>
                   <div className={styles.cardGrid}>
@@ -562,65 +562,65 @@ export default function ClientPortalPage() {
                   </div>
 
                   <div className={styles.formGroup}>
-                    <label className={styles.label}>Updated Case Summary & Legal Facts</label>
+                    <label className={styles.label}>Updated Inquiry Summary & Project Notes</label>
                     <textarea
                       rows={4}
                       className={styles.input}
                       value={editCaseSummary}
                       onChange={(e) => setEditCaseSummary(e.target.value)}
-                      placeholder="Add any new developments, timeline events, or details about your legal dispute..."
+                      placeholder="Add any new developments, objectives, or scope updates about your project..."
                     />
                   </div>
 
                   <div className={styles.cardGrid}>
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Opponent Party Name</label>
+                      <label className={styles.label}>Organization / Counterparty</label>
                       <input
                         type="text"
                         className={styles.input}
                         value={editOpponentName}
                         onChange={(e) => setEditOpponentName(e.target.value)}
-                        placeholder="e.g. Suresh Chandra"
+                        placeholder="e.g. Apex Distribution Ventures"
                       />
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Court Jurisdiction</label>
+                      <label className={styles.label}>Industry / Sector</label>
                       <input
                         type="text"
                         className={styles.input}
                         value={editCourt}
                         onChange={(e) => setEditCourt(e.target.value)}
-                        placeholder="e.g. Patna High Court / Civil Court"
+                        placeholder="e.g. Corporate Commercial Services / Enterprise Technology"
                       />
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Police Station</label>
+                      <label className={styles.label}>Department / Ref Code</label>
                       <input
                         type="text"
                         className={styles.input}
                         value={editPoliceStation}
                         onChange={(e) => setEditPoliceStation(e.target.value)}
-                        placeholder="e.g. Gomti Nagar PS"
+                        placeholder="e.g. Unit-CORP-4"
                       />
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Case Stage</label>
+                      <label className={styles.label}>Project Stage</label>
                       <input
                         type="text"
                         className={styles.input}
                         value={editCaseStage}
                         onChange={(e) => setEditCaseStage(e.target.value)}
-                        placeholder="e.g. Notice Received / FIR / Evidence"
+                        placeholder="e.g. Planning & Scope / Initiating Project / Active Operations"
                       />
                     </div>
                   </div>
 
                   <div style={{ textAlign: 'right', marginTop: 10 }}>
                     <button type="submit" className={styles.saveBtn} disabled={savingUpdates}>
-                      {savingUpdates ? 'Saving Updates...' : '💾 Save Case Updates'}
+                      {savingUpdates ? 'Saving Updates...' : '💾 Save Project Updates'}
                     </button>
                   </div>
                 </form>
@@ -631,7 +631,7 @@ export default function ClientPortalPage() {
             {activeTab === 'documents' && (
               <div className={styles.detailCard}>
                 <div className={styles.cardHeader}>
-                  <h3 className={styles.cardTitle}>📁 Upload & Manage Case Documents</h3>
+                  <h3 className={styles.cardTitle}>📁 Upload & Manage Project Documents</h3>
                 </div>
 
                 <div className={styles.docList}>
@@ -656,7 +656,7 @@ export default function ClientPortalPage() {
                     ))
                   ) : (
                     <p style={{ color: 'var(--text-muted)', fontSize: 14, textAlign: 'center', padding: '16px 0' }}>
-                      No documents attached yet. Attach your legal notices, agreements, FIR copies, or property deeds below.
+                      No documents attached yet. Attach your project briefs, agreements, presentations, or data files below.
                     </p>
                   )}
                 </div>
@@ -688,21 +688,21 @@ export default function ClientPortalPage() {
               <div className={styles.cardGrid}>
                 <div className={styles.detailCard}>
                   <div className={styles.cardHeader}>
-                    <h3 className={styles.cardTitle}>🧠 AI Legal Assessment</h3>
+                    <h3 className={styles.cardTitle}>🧠 AI Strategic Assessment</h3>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Legal Category</div>
+                    <div className={styles.detailLabel}>Service Category</div>
                     <div className={styles.detailValue}>{consultation.aiCategory || consultation.practiceArea}</div>
                   </div>
                   <div className={styles.detailRow}>
-                    <div className={styles.detailLabel}>Assessed Risk Level</div>
+                    <div className={styles.detailLabel}>Assessed Priority Level</div>
                     <div className={styles.detailValue} style={{ fontWeight: 700, color: consultation.aiRiskLevel === 'High' ? '#D32F2F' : '#2F855A' }}>
                       {consultation.aiRiskLevel || 'Standard Risk'}
                     </div>
                   </div>
                   <div className={styles.detailRow}>
                     <div className={styles.detailLabel}>Executive Summary</div>
-                    <div className={styles.detailValue}>{consultation.aiSummary || 'Summary pending legal review.'}</div>
+                    <div className={styles.detailValue}>{consultation.aiSummary || 'Summary pending advisory review.'}</div>
                   </div>
                 </div>
 
@@ -718,7 +718,7 @@ export default function ClientPortalPage() {
                         </li>
                       ))
                     ) : (
-                      <li style={{ fontSize: 14, color: 'var(--text-muted)' }}>Checklist will be populated by senior counsel during initial briefing.</li>
+                      <li style={{ fontSize: 14, color: 'var(--text-muted)' }}>Checklist will be populated by your lead consultant during initial briefing.</li>
                     )}
                   </ul>
                 </div>

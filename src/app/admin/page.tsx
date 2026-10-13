@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
             {loading ? <><span className={styles.spinner} /> Signing in...</> : 'Sign In'}
           </button>
         </form>
-        <p className={styles.hint}>Default password: <code>nyaya2024</code></p>
+        <p className={styles.hint}>Default password: <code>admin2024</code></p>
       </div>
     </main>
   );

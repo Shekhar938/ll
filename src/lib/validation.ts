@@ -22,7 +22,7 @@ export function validateConsultationForm(data: {
   const mobileClean = (data.mobile || '').replace(/\s/g, '');
   const mobileRegex = /^[6-9]\d{9}$/;
   if (!mobileClean || !mobileRegex.test(mobileClean)) {
-    errors.mobile = 'Please enter a valid 10-digit Indian mobile number starting with 6-9';
+    errors.mobile = 'Please enter a valid 10-digit mobile number';
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,11 +31,11 @@ export function validateConsultationForm(data: {
   }
 
   if (!data.practiceArea) {
-    errors.practiceArea = 'Please select a legal practice area';
+    errors.practiceArea = 'Please select a service category';
   }
 
   if (!data.caseSummary || data.caseSummary.trim().length < 10) {
-    errors.caseSummary = 'Please provide a case summary (at least 10 characters)';
+    errors.caseSummary = 'Please provide an inquiry summary (at least 10 characters)';
   }
 
   return {

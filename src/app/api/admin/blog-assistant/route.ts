@@ -133,7 +133,7 @@ CURRENT ARTICLE DRAFT CONTEXT:
 
     return NextResponse.json({
       success: false,
-      reply: 'Failed to generate AI legal writing assistance. Please verify your connection.',
+      reply: 'Failed to generate AI writing assistance. Please verify your connection.',
       error: lastError?.message
     }, { status: 500 });
 

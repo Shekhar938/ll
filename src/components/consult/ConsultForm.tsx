@@ -20,12 +20,12 @@ export type FormData = {
 };
 
 const INITIAL: FormData = {
-  fullName: '', mobile: '', email: '', city: '', state: 'Bihar', preferredLanguage: '', occupation: '',
+  fullName: '', mobile: '', email: '', city: '', state: 'National', preferredLanguage: '', occupation: '',
   practiceArea: '', caseType: '', caseSummary: '', opponentName: '', court: '', policeStation: '', caseStage: '',
   urgency: 'medium', preferredContactTime: 'morning', videoConsultation: false, documents: [],
 };
 
-const DRAFT_KEY = 'nyaya_consult_draft';
+const DRAFT_KEY = 'clientflow_consult_draft';
 
 export default function ConsultForm() {
   const router = useRouter();

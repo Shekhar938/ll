@@ -182,24 +182,24 @@ export default function ClientDetailView({ consultation: initial }: Props) {
           </div>
         )}
 
-        {/* Case Details */}
+        {/* Project Details */}
         <div className={styles.detailCard}>
-          <h3 className={styles.cardTitle}>Case Details</h3>
+          <h3 className={styles.cardTitle}>Project & Engagement Details</h3>
           <div className={styles.detailGrid}>
-            <div className={styles.detailItem}><span className={styles.detailLabel}>Practice Area</span><span className={styles.detailValue}>{c.practiceArea}</span></div>
-            <div className={styles.detailItem}><span className={styles.detailLabel}>Case Type</span><span className={styles.detailValue}>{c.caseType}</span></div>
-            <div className={styles.detailItem}><span className={styles.detailLabel}>Case Stage</span><span className={styles.detailValue}>{c.caseStage}</span></div>
+            <div className={styles.detailItem}><span className={styles.detailLabel}>Service Area</span><span className={styles.detailValue}>{c.practiceArea}</span></div>
+            <div className={styles.detailItem}><span className={styles.detailLabel}>Inquiry Type</span><span className={styles.detailValue}>{c.caseType}</span></div>
+            <div className={styles.detailItem}><span className={styles.detailLabel}>Project Stage</span><span className={styles.detailValue}>{c.caseStage}</span></div>
             <div className={styles.detailItem}><span className={styles.detailLabel}>Urgency</span><span className={styles.detailValue} style={{ textTransform: 'capitalize' }}>{c.urgency}</span></div>
-            {c.opponentName && <div className={styles.detailItem}><span className={styles.detailLabel}>Opponent</span><span className={styles.detailValue}>{c.opponentName}</span></div>}
-            {c.court && <div className={styles.detailItem}><span className={styles.detailLabel}>Court</span><span className={styles.detailValue}>{c.court}</span></div>}
-            {c.policeStation && <div className={styles.detailItem}><span className={styles.detailLabel}>Police Station</span><span className={styles.detailValue}>{c.policeStation}</span></div>}
+            {c.opponentName && <div className={styles.detailItem}><span className={styles.detailLabel}>Organization</span><span className={styles.detailValue}>{c.opponentName}</span></div>}
+            {c.court && <div className={styles.detailItem}><span className={styles.detailLabel}>Industry Sector</span><span className={styles.detailValue}>{c.court}</span></div>}
+            {c.policeStation && <div className={styles.detailItem}><span className={styles.detailLabel}>Dept / Ref Code</span><span className={styles.detailValue}>{c.policeStation}</span></div>}
             <div className={styles.detailItem}><span className={styles.detailLabel}>Contact Time</span><span className={styles.detailValue} style={{ textTransform: 'capitalize' }}>{c.preferredContactTime}</span></div>
             <div className={styles.detailItem}><span className={styles.detailLabel}>Video Call</span><span className={styles.detailValue}>{c.videoConsultation ? 'Yes' : 'No'}</span></div>
             <div className={styles.detailItem}><span className={styles.detailLabel}>Language</span><span className={styles.detailValue}>{c.preferredLanguage}</span></div>
             <div className={styles.detailItem}><span className={styles.detailLabel}>Submitted</span><span className={styles.detailValue}>{formatDate(c.createdAt)}</span></div>
           </div>
           <div className={styles.summaryBlock}>
-            <span className={styles.detailLabel}>Case Summary</span>
+            <span className={styles.detailLabel}>Inquiry Summary</span>
             <p className={styles.summaryText}>{c.caseSummary}</p>
           </div>
         </div>
@@ -222,7 +222,7 @@ export default function ClientDetailView({ consultation: initial }: Props) {
         {/* Internal Notes */}
         <div className={styles.detailCard}>
           <h3 className={styles.cardTitle}>Internal Notes</h3>
-          <textarea className={styles.notesArea} placeholder="Add internal notes about this case..." value={notes} rows={5} onChange={(e) => setNotes(e.target.value)} />
+          <textarea className={styles.notesArea} placeholder="Add internal notes about this client engagement..." value={notes} rows={5} onChange={(e) => setNotes(e.target.value)} />
           <button className={styles.saveNotesBtn} onClick={saveNotes} disabled={savingNotes}>
             {savingNotes ? 'Saving...' : 'Save Notes'}
           </button>

@@ -148,7 +148,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   const [formExcerpt, setFormExcerpt] = useState('');
   const [formContent, setFormContent] = useState('');
   const [formAuthor, setFormAuthor] = useState('Business Admin');
-  const [formTags, setFormTags] = useState('Legal Insights');
+  const [formTags, setFormTags] = useState('Business Insights');
   const [savingBlog, setSavingBlog] = useState(false);
 
   // Draft Cache State
@@ -254,7 +254,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   // Auto-save draft to localStorage whenever form fields change
   useEffect(() => {
     if (!isModalOpen) return;
-    const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
+    const draftKey = editingPost ? `clientflow_draft_${editingPost.id}` : 'clientflow_draft_new';
     
     const draftData = {
       title: formTitle,
@@ -357,7 +357,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   // Blog CRUD actions
   const openNewBlogModal = (skipUrlUpdate: boolean | React.MouseEvent = false) => {
     setEditingPost(null);
-    const draftKey = 'nyaya_draft_new';
+    const draftKey = 'clientflow_draft_new';
     const savedDraft = typeof window !== 'undefined' ? localStorage.getItem(draftKey) : null;
     
     if (savedDraft) {
@@ -401,7 +401,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
 
   const openEditBlogModal = (post: BlogPost, skipUrlUpdate: boolean | React.MouseEvent = false) => {
     setEditingPost(post);
-    const draftKey = `nyaya_draft_${post.id}`;
+    const draftKey = `clientflow_draft_${post.id}`;
     const savedDraft = typeof window !== 'undefined' ? localStorage.getItem(draftKey) : null;
     
     if (savedDraft) {
@@ -491,7 +491,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   }, [isModalOpen]);
 
   const discardDraft = () => {
-    const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
+    const draftKey = editingPost ? `clientflow_draft_${editingPost.id}` : 'clientflow_draft_new';
     localStorage.removeItem(draftKey);
     setHasRestoredDraft(false);
     setLastSavedTime('');
@@ -553,7 +553,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
       }
 
       // Clear draft on successful publish
-      const draftKey = editingPost ? `nyaya_draft_${editingPost.id}` : 'nyaya_draft_new';
+      const draftKey = editingPost ? `clientflow_draft_${editingPost.id}` : 'clientflow_draft_new';
       localStorage.removeItem(draftKey);
       setHasRestoredDraft(false);
       setLastSavedTime('');
@@ -569,7 +569,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
   };
 
   const handleDeleteBlog = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this legal whitepaper/article?')) return;
+    if (!confirm('Are you sure you want to delete this article?')) return;
     try {
       const res = await fetch(`/api/admin/blogs/${id}`, { method: 'DELETE' });
       if (res.ok) {
@@ -666,7 +666,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
             <div className={styles.topbar}>
               <div>
                 <h1 className={styles.heading}>Consultation Dashboard</h1>
-                <p className={styles.subheading}>Manage legal consultation requests & case inquiries</p>
+                <p className={styles.subheading}>Manage consultation requests & client inquiries</p>
               </div>
             </div>
 
@@ -700,11 +700,11 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                 <option value="archived">Archived</option>
               </select>
               <select className={styles.filterSelect} value={filterArea} onChange={(e) => setFilterArea(e.target.value)}>
-                <option value="">All Areas</option>
+                <option value="">All Services</option>
                 {PRACTICE_AREAS.map((a) => <option key={a}>{a}</option>)}
               </select>
               <select className={styles.filterSelect} value={filterState} onChange={(e) => setFilterState(e.target.value)}>
-                <option value="">All States</option>
+                <option value="">All Regions</option>
                 {STATES.slice(0, 15).map((s) => <option key={s}>{s}</option>)}
               </select>
             </div>
@@ -721,8 +721,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                   <thead>
                     <tr>
                       <th>Client</th>
-                      <th>Practice Area</th>
-                      <th>Stage</th>
+                      <th>Service Area</th>
+                      <th>Project Stage</th>
                       <th>Urgency</th>
                       <th>Status</th>
                       <th>Submitted</th>
@@ -851,8 +851,8 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
           <>
             <div className={styles.topbar}>
               <div>
-                <h1 className={styles.heading}>Blog & Legal Whitepapers</h1>
-                <p className={styles.subheading}>Publish and manage articles, whitepapers & legal guides</p>
+                <h1 className={styles.heading}>Articles & Knowledge Base</h1>
+                <p className={styles.subheading}>Publish and manage business articles, reports & strategy guides</p>
               </div>
               <button className={styles.addBtn} onClick={openNewBlogModal}>
                 + Write New Article
@@ -871,7 +871,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               {filteredBlogs.length === 0 ? (
                 <div className={styles.empty}>
                   <span style={{ fontSize: 48 }}>📚</span>
-                  <p>No legal articles published yet</p>
+                  <p>No articles published yet</p>
                   <button className={styles.addBtn} onClick={openNewBlogModal} style={{ marginTop: 12 }}>
                     Write First Article
                   </button>
@@ -930,7 +930,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
               {filteredBlogs.length === 0 ? (
                 <div className={styles.empty}>
                   <span style={{ fontSize: 36 }}>📚</span>
-                  <p>No legal articles published yet</p>
+                  <p>No articles published yet</p>
                 </div>
               ) : (
                 filteredBlogs.map((b) => (
@@ -967,7 +967,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
         )}
       </main>
 
-      {/* Full Screen Workspace for Creating / Editing Legal Articles */}
+      {/* Full Screen Workspace for Creating / Editing Articles */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={closeBlogModal}>
           <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
@@ -975,7 +975,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
             <div className={styles.modalHeader}>
               <div className={styles.modalTitleWrap}>
                 <h2 className={styles.modalTitle}>
-                  {editingPost ? 'Edit Legal Article' : 'Write New Legal Article'}
+                  {editingPost ? 'Edit Article' : 'Write New Article'}
                 </h2>
                 {lastSavedTime && (
                   <span className={styles.draftBadge}>
@@ -1025,7 +1025,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                       <textarea
                         rows={2}
                         className={`${styles.formTextarea} ${styles.expandableInput}`}
-                        placeholder="e.g. Navigating the Bharatiya Nyaya Sanhita (BNS) 2023: Structural Shifts and Judicial Implications"
+                        placeholder="e.g. Scalable Business Architectures: Navigating Digital Transformation"
                         value={formTitle}
                         onChange={(e) => setFormTitle(e.target.value)}
                         required
@@ -1058,7 +1058,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                       <textarea
                         rows={2}
                         className={`${styles.formTextarea} ${styles.expandableInput}`}
-                        placeholder="Criminal Law, BNS 2023, Legal Reform"
+                        placeholder="Business Strategy, Growth, Enterprise, Operations"
                         value={formTags}
                         onChange={(e) => setFormTags(e.target.value)}
                       />
@@ -1090,7 +1090,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                   </div>
                   <textarea
                     className={styles.fullArticleTextarea}
-                    placeholder="Write full legal whitepaper or article content here... (Markdown supported)"
+                    placeholder="Write full article content here... (Markdown supported)"
                     value={formContent}
                     onChange={(e) => setFormContent(e.target.value)}
                     required
@@ -1118,7 +1118,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                       <div className={styles.copilotBadgeIcon}>🖋️</div>
                       <div>
                         <h3>Blog Copilot</h3>
-                        <p className={styles.copilotSubtitle}>Legal Writing & Proofreading Assistant</p>
+                        <p className={styles.copilotSubtitle}>Business Editorial & Writing Assistant</p>
                         <div className={styles.copilotCredentialBadge}>
                           Business Content & Publishing Assistant
                         </div>
@@ -1193,7 +1193,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                     {aiMessages.length === 0 ? (
                       <div className={styles.copilotEmpty}>
                         <span style={{ fontSize: 32 }}>📜</span>
-                        <p>Ask Blog Copilot to draft section outlines, check statutory accuracy (BNS/BNSS/BSA), or polish your article style.</p>
+                        <p>Ask Blog Copilot to draft section outlines, verify strategic concepts, or polish your article style.</p>
                       </div>
                     ) : (
                       aiMessages.map((msg, idx) => {
@@ -1253,7 +1253,7 @@ export default function DashboardClient({ consultations, stats, initialBlogPosts
                         );
                       })
                     )}
-                    {loadingAi && <div className={styles.copilotLoading}>🤖 Blog Copilot analyzing legal draft...</div>}
+                    {loadingAi && <div className={styles.copilotLoading}>🤖 Blog Copilot analyzing article draft...</div>}
                   </div>
 
                   {/* Input Row */}

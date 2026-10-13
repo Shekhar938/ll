@@ -141,7 +141,7 @@ export const translations = {
       }
     },
     languages: { 'English': 'English', 'Hindi': 'Hindi' },
-    states: { 'Bihar': 'Bihar', 'General': 'General' },
+    states: { 'General': 'General', 'National': 'National', 'International': 'International' },
     districts: {
       'Araria': 'Araria', 'Arwal': 'Arwal', 'Aurangabad': 'Aurangabad', 'Banka': 'Banka', 'Begusarai': 'Begusarai', 'Bhagalpur': 'Bhagalpur', 'Bhojpur': 'Bhojpur', 
       'Buxar': 'Buxar', 'Darbhanga': 'Darbhanga', 'East Champaran': 'East Champaran', 'Gaya': 'Gaya', 'Gopalganj': 'Gopalganj', 'Jamui': 'Jamui', 'Jehanabad': 'Jehanabad', 
@@ -253,47 +253,47 @@ export const translations = {
       steps: { 1: 'व्यक्तिगत जानकारी', 2: 'कानूनी मामला', 3: 'प्राथमिकता', 4: 'दस्तावेज़', 5: 'समीक्षा' },
       nav: { back: 'पीछे', next: 'अगला', submit: 'अनुरोध सबमिट करें', submitting: 'सबमिट हो रहा है...' },
       step1: {
-        title: 'व्यक्तिगत जानकारी', desc: 'अपने बारे में बताएं ताकि हम सही मार्गदर्शन के साथ आप तक पहुंच सकें।',
+        title: 'संपर्क जानकारी', desc: 'अपने बारे में बताएं ताकि हमारी टीम सही मार्गदर्शन के साथ आप तक पहुंच सके।',
         fullName: 'पूरा नाम', fullNamePlaceholder: 'राजेश कुमार',
-        mobile: 'मोबाइल नंबर', mobilePlaceholder: '9XXXXXXXXX',
+        mobile: 'संपर्क नंबर', mobilePlaceholder: '9XXXXXXXXX',
         email: 'ईमेल पता', emailPlaceholder: 'rajesh@example.com',
-        occupation: 'पेशा', occupationPlaceholder: 'जैसे- व्यवसायी, शिक्षक',
-        city: 'शहर (ज़िला)', citySelect: 'ज़िला चुनें',
-        state: 'राज्य', prefLang: 'पसंदीदा भाषा', langSelect: 'भाषा चुनें',
+        occupation: 'संगठन / पद', occupationPlaceholder: 'जैसे- संस्थापक, संचालन निदेशक, प्रबंधक',
+        city: 'शहर / क्षेत्र', citySelect: 'क्षेत्र चुनें',
+        state: 'राज्य / प्रांत', prefLang: 'पसंदीदा भाषा', langSelect: 'भाषा चुनें',
         errors: {
-          fullName: 'पूरा नाम आवश्यक है', mobileReq: 'मोबाइल नंबर आवश्यक है', mobileInv: 'मान्य 10-अंकीय भारतीय मोबाइल नंबर दर्ज करें',
+          fullName: 'पूरा नाम आवश्यक है', mobileReq: 'संपर्क नंबर आवश्यक है', mobileInv: 'मान्य 10-अंकीय नंबर दर्ज करें',
           emailReq: 'ईमेल आवश्यक है', emailInv: 'वैध ईमेल पता दर्ज करें', cityReq: 'शहर आवश्यक है', stateReq: 'कृपया एक राज्य चुनें'
         }
       },
       step2: {
-        title: 'कानूनी मामले का विवरण', desc: 'अपनी कानूनी आवश्यकता के बारे में बुनियादी विवरण प्रदान करें।',
-        practiceArea: 'अभ्यास क्षेत्र', selectPractice: 'अभ्यास क्षेत्र चुनें', caseType: 'केस का प्रकार', selectCaseType: 'केस का प्रकार चुनें', 
-        caseSummary: 'संक्षिप्त केस सारांश', summaryPlaceholder: 'अपनी समस्या का संक्षेप में वर्णन करें...',
-        opponent: 'विरोधी पक्ष का नाम (यदि कोई हो)', opponentPlaceholder: 'विरोधी या संगठन का नाम',
-        court: 'संबंधित न्यायालय / अधिकार क्षेत्र', courtPlaceholder: 'जैसे- दिल्ली उच्च न्यायालय',
-        station: 'पुलिस स्टेशन', stationPlaceholder: 'जैसे- कनॉट प्लेस पीएस', 
-        stage: 'केस का वर्तमान चरण', selectStage: 'चरण चुनें', optional: '(यदि लागू हो)',
-        errors: { practiceArea: 'कृपया अभ्यास क्षेत्र चुनें', caseType: 'कृपया केस का प्रकार चुनें', caseSummary: 'कृपया संक्षिप्त सारांश प्रदान करें', summaryShort: 'कृपया कम से कम 30 अक्षर प्रदान करें', caseStage: 'कृपया एक केस चरण चुनें' }
+        title: 'पूछताछ और आवश्यकताएं', desc: 'अपनी परियोजना या परामर्श आवश्यकता के बारे में विवरण प्रदान करें।',
+        practiceArea: 'सेवा श्रेणी', selectPractice: 'सेवा श्रेणी चुनें', caseType: 'पूछताछ का प्रकार', selectCaseType: 'पूछताछ का प्रकार चुनें', 
+        caseSummary: 'पूछताछ सारांश', summaryPlaceholder: 'अपने उद्देश्यों, वर्तमान चुनौतियों या विशिष्ट आवश्यकताओं का वर्णन करें...',
+        opponent: 'संगठन / संबंधित पक्ष (वैकल्पिक)', opponentPlaceholder: 'संबंधित कंपनी या संस्था का नाम',
+        court: 'उद्योग क्षेत्र / कार्यक्षेत्र', courtPlaceholder: 'जैसे- प्रौद्योगिकी / फिनटेक / राष्ट्रीय',
+        station: 'विभाग / संदर्भ कोड', stationPlaceholder: 'जैसे- ऑपरेशंस यूनिट 4', 
+        stage: 'वर्तमान परियोजना चरण', selectStage: 'चरण चुनें', optional: '(यदि लागू हो)',
+        errors: { practiceArea: 'कृपया सेवा श्रेणी चुनें', caseType: 'कृपया पूछताछ का प्रकार चुनें', caseSummary: 'कृपया संक्षिप्त सारांश प्रदान करें', summaryShort: 'कृपया कम से कम 30 अक्षर प्रदान करें', caseStage: 'कृपया एक परियोजना चरण चुनें' }
       },
       step3: {
-        title: 'प्राथमिकता और प्राथमिकताएं', desc: 'हमें बताएं कि आपको कितनी तत्परता से सहायता की आवश्यकता है।',
-        urgency: 'यह मामला कितना जरूरी है?', urgLow: 'कम (एक सप्ताह के भीतर)', urgMed: 'मध्यम (2-3 दिनों के भीतर)', urgHigh: 'उच्च (24 घंटों के भीतर)',
+        title: 'प्राथमिकता और शेड्यूलिंग', desc: 'हमें बताएं कि आपको कितनी तत्परता से सहायता की आवश्यकता है।',
+        urgency: 'यह पूछताछ कितनी जरूरी है?', urgLow: 'मानक (एक सप्ताह के भीतर)', urgMed: 'मध्यम (2-3 दिनों के भीतर)', urgHigh: 'प्राथमिकता (24 घंटों के भीतर)',
         contactTime: 'पसंदीदा संपर्क समय', timeMorn: 'सुबह (10 AM - 1 PM)', timeAft: 'दोपहर (2 PM - 5 PM)', timeEve: 'शाम (6 PM - 8 PM)',
         video: 'वीडियो परामर्श का अनुरोध करें', videoDesc: 'यदि संभव हो तो मैं फोन कॉल के बजाय वीडियो कॉल पसंद करूंगा।'
       },
       step4: {
-        title: 'समर्थक दस्तावेज़', desc: 'आपके मामले को बेहतर ढंग से समझने में हमारी मदद करने के लिए कोई प्रासंगिक दस्तावेज़ (FIR, नोटिस, समझौते) अपलोड करें।',
-        uploadBtn: 'अपलोड करने के लिए फ़ाइलों को यहां क्लिक या ड्रैग करें', uploadSub: 'समर्थित: PDF, JPG, PNG (अधिकतम 20MB प्रति फ़ाइल)'
+        title: 'समर्थक दस्तावेज़', desc: 'कोई प्रासंगिक प्रोजेक्ट ब्रीफ, अनुबंध या संदर्भ फाइलें अपलोड करें।',
+        uploadBtn: 'अपलोड करने के लिए फ़ाइलों को यहां क्लिक या ड्रैग करें', uploadSub: 'समर्थित: PDF, JPG, PNG, DOCX (अधिकतम 20MB प्रति फ़ाइल)'
       },
       step5: {
         title: 'समीक्षा और सबमिट', desc: 'अनुरोध सबमिट करने से पहले कृपया अपने विवरण की समीक्षा करें।',
-        edit: 'संपादित करें', personal: 'व्यक्तिगत', legal: 'कानूनी मामला', prefs: 'प्राथमिकताएं', docs: 'दस्तावेज़', noDocs: 'कोई दस्तावेज़ अपलोड नहीं किया गया',
+        edit: 'संपादित करें', personal: 'संपर्क विवरण', legal: 'पूछताछ विवरण', prefs: 'प्राथमिकताएं', docs: 'दस्तावेज़', noDocs: 'कोई दस्तावेज़ अपलोड नहीं किया गया',
         submitError: 'कुछ गलत हो गया। कृपया पुन: प्रयास करें।',
         consent: 'सबमिट करके, आप हमारी गोपनीयता नीति और सेवा की शर्तों से सहमत होते हैं। आपकी जानकारी एन्क्रिप्टेड और गोपनीय है।'
       }
     },
     languages: { 'English': 'अंग्रेज़ी', 'Hindi': 'हिंदी' },
-    states: { 'Bihar': 'बिहार' },
+    states: { 'General': 'सामान्य', 'National': 'राष्ट्रीय', 'International': 'अंतर्राष्ट्रीय' },
     districts: {
       'Araria': 'अररिया', 'Arwal': 'अरवल', 'Aurangabad': 'औरंगाबाद', 'Banka': 'बांका', 'Begusarai': 'बेगूसराय', 'Bhagalpur': 'भागलपुर', 'Bhojpur': 'भोजपुर', 
       'Buxar': 'बक्सर', 'Darbhanga': 'दरभंगा', 'East Champaran': 'पूर्वी चंपारण', 'Gaya': 'गया', 'Gopalganj': 'गोपालगंज', 'Jamui': 'जमुई', 'Jehanabad': 'जहानाबाद', 

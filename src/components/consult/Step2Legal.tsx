@@ -8,7 +8,7 @@ import { FormData } from './ConsultForm';
 import { PRACTICE_AREAS, CASE_TYPES } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const CASE_STAGES = ['Pending', 'Notice Received', 'FIR', 'Court Case', 'Need Advice'];
+const CASE_STAGES = ['Planning & Scope', 'Initiating Project', 'Active Operations', 'Scaling & Delivery', 'Advisory & Review'];
 
 interface Props { data: FormData; update: (u: Partial<FormData>) => void; onNext: () => void; onBack: () => void; }
 

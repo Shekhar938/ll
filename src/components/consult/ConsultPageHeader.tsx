@@ -25,7 +25,7 @@ export default function ConsultPageHeader() {
       }}>
         <span>🔒 Already a client?</span>
         <Link href="/portal" style={{ color: '#FFE082', textDecoration: 'underline', fontWeight: 700 }}>
-          Login to Client Portal & Track Case Status ➔
+          Login to Client Portal & Track Status ➔
         </Link>
       </div>
     </>

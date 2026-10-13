@@ -13,15 +13,15 @@ export default async function LatestBlogs() {
     <section className={`section ${styles.blogSection}`} id="blog">
       <div className="container">
         <div className={styles.header}>
-          <h2 className={styles.title}>Latest Legal Insights</h2>
-          <p className={styles.subtitle}>Stay informed with our expert guides and recent legal updates.</p>
+          <h2 className={styles.title}>Latest Insights & Publications</h2>
+          <p className={styles.subtitle}>Stay informed with actionable strategies, industry analysis, and operational guides.</p>
         </div>
 
         <div className={styles.grid}>
           {latestPosts.map((post) => (
             <article key={post.id} className={styles.card}>
               <div className={styles.meta}>
-                <span className={styles.tag}>{post.tags?.[0] || 'Law'}</span>
+                <span className={styles.tag}>{post.tags?.[0] || 'Business'}</span>
                 <time dateTime={post.publishedAt} className={styles.date}>
                   {new Date(post.publishedAt).toLocaleDateString('en-IN', {
                     year: 'numeric',

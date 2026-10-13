@@ -23,7 +23,7 @@ export default async function BlogIndex() {
       <main className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>Insights & Industry Guides</h1>
-          <p className={styles.subtitle}>Stay informed about your rights and Indian law.</p>
+          <p className={styles.subtitle}>Stay informed about modern business strategy, compliance, and growth.</p>
         </div>
 
         <div className={styles.grid}>

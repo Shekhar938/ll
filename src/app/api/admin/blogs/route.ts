@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       excerpt: excerpt || title,
       content,
       author: author || 'Business Admin',
-      tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()) : ['Legal Insights']
+      tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()) : ['Business Insights']
     });
 
     return NextResponse.json({ success: true, post: newPost });

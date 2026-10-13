@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const SESSION_COOKIE = 'nyaya_admin_session';
-const SESSION_SECRET = process.env.SESSION_SECRET || 'nyaya-secret-key-change-in-production';
+const SESSION_COOKIE = 'clientflow_admin_session';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'clientflow-secret-key-change-in-production';
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
